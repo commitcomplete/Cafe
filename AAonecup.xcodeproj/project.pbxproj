@@ -13,6 +13,13 @@
 		78974AF428D9DF2D00477AE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78974AF228D9DF2D00477AE6 /* Main.storyboard */; };
 		78974AF628D9DF2E00477AE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78974AF528D9DF2E00477AE6 /* Assets.xcassets */; };
 		78974AF928D9DF2E00477AE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78974AF728D9DF2E00477AE6 /* LaunchScreen.storyboard */; };
+		78974B1728D9F4E200477AE6 /* FindCafeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B1628D9F4E200477AE6 /* FindCafeViewController.swift */; };
+		78974B1928D9F4F500477AE6 /* FindCafeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B1828D9F4F500477AE6 /* FindCafeViewModel.swift */; };
+		78974B1B28D9F50000477AE6 /* FindCafeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B1A28D9F50000477AE6 /* FindCafeView.swift */; };
+		78974B1E28D9FA1D00477AE6 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 78974B1D28D9FA1D00477AE6 /* RxCocoa */; };
+		78974B2028D9FA1D00477AE6 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 78974B1F28D9FA1D00477AE6 /* RxRelay */; };
+		78974B2228D9FA1D00477AE6 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78974B2128D9FA1D00477AE6 /* RxSwift */; };
+		78974B2528D9FA5800477AE6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 78974B2428D9FA5800477AE6 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +31,9 @@
 		78974AF528D9DF2E00477AE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		78974AF828D9DF2E00477AE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78974AFA28D9DF2E00477AE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78974B1628D9F4E200477AE6 /* FindCafeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCafeViewController.swift; sourceTree = "<group>"; };
+		78974B1828D9F4F500477AE6 /* FindCafeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCafeViewModel.swift; sourceTree = "<group>"; };
+		78974B1A28D9F50000477AE6 /* FindCafeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCafeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +41,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78974B2228D9FA1D00477AE6 /* RxSwift in Frameworks */,
+				78974B2528D9FA5800477AE6 /* SnapKit in Frameworks */,
+				78974B2028D9FA1D00477AE6 /* RxRelay in Frameworks */,
+				78974B1E28D9FA1D00477AE6 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,15 +70,82 @@
 		78974AEB28D9DF2D00477AE6 /* AAonecup */ = {
 			isa = PBXGroup;
 			children = (
-				78974AEC28D9DF2D00477AE6 /* AppDelegate.swift */,
-				78974AEE28D9DF2D00477AE6 /* SceneDelegate.swift */,
+				78974B0028D9E73200477AE6 /* Application */,
+				78974B0528D9E7D900477AE6 /* Util */,
+				78974B0428D9E7A600477AE6 /* Resource */,
+				78974B0328D9E77500477AE6 /* Presentation */,
+				78974B0228D9E76B00477AE6 /* Network */,
+				78974B0128D9E76600477AE6 /* Domain */,
 				78974AF028D9DF2D00477AE6 /* ViewController.swift */,
 				78974AF228D9DF2D00477AE6 /* Main.storyboard */,
-				78974AF528D9DF2E00477AE6 /* Assets.xcassets */,
 				78974AF728D9DF2E00477AE6 /* LaunchScreen.storyboard */,
 				78974AFA28D9DF2E00477AE6 /* Info.plist */,
 			);
 			path = AAonecup;
+			sourceTree = "<group>";
+		};
+		78974B0028D9E73200477AE6 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				78974AEC28D9DF2D00477AE6 /* AppDelegate.swift */,
+				78974AEE28D9DF2D00477AE6 /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		78974B0128D9E76600477AE6 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				78974B0628D9E80700477AE6 /* Model */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		78974B0228D9E76B00477AE6 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		78974B0328D9E77500477AE6 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				78974B1528D9F4B100477AE6 /* FindCafeScene */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		78974B0428D9E7A600477AE6 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				78974AF528D9DF2E00477AE6 /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		78974B0528D9E7D900477AE6 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		78974B0628D9E80700477AE6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		78974B1528D9F4B100477AE6 /* FindCafeScene */ = {
+			isa = PBXGroup;
+			children = (
+				78974B1628D9F4E200477AE6 /* FindCafeViewController.swift */,
+				78974B1828D9F4F500477AE6 /* FindCafeViewModel.swift */,
+				78974B1A28D9F50000477AE6 /* FindCafeView.swift */,
+			);
+			path = FindCafeScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +164,12 @@
 			dependencies = (
 			);
 			name = AAonecup;
+			packageProductDependencies = (
+				78974B1D28D9FA1D00477AE6 /* RxCocoa */,
+				78974B1F28D9FA1D00477AE6 /* RxRelay */,
+				78974B2128D9FA1D00477AE6 /* RxSwift */,
+				78974B2428D9FA5800477AE6 /* SnapKit */,
+			);
 			productName = AAonecup;
 			productReference = 78974AE928D9DF2D00477AE6 /* AAonecup.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +198,10 @@
 				Base,
 			);
 			mainGroup = 78974AE028D9DF2D00477AE6;
+			packageReferences = (
+				78974B1C28D9FA1D00477AE6 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				78974B2328D9FA5800477AE6 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 78974AEA28D9DF2D00477AE6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -138,8 +229,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78974B1B28D9F50000477AE6 /* FindCafeView.swift in Sources */,
 				78974AF128D9DF2D00477AE6 /* ViewController.swift in Sources */,
 				78974AED28D9DF2D00477AE6 /* AppDelegate.swift in Sources */,
+				78974B1928D9F4F500477AE6 /* FindCafeViewModel.swift in Sources */,
+				78974B1728D9F4E200477AE6 /* FindCafeViewController.swift in Sources */,
 				78974AEF28D9DF2D00477AE6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -202,6 +296,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -262,6 +357,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTING_SEARCH_PATHS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -288,6 +384,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MSUF83HQ8R;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AAonecup/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -317,6 +414,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = MSUF83HQ8R;
+				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AAonecup/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -360,6 +458,48 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		78974B1C28D9FA1D00477AE6 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		78974B2328D9FA5800477AE6 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		78974B1D28D9FA1D00477AE6 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78974B1C28D9FA1D00477AE6 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		78974B1F28D9FA1D00477AE6 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78974B1C28D9FA1D00477AE6 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		78974B2128D9FA1D00477AE6 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78974B1C28D9FA1D00477AE6 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		78974B2428D9FA5800477AE6 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78974B2328D9FA5800477AE6 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 78974AE128D9DF2D00477AE6 /* Project object */;
 }
