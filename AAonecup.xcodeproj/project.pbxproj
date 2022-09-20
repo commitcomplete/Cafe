@@ -15,11 +15,11 @@
 		78974AF928D9DF2E00477AE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78974AF728D9DF2E00477AE6 /* LaunchScreen.storyboard */; };
 		78974B1728D9F4E200477AE6 /* FindCafeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B1628D9F4E200477AE6 /* FindCafeViewController.swift */; };
 		78974B1928D9F4F500477AE6 /* FindCafeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B1828D9F4F500477AE6 /* FindCafeViewModel.swift */; };
-		78974B1B28D9F50000477AE6 /* FindCafeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B1A28D9F50000477AE6 /* FindCafeView.swift */; };
 		78974B1E28D9FA1D00477AE6 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 78974B1D28D9FA1D00477AE6 /* RxCocoa */; };
 		78974B2028D9FA1D00477AE6 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 78974B1F28D9FA1D00477AE6 /* RxRelay */; };
 		78974B2228D9FA1D00477AE6 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78974B2128D9FA1D00477AE6 /* RxSwift */; };
 		78974B2528D9FA5800477AE6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 78974B2428D9FA5800477AE6 /* SnapKit */; };
+		78974B2828D9FB3B00477AE6 /* FindCafeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B2728D9FB3B00477AE6 /* FindCafeButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +33,7 @@
 		78974AFA28D9DF2E00477AE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78974B1628D9F4E200477AE6 /* FindCafeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCafeViewController.swift; sourceTree = "<group>"; };
 		78974B1828D9F4F500477AE6 /* FindCafeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCafeViewModel.swift; sourceTree = "<group>"; };
-		78974B1A28D9F50000477AE6 /* FindCafeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCafeView.swift; sourceTree = "<group>"; };
+		78974B2728D9FB3B00477AE6 /* FindCafeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCafeButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,11 +141,19 @@
 		78974B1528D9F4B100477AE6 /* FindCafeScene */ = {
 			isa = PBXGroup;
 			children = (
+				78974B2628D9FB2000477AE6 /* FindCafeViews */,
 				78974B1628D9F4E200477AE6 /* FindCafeViewController.swift */,
 				78974B1828D9F4F500477AE6 /* FindCafeViewModel.swift */,
-				78974B1A28D9F50000477AE6 /* FindCafeView.swift */,
 			);
 			path = FindCafeScene;
+			sourceTree = "<group>";
+		};
+		78974B2628D9FB2000477AE6 /* FindCafeViews */ = {
+			isa = PBXGroup;
+			children = (
+				78974B2728D9FB3B00477AE6 /* FindCafeButton.swift */,
+			);
+			path = FindCafeViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,12 +237,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78974B1B28D9F50000477AE6 /* FindCafeView.swift in Sources */,
 				78974AF128D9DF2D00477AE6 /* ViewController.swift in Sources */,
 				78974AED28D9DF2D00477AE6 /* AppDelegate.swift in Sources */,
 				78974B1928D9F4F500477AE6 /* FindCafeViewModel.swift in Sources */,
 				78974B1728D9F4E200477AE6 /* FindCafeViewController.swift in Sources */,
 				78974AEF28D9DF2D00477AE6 /* SceneDelegate.swift in Sources */,
+				78974B2828D9FB3B00477AE6 /* FindCafeButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
