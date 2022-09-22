@@ -19,7 +19,9 @@
 		78974B2028D9FA1D00477AE6 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 78974B1F28D9FA1D00477AE6 /* RxRelay */; };
 		78974B2228D9FA1D00477AE6 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 78974B2128D9FA1D00477AE6 /* RxSwift */; };
 		78974B2528D9FA5800477AE6 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 78974B2428D9FA5800477AE6 /* SnapKit */; };
-		78974B2828D9FB3B00477AE6 /* FindCafeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B2728D9FB3B00477AE6 /* FindCafeButton.swift */; };
+		78974B2A28DA529100477AE6 /* Cafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B2928DA529100477AE6 /* Cafe.swift */; };
+		78974B2C28DB4A2C00477AE6 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B2B28DB4A2C00477AE6 /* APIService.swift */; };
+		78974B2E28DB50BB00477AE6 /* Joke.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B2D28DB50BB00477AE6 /* Joke.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +35,9 @@
 		78974AFA28D9DF2E00477AE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78974B1628D9F4E200477AE6 /* FindCafeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCafeViewController.swift; sourceTree = "<group>"; };
 		78974B1828D9F4F500477AE6 /* FindCafeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCafeViewModel.swift; sourceTree = "<group>"; };
-		78974B2728D9FB3B00477AE6 /* FindCafeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindCafeButton.swift; sourceTree = "<group>"; };
+		78974B2928DA529100477AE6 /* Cafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cafe.swift; sourceTree = "<group>"; };
+		78974B2B28DB4A2C00477AE6 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		78974B2D28DB50BB00477AE6 /* Joke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Joke.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +108,7 @@
 		78974B0228D9E76B00477AE6 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				78974B2B28DB4A2C00477AE6 /* APIService.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -134,6 +139,8 @@
 		78974B0628D9E80700477AE6 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				78974B2928DA529100477AE6 /* Cafe.swift */,
+				78974B2D28DB50BB00477AE6 /* Joke.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -151,7 +158,6 @@
 		78974B2628D9FB2000477AE6 /* FindCafeViews */ = {
 			isa = PBXGroup;
 			children = (
-				78974B2728D9FB3B00477AE6 /* FindCafeButton.swift */,
 			);
 			path = FindCafeViews;
 			sourceTree = "<group>";
@@ -238,11 +244,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				78974AF128D9DF2D00477AE6 /* ViewController.swift in Sources */,
+				78974B2C28DB4A2C00477AE6 /* APIService.swift in Sources */,
 				78974AED28D9DF2D00477AE6 /* AppDelegate.swift in Sources */,
+				78974B2A28DA529100477AE6 /* Cafe.swift in Sources */,
 				78974B1928D9F4F500477AE6 /* FindCafeViewModel.swift in Sources */,
 				78974B1728D9F4E200477AE6 /* FindCafeViewController.swift in Sources */,
+				78974B2E28DB50BB00477AE6 /* Joke.swift in Sources */,
 				78974AEF28D9DF2D00477AE6 /* SceneDelegate.swift in Sources */,
-				78974B2828D9FB3B00477AE6 /* FindCafeButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
