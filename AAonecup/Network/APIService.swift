@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 let MenuUrl = "https://api.chucknorris.io/jokes/random"
-
+// shared로 변환할 필요가 있을까?
 class APIService {
     static func fetchAllMenus(onComplete: @escaping (Result<Data, Error>) -> Void) {
         URLSession.shared.dataTask(with: URL(string: MenuUrl)!) { data, res, err in
