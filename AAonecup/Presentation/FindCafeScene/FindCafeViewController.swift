@@ -65,6 +65,14 @@ extension FindCafeViewController{
             make.bottom.equalToSuperview().inset(80)
             make.height.equalTo(48)
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTouchAnimation))
+        coffeeImageView.addGestureRecognizer(tapGesture)
+        coffeeImageView.isUserInteractionEnabled = true
+        cafeFindButton.rx.tap.bind{
+            print("button touched")
+        }
+        .disposed(by: disposeBag)
     }
    
    
@@ -94,11 +102,26 @@ extension FindCafeViewController{
         do {
             self.audioPlayer = try AVAudioPlayer(contentsOf: self.iceSound)
             self.audioPlayer.play()
+            
                } catch {
                   print("error")
                }
     }
     
+    @objc func imageTouchAnimation(_ sender: UITapGestureRecognizer){
+        playIceSound()
+        UIView.animate(withDuration: 0.1) {
+            let rotate = CGAffineTransform(rotationAngle: .pi)
+            self.coffeeImageView.transform = rotate
+        } completion: { _ in
+            UIView.animate(withDuration: 0.1) {
+                let rotate = CGAffineTransform(rotationAngle: .zero)
+                self.coffeeImageView.transform = rotate
+            }
+        }
+    }
+    
+    }
 //    func setButtonConfigure(){
 //        let findButton = makeCafeFindButton()
 //        self.view.addSubview(findButton)
@@ -117,4 +140,4 @@ extension FindCafeViewController{
 //            .disposed(by: disposeBag)
 //    }
     
-}
+
