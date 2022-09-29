@@ -23,7 +23,6 @@ class FindCafeViewController : UIViewController{
     private lazy var coffeeImageView: UIImageView = {
             let imageView = UIImageView()
             imageView.layer.masksToBounds = true
-            imageView.tintColor = .systemGray5
             imageView.image = UIImage(named: "iceCoffee")
             return imageView
         }()
@@ -52,11 +51,13 @@ class FindCafeViewController : UIViewController{
 
 extension FindCafeViewController{
     func setUpLayOut(){
+        view.backgroundColor = UIColor(named: "AccentColor")
         view.addSubview(coffeeImageView)
         view.addSubview(cafeFindButton)
         coffeeImageView.snp.makeConstraints{make in
             make.center.equalToSuperview()
-            
+            make.width.equalTo(270)
+            make.height.equalTo(385)
         }
         cafeFindButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
