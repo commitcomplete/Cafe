@@ -18,19 +18,27 @@ class FindCafeViewController : UIViewController{
     let disposeBag = DisposeBag()
     let iceSound = URL(fileURLWithPath: Bundle.main.path(forResource: "iceSound", ofType: "mp3")!)
     var audioPlayer = AVAudioPlayer()
-
     
+    private lazy var mainTitle : UILabel = {
+        let label = UILabel()
+        label.text = "AAOneCup"
+        label.textColor = UIColor(named: "Brown")
+        label.font = UIFont.systemFont(ofSize: 60, weight: .bold)
+        label.alpha = 0.0
+        return label
+    }()
     private lazy var coffeeImageView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.layer.masksToBounds = true
-            imageView.image = UIImage(named: "iceCoffee")
-            return imageView
-        }()
+        let imageView = UIImageView()
+        imageView.layer.masksToBounds = true
+        imageView.image = UIImage(named: "iceCoffee")
+        return imageView
+    }()
     
     private lazy var cafeFindButton : UIButton = {
         let findButton : UIButton = UIButton()
         findButton.backgroundColor = UIColor(named: "Brown")
         findButton.setTitle(" 카페 찾기", for: .normal)
+        findButton.setTitle(" 카페 찾기", for: .selected)
         findButton.layer.cornerRadius = 10
         findButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         findButton.tintColor = .white
@@ -44,7 +52,7 @@ class FindCafeViewController : UIViewController{
         super.viewDidLoad()
         setUpLayOut()
         introAnimationWithSound()
-
+        
     }
     
 }
@@ -54,6 +62,11 @@ extension FindCafeViewController{
         view.backgroundColor = UIColor(named: "AccentColor")
         view.addSubview(coffeeImageView)
         view.addSubview(cafeFindButton)
+        view.addSubview(mainTitle)
+        mainTitle.snp.makeConstraints{
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().offset(100)
+        }
         coffeeImageView.snp.makeConstraints{make in
             make.center.equalToSuperview()
             make.width.equalTo(270)
@@ -70,12 +83,12 @@ extension FindCafeViewController{
         coffeeImageView.addGestureRecognizer(tapGesture)
         coffeeImageView.isUserInteractionEnabled = true
         cafeFindButton.rx.tap.bind{
-            print("button touched")
+            self.buttonTouchAnimation()
         }
         .disposed(by: disposeBag)
     }
-   
-   
+    
+    
     func introAnimationWithSound(){
         playIceSound()
         UIView.animate(withDuration: 0.2) {
@@ -89,10 +102,11 @@ extension FindCafeViewController{
                 UIView.animate(withDuration: 0.1){
                     let rotate = CGAffineTransform(rotationAngle: .zero)
                     self.coffeeImageView.transform = rotate
-        
+                    
                 }completion: { _ in
                     UIView.animate(withDuration: 0.8) {
                         self.cafeFindButton.alpha = 1.0
+                        self.mainTitle.alpha = 1.0
                     }
                 }
             }
@@ -103,9 +117,9 @@ extension FindCafeViewController{
             self.audioPlayer = try AVAudioPlayer(contentsOf: self.iceSound)
             self.audioPlayer.play()
             
-               } catch {
-                  print("error")
-               }
+        } catch {
+            print("error")
+        }
     }
     
     @objc func imageTouchAnimation(_ sender: UITapGestureRecognizer){
@@ -120,8 +134,39 @@ extension FindCafeViewController{
             }
         }
     }
-    
+    func buttonTouchAnimation(){
+        cafeFindButton.setTitle("탐색중...", for: .normal)
+        cafeFindButton.isEnabled = false
+        cafeFindButton.setImage(UIImage(systemName: ""), for: .normal)
+        UIView.animate(withDuration: 0.7) {
+            self.mainTitle.alpha = 0.0
+        }
+        let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            self.progressAnimation()
+        }
+        
     }
+    
+    func progressAnimation(){
+        playIceSound()
+        UIView.animate(withDuration: 0.2) {
+            let rotate = CGAffineTransform(rotationAngle: .pi * 0.1)
+            self.coffeeImageView.transform = rotate
+        } completion: { _ in
+            UIView.animate(withDuration: 0.2) {
+                let rotate = CGAffineTransform(rotationAngle: -.pi * 0.1)
+                self.coffeeImageView.transform = rotate
+            }completion: { _ in
+                UIView.animate(withDuration: 0.1){
+                    let rotate = CGAffineTransform(rotationAngle: .zero)
+                    self.coffeeImageView.transform = rotate
+                    
+                }
+            }
+        }
+    }
+}
+
 //    func setButtonConfigure(){
 //        let findButton = makeCafeFindButton()
 //        self.view.addSubview(findButton)
@@ -139,5 +184,5 @@ extension FindCafeViewController{
 //                }
 //            .disposed(by: disposeBag)
 //    }
-    
+
 
