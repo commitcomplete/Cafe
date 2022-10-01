@@ -10,7 +10,8 @@ import RxSwift
 import RxCocoa
 import RxRelay
 
-class FindCafeViewModel {
+
+class FindCafeViewModel{
     lazy var nameObservable = PublishSubject<Joke>()
     lazy var firstJoke = nameObservable.map{
         $0.value
@@ -30,6 +31,10 @@ class FindCafeViewModel {
                 self.nameObservable.onNext($0)
             })
         
+    }
+    
+    func getCafeList(query : String){
+        LoadSEARCHnewsAPI.shared.requestAPIToNaver(queryValue: query)
     }
     
 }
