@@ -15,13 +15,14 @@ import AVFoundation
 import CoreLocation
 
 class FindCafeViewController : UIViewController {
+    var progressAnimationtimer: Timer? = nil
     var isButtonClicked = false
     let locationManager = CLLocationManager()
     let viewModel = FindCafeViewModel()
     let disposeBag = DisposeBag()
     let iceSound = URL(fileURLWithPath: Bundle.main.path(forResource: "iceSound", ofType: "mp3")!)
     var audioPlayer = AVAudioPlayer()
-    
+    let cellId = "CafeTableViewCell"
     private lazy var mainTitle : UILabel = {
         let label = UILabel()
         label.text = "아아,한잔"
@@ -29,6 +30,12 @@ class FindCafeViewController : UIViewController {
         label.font = UIFont.systemFont(ofSize: 60, weight: .bold)
         label.alpha = 0.0
         return label
+    }()
+    private lazy var cafeTableView : UITableView = {
+        let tableView = UITableView()
+        tableView.backgroundColor = .clear
+        tableView.rowHeight = 80
+        return tableView
     }()
     private lazy var coffeeImageView: UIImageView = {
         let imageView = UIImageView()
@@ -56,13 +63,25 @@ class FindCafeViewController : UIViewController {
         setUpCLLocation()
         setUpLayOut()
         introAnimationWithSound()
+        cafeTableView.dataSource = nil
+        cafeTableView.register(CafeTableViewCell.self, forCellReuseIdentifier: cellId)
         viewModel.cafeListObservable
             .debug()
-            .map{
-                $0[0].address
+            .observeOn(MainScheduler.instance)
+            .bind(to: cafeTableView.rx.items(cellIdentifier: cellId, cellType: CafeTableViewCell.self)){
+                index, item, cell in
+                cell.cafeNameLabel.text = item.title
+                cell.cafeAddressLabel.text = item.address
+                
             }
-            .bind(to: mainTitle.rx.text)
             .disposed(by: disposeBag)
+        cafeTableView.isScrollEnabled = false
+        viewModel.isProgressAnimationContinue.bind{
+            if $0{
+                print("true도착")
+                self.progressAnimationtimer?.invalidate()
+            }
+        }
     }
     
 }
@@ -71,12 +90,14 @@ extension FindCafeViewController{
     
     func setUpLayOut(){
         view.backgroundColor = UIColor(named: "AccentColor")
+        
         view.addSubview(coffeeImageView)
+        view.addSubview(cafeTableView)
         view.addSubview(cafeFindButton)
         view.addSubview(mainTitle)
         mainTitle.snp.makeConstraints{
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().offset(100)
+            
         }
         coffeeImageView.snp.makeConstraints{make in
             make.center.equalToSuperview()
@@ -89,7 +110,12 @@ extension FindCafeViewController{
             make.bottom.equalToSuperview().inset(80)
             make.height.equalTo(48)
         }
-        
+        cafeTableView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.leading.equalToSuperview().offset(24)
+            make.bottom.equalToSuperview().inset(160)
+            make.top.equalTo(mainTitle.snp.bottom).offset(10)
+        }
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTouchAnimation))
         coffeeImageView.addGestureRecognizer(tapGesture)
         coffeeImageView.isUserInteractionEnabled = true
@@ -152,9 +178,10 @@ extension FindCafeViewController{
         cafeFindButton.isEnabled = false
         cafeFindButton.setImage(UIImage(systemName: ""), for: .normal)
         UIView.animate(withDuration: 0.7) {
-            self.mainTitle.alpha = 0.7
+            self.mainTitle.alpha = 0.0
+            self.coffeeImageView.alpha = 0.3
         }
-        let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        progressAnimationtimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
             self.progressAnimation()
         }
         

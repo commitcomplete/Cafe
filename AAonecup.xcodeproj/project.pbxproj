@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7875444C28EC45DE0008A663 /* CafeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875444B28EC45DE0008A663 /* CafeTableViewCell.swift */; };
 		78974AED28D9DF2D00477AE6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974AEC28D9DF2D00477AE6 /* AppDelegate.swift */; };
 		78974AEF28D9DF2D00477AE6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974AEE28D9DF2D00477AE6 /* SceneDelegate.swift */; };
 		78974AF128D9DF2D00477AE6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974AF028D9DF2D00477AE6 /* ViewController.swift */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7875444B28EC45DE0008A663 /* CafeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeTableViewCell.swift; sourceTree = "<group>"; };
 		78974AE928D9DF2D00477AE6 /* AAonecup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AAonecup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78974AEC28D9DF2D00477AE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78974AEE28D9DF2D00477AE6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 		78974B2628D9FB2000477AE6 /* FindCafeViews */ = {
 			isa = PBXGroup;
 			children = (
+				7875444B28EC45DE0008A663 /* CafeTableViewCell.swift */,
 			);
 			path = FindCafeViews;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7875444C28EC45DE0008A663 /* CafeTableViewCell.swift in Sources */,
 				78974B3228E26F6400477AE6 /* SearchCafe.swift in Sources */,
 				78974AF128D9DF2D00477AE6 /* ViewController.swift in Sources */,
 				78974B2C28DB4A2C00477AE6 /* APIService.swift in Sources */,
