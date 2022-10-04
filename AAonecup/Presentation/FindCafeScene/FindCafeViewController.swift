@@ -56,7 +56,13 @@ class FindCafeViewController : UIViewController {
         setUpCLLocation()
         setUpLayOut()
         introAnimationWithSound()
-        
+        viewModel.cafeListObservable
+            .debug()
+            .map{
+                $0[0].address
+            }
+            .bind(to: mainTitle.rx.text)
+            .disposed(by: disposeBag)
     }
     
 }
@@ -146,7 +152,7 @@ extension FindCafeViewController{
         cafeFindButton.isEnabled = false
         cafeFindButton.setImage(UIImage(systemName: ""), for: .normal)
         UIView.animate(withDuration: 0.7) {
-            self.mainTitle.alpha = 0.0
+            self.mainTitle.alpha = 0.7
         }
         let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             self.progressAnimation()

@@ -9,18 +9,18 @@ import Foundation
 import UIKit
 import RxSwift
 
-class LoadSEARCHnewsAPI {
+class  naverAPI {
     
-    static var shared = LoadSEARCHnewsAPI()
+    static var shared = naverAPI()
     
-    let jsconDecoder: JSONDecoder = JSONDecoder()
+    let jsonDecoder: JSONDecoder = JSONDecoder()
 
-    func urlTaskDone() {
+    static func urlTaskDone() {
         let item = dataManager.shared.searchResult?.items[0]
         print(dataManager.shared.searchResult)
     }
     
-    func requestAPIToNaver(queryValue: String) {
+    static func findNearCafeAPIToNaver(queryValue: String , onComplete: @escaping (Result<Data, Error>) -> Void){
         
         let clientID: String = client_ID
         let clientKEY: String = client_Secret
@@ -28,24 +28,58 @@ class LoadSEARCHnewsAPI {
         let query: String  = "https://openapi.naver.com/v1/search/local.json?query=\(queryValue)&display=5&sort=comment"
         let encodedQuery: String = query.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
         let queryURL: URL = URL(string: encodedQuery)!
-       
         var requestURL = URLRequest(url: queryURL)
         requestURL.addValue(clientID, forHTTPHeaderField: "X-Naver-Client-Id")
         requestURL.addValue(clientKEY, forHTTPHeaderField: "X-Naver-Client-Secret")
         
-        let task = URLSession.shared.dataTask(with: requestURL) { data, response, error in
-            guard error == nil else { print(error); return }
-            guard let data = data else { print(error); return }
-            
-            do {
-                let searchInfo: Cafe = try self.jsconDecoder.decode(Cafe.self, from: data)
-                dataManager.shared.searchResult = searchInfo
-                self.urlTaskDone()
-            } catch {
-                print(fatalError())
+        let task = URLSession.shared.dataTask(with: requestURL) { data, res, err in
+            if let err = err {
+                onComplete(.failure(err))
+                return
             }
-        }
-        task.resume()
+            guard let data = data else {
+                let httpResponse = res as! HTTPURLResponse
+                onComplete(.failure(NSError(domain: "no data",
+                                            code: httpResponse.statusCode,
+                                            userInfo: nil)))
+                return
+            }
+            onComplete(.success(data))
+            
+            
+            
+//            do {
+//                searchInfo = try shared.jsonDecoder.decode(Cafe.self, from: data)
+//                dataManager.shared.searchResult = searchInfo
+//
+//                self.urlTaskDone()
+//            } catch {
+//                print(fatalError())
+//
+//            }
+        }.resume()
+        
     }
     
-}
+    static func rxFindNearCafeAPItoNaver(query : String) -> Observable<Data>{
+        return Observable.create { emitter in
+            findNearCafeAPIToNaver(queryValue: query){result in
+                     switch result{
+                     case let .success(data):
+                         print("rx 도착")
+                         print(data)
+                         
+                         print(data)
+                         emitter.onNext(data)
+                         emitter.onCompleted()
+                     case let .failure(err):
+                         print("실패")
+                         emitter.onError(err)
+                     }
+                }
+            return Disposables.create()
+            }
+        }
+    }
+    
+

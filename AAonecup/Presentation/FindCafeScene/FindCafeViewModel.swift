@@ -13,6 +13,7 @@ import RxRelay
 
 class FindCafeViewModel{
     lazy var nameObservable = PublishSubject<Joke>()
+    lazy var cafeListObservable = PublishSubject<[Item]>()
     lazy var firstJoke = nameObservable.map{
         $0.value
     }
@@ -34,7 +35,19 @@ class FindCafeViewModel{
     }
     
     func getCafeList(query : String){
-        LoadSEARCHnewsAPI.shared.requestAPIToNaver(queryValue: query)
+        var itemArray = PublishSubject<[Item]>()
+        naverAPI.rxFindNearCafeAPItoNaver(query: query)
+            .map{ data -> Cafe in
+                let response = try! JSONDecoder().decode(Cafe.self, from: data)
+//                print(response.items.last?.title)
+                return response
+            }
+            .subscribe(onNext: {
+//                print("도착")
+                self.cafeListObservable.onNext($0.items)
+//                print("\($0.items.last?.title)")
+            })
+        
     }
     
 }

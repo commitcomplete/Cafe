@@ -116,8 +116,8 @@
 		78974B0228D9E76B00477AE6 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				78974B2B28DB4A2C00477AE6 /* APIService.swift */,
 				78974B2F28E26F2000477AE6 /* dataManager.swift */,
+				78974B2B28DB4A2C00477AE6 /* APIService.swift */,
 				78974B3128E26F6400477AE6 /* SearchCafe.swift */,
 			);
 			path = Network;
