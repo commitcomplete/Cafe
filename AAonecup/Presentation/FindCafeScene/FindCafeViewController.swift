@@ -107,7 +107,7 @@ extension FindCafeViewController{
         cafeFindButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
-            make.bottom.equalToSuperview().inset(80)
+            make.top.equalTo(cafeTableView.snp.bottom).offset(60)
             make.height.equalTo(48)
         }
         cafeTableView.snp.makeConstraints { make in
@@ -181,7 +181,7 @@ extension FindCafeViewController{
             self.mainTitle.alpha = 0.0
             self.coffeeImageView.alpha = 0.3
         }
-        progressAnimationtimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { timer in
+        progressAnimationtimer = Timer.scheduledTimer(withTimeInterval: 0.6, repeats: true) { _ in
             self.progressAnimation()
         }
         

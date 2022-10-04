@@ -25,7 +25,7 @@ class  naverAPI {
         let clientID: String = client_ID
         let clientKEY: String = client_Secret
         
-        let query: String  = "https://openapi.naver.com/v1/search/local.json?query=\(queryValue)&display=5&sort=comment"
+        let query: String  = "https://openapi.naver.com/v1/search/local.json?query=\(queryValue)&display=5&sort=random"
         let encodedQuery: String = query.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
         let queryURL: URL = URL(string: encodedQuery)!
         var requestURL = URLRequest(url: queryURL)
@@ -67,9 +67,6 @@ class  naverAPI {
                      switch result{
                      case let .success(data):
                          print("rx 도착")
-                         print(data)
-                         
-                         print(data)
                          emitter.onNext(data)
                          emitter.onCompleted()
                      case let .failure(err):
