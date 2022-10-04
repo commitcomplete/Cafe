@@ -23,6 +23,7 @@ class FindCafeViewController : UIViewController {
     let iceSound = URL(fileURLWithPath: Bundle.main.path(forResource: "iceSound", ofType: "mp3")!)
     var audioPlayer = AVAudioPlayer()
     let cellId = "CafeTableViewCell"
+    
     private lazy var mainTitle : UILabel = {
         let label = UILabel()
         label.text = "아아,한잔"
@@ -63,38 +64,43 @@ class FindCafeViewController : UIViewController {
         setUpCLLocation()
         setUpLayOut()
         introAnimationWithSound()
-        cafeTableView.dataSource = nil
-        cafeTableView.register(CafeTableViewCell.self, forCellReuseIdentifier: cellId)
-        viewModel.cafeListObservable
-            .debug()
-            .observeOn(MainScheduler.instance)
-            .bind(to: cafeTableView.rx.items(cellIdentifier: cellId, cellType: CafeTableViewCell.self)){
-                index, item, cell in
-                cell.cafeNameLabel.text = item.title
-                cell.cafeAddressLabel.text = item.address
-                
-            }
-            .disposed(by: disposeBag)
-        cafeTableView.isScrollEnabled = false
-        viewModel.isProgressAnimationContinue.bind{
-            if $0{
-                print("true도착")
-                self.progressAnimationtimer?.invalidate()
-            }
-        }
+        bindingObject()
     }
     
 }
 
 extension FindCafeViewController{
     
+    func bindingObject(){
+        viewModel.cafeListObservable
+            .observe(on: MainScheduler.instance)
+            .bind(to: cafeTableView.rx.items(cellIdentifier: cellId, cellType: CafeTableViewCell.self)){
+                index, item, cell in
+                
+                cell.cafeNameLabel.text = item.title
+                    .replacingOccurrences(of: "<b>", with:" ")
+                    .replacingOccurrences(of: "</b>", with:" ")
+                cell.cafeAddressLabel.text = item.roadAddress
+                
+            }
+            .disposed(by: disposeBag)
+        viewModel.isProgressAnimationContinue.bind{
+            if $0{
+                self.progressAnimationtimer?.invalidate()
+                DispatchQueue.main.async {
+                    self.cafeFindButton.setTitle("탐색완료", for: .normal)
+                }
+            }
+        }
+    }
+    
     func setUpLayOut(){
         view.backgroundColor = UIColor(named: "AccentColor")
-        
         view.addSubview(coffeeImageView)
         view.addSubview(cafeTableView)
         view.addSubview(cafeFindButton)
         view.addSubview(mainTitle)
+        setUpTableView()
         mainTitle.snp.makeConstraints{
             $0.centerX.equalToSuperview()
             
@@ -126,7 +132,11 @@ extension FindCafeViewController{
         }
         .disposed(by: disposeBag)
     }
-    
+    func setUpTableView(){
+        cafeTableView.dataSource = nil
+        cafeTableView.register(CafeTableViewCell.self, forCellReuseIdentifier: cellId)
+        cafeTableView.isScrollEnabled = false
+    }
     
     func introAnimationWithSound(){
         playIceSound()
@@ -155,7 +165,6 @@ extension FindCafeViewController{
         do {
             self.audioPlayer = try AVAudioPlayer(contentsOf: self.iceSound)
             self.audioPlayer.play()
-            
         } catch {
             print("error")
         }
@@ -207,23 +216,6 @@ extension FindCafeViewController{
     }
 }
 
-//    func setButtonConfigure(){
-//        let findButton = makeCafeFindButton()
-//        self.view.addSubview(findButton)
-//        findButton.snp.makeConstraints{make in
-//            make.width.equalTo(200)
-//            make.height.equalTo(100)
-//            make.centerX.equalToSuperview()
-//            make.bottom.equalToSuperview().inset(100)
-//        }
-//
-//        findButton.rx.tap
-//            .bind{
-////               self.viewModel.onTapButton()
-//                LoadSEARCHnewsAPI.shared.requestAPIToNaver(queryValue: "경상북도 포항시 남구 카페")
-//                }
-//            .disposed(by: disposeBag)
-//    }
 extension FindCafeViewController :CLLocationManagerDelegate{
     func setUpCLLocation(){
         //델리게이트 설정
@@ -259,25 +251,24 @@ extension FindCafeViewController :CLLocationManagerDelegate{
             guard let placemarks = placemarks,
                   let address = placemarks.last
             else { return }
-            var currentPlaceCafeQuery = (address.locality ?? "서울")+(address.subLocality ?? "종로구")+"카페"
-            
+            let currentPlaceCafeQuery = (address.locality ?? "서울")+(address.subLocality ?? "종로구")+"카페"
             self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
             
         }
     }
     func sendLocationPermissionAlert(){
-            //Alert 생성 후 액션 연결
-            let alertController = UIAlertController(title: "위치 서비스를 사용할 수 없습니다. 기기의 위치서비스를 켜주세요.(필수권한)", message: "앱 설정 화면으로 이동하시겠습니까?", preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "아니오", style: .destructive, handler: { (action) -> Void in
-                
-            }))
-            alertController.addAction(UIAlertAction(title: "네", style: .default, handler: { (action) -> Void in
-                
-                if let appSettings = URL(string: UIApplication.openSettingsURLString){
-                    UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
-                }
-            }))
-            self.present(alertController, animated: true, completion: nil)
+        //Alert 생성 후 액션 연결
+        let alertController = UIAlertController(title: "위치 서비스를 사용할 수 없습니다. 기기의 위치서비스를 켜주세요.(필수권한)", message: "앱 설정 화면으로 이동하시겠습니까?", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "아니오", style: .destructive, handler: { (action) -> Void in
+            
+        }))
+        alertController.addAction(UIAlertAction(title: "네", style: .default, handler: { (action) -> Void in
+            
+            if let appSettings = URL(string: UIApplication.openSettingsURLString){
+                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+            }
+        }))
+        self.present(alertController, animated: true, completion: nil)
         
     }
     

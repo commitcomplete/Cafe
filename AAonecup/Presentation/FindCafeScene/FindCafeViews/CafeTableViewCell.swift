@@ -26,7 +26,6 @@ class CafeTableViewCell : UITableViewCell{
             
             cafeNameLabel.snp.makeConstraints { (make) in
                 make.leading.equalToSuperview().inset(8)
-                print(UIScreen.main.bounds.width - 20)
                 make.width.equalTo(UIScreen.main.bounds.width - 80)
                 make.top.equalToSuperview().inset(8)
             }
@@ -38,6 +37,7 @@ class CafeTableViewCell : UITableViewCell{
             }
             
             cafeNameLabel.font = UIFont.boldSystemFont(ofSize: 30)
+            cafeAddressLabel.font = UIFont.boldSystemFont(ofSize: 16)
             
         }
         
