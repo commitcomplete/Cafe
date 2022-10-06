@@ -24,7 +24,7 @@ class  naverAPI {
         let clientID: String = client_ID
         let clientKEY: String = client_Secret
         
-        let query: String  = "https://openapi.naver.com/v1/search/local.json?query=\(queryValue)&display=5&sort=random"
+        let query: String  = "https://openapi.naver.com/v1/search/local.json?query=\(queryValue)&display=5&sort=comment"
         let encodedQuery: String = query.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
         let queryURL: URL = URL(string: encodedQuery)!
         var requestURL = URLRequest(url: queryURL)

@@ -23,6 +23,8 @@ class FindCafeViewController : UIViewController {
     let iceSound = URL(fileURLWithPath: Bundle.main.path(forResource: "iceSound", ofType: "mp3")!)
     var audioPlayer = AVAudioPlayer()
     let cellId = "CafeTableViewCell"
+    var currentCoords : CLLocationCoordinate2D!
+    
     
     private lazy var mainTitle : UILabel = {
         let label = UILabel()
@@ -84,6 +86,21 @@ extension FindCafeViewController{
                 
             }
             .disposed(by: disposeBag)
+        viewModel.distanceObservable
+            .observe(on: MainScheduler.instance)
+            .bind(to: cafeTableView.rx.items(cellIdentifier: cellId, cellType: CafeTableViewCell.self)){index, item, cell in
+                cell.cafeDistance.text = "123"
+            }
+            .disposed(by: disposeBag)
+        
+        cafeTableView.rx.modelSelected(Item.self)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {item in
+                print(item.title)
+                self.pushNavi()
+            })
+            .disposed(by: disposeBag)
+        
         viewModel.isProgressAnimationContinue.bind{
             if $0{
                 self.progressAnimationtimer?.invalidate()
@@ -132,6 +149,13 @@ extension FindCafeViewController{
         }
         .disposed(by: disposeBag)
     }
+    func pushNavi(){
+        let cafeRouteViewController = CafeRouteViewController()
+        cafeRouteViewController.placeString1 = "1"
+        cafeRouteViewController.placeString2 = "2"
+        self.navigationController?.pushViewController(cafeRouteViewController, animated: true)
+    }
+    
     func setUpTableView(){
         cafeTableView.dataSource = nil
         cafeTableView.register(CafeTableViewCell.self, forCellReuseIdentifier: cellId)
@@ -245,6 +269,7 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         let longtitude = locationManager.location?.coordinate.longitude ?? 131
         let langtitude = locationManager.location?.coordinate.latitude ?? 37
         let currentLocation = CLLocation(latitude: langtitude, longitude: longtitude)
+        viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr")
         geocoder.reverseGeocodeLocation(currentLocation, preferredLocale: locale) { [weak self] placemarks, _ in
@@ -252,6 +277,7 @@ extension FindCafeViewController :CLLocationManagerDelegate{
                   let address = placemarks.last
             else { return }
             let currentPlaceCafeQuery = (address.locality ?? "서울")+(address.subLocality ?? "종로구")+"카페"
+            self?.getDistance(addressString: currentPlaceCafeQuery)
             self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
             
         }
@@ -290,6 +316,23 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         @unknown default:
             break
         }
+    }
+    
+    func getDistance(addressString : String){
+        let addressString = addressString
+        var coords: CLLocationCoordinate2D?
+        
+        CLGeocoder().geocodeAddressString(addressString, completionHandler:{(placemarks, error) in
+            if error != nil {
+                print("에러 발생: \(error!.localizedDescription)")
+            } else if placemarks!.count > 0 {
+                let placemark = placemarks![0]
+                let location = placemark.location
+                coords = location!.coordinate
+                //4.showMap을 호출 한다.
+                print(coords?.latitude, coords?.longitude)
+            }
+        })
     }
     
 }

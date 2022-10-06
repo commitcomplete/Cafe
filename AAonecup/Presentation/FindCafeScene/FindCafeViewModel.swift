@@ -9,12 +9,14 @@ import Foundation
 import RxSwift
 import RxCocoa
 import RxRelay
+import CoreLocation
 
 
 class FindCafeViewModel{
     lazy var nameObservable = PublishSubject<Joke>()
     lazy var cafeListObservable = PublishSubject<[Item]>()
     lazy var isProgressAnimationContinue = PublishSubject<Bool>()
+    lazy var distanceObservable = PublishSubject<[Int]>()
     
     lazy var firstJoke = nameObservable.map{
         $0.value
@@ -24,17 +26,7 @@ class FindCafeViewModel{
         $0.url
     }.map{"\($0 ?? "firstjokeurl")"}
     
-    func onTapButton(){
-        APIService.fetchAllMenusRx()
-            .map{ data -> Joke in
-                let response = try! JSONDecoder().decode(Joke.self,from: data)
-                return response
-            }
-            .subscribe(onNext: {
-                self.nameObservable.onNext($0)
-            })
-        
-    }
+    var currentCoord : CLLocationCoordinate2D!
     
     func getCafeList(query : String){
         naverAPI.rxFindNearCafeAPItoNaver(query: query)

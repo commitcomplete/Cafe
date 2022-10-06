@@ -8,10 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		7875444C28EC45DE0008A663 /* CafeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875444B28EC45DE0008A663 /* CafeTableViewCell.swift */; };
+		7875445028EF32980008A663 /* CafeRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875444F28EF32980008A663 /* CafeRouteViewController.swift */; };
+		7875445228EF549D0008A663 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875445128EF549D0008A663 /* MapViewController.swift */; };
+		7875445428EF79BF0008A663 /* NearCafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875445328EF79BF0008A663 /* NearCafe.swift */; };
 		78974AED28D9DF2D00477AE6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974AEC28D9DF2D00477AE6 /* AppDelegate.swift */; };
 		78974AEF28D9DF2D00477AE6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974AEE28D9DF2D00477AE6 /* SceneDelegate.swift */; };
 		78974AF128D9DF2D00477AE6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974AF028D9DF2D00477AE6 /* ViewController.swift */; };
-		78974AF428D9DF2D00477AE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78974AF228D9DF2D00477AE6 /* Main.storyboard */; };
 		78974AF628D9DF2E00477AE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78974AF528D9DF2E00477AE6 /* Assets.xcassets */; };
 		78974AF928D9DF2E00477AE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78974AF728D9DF2E00477AE6 /* LaunchScreen.storyboard */; };
 		78974B1728D9F4E200477AE6 /* FindCafeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B1628D9F4E200477AE6 /* FindCafeViewController.swift */; };
@@ -31,11 +33,13 @@
 
 /* Begin PBXFileReference section */
 		7875444B28EC45DE0008A663 /* CafeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeTableViewCell.swift; sourceTree = "<group>"; };
+		7875444F28EF32980008A663 /* CafeRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeRouteViewController.swift; sourceTree = "<group>"; };
+		7875445128EF549D0008A663 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		7875445328EF79BF0008A663 /* NearCafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearCafe.swift; sourceTree = "<group>"; };
 		78974AE928D9DF2D00477AE6 /* AAonecup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AAonecup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78974AEC28D9DF2D00477AE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78974AEE28D9DF2D00477AE6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		78974AF028D9DF2D00477AE6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		78974AF328D9DF2D00477AE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		78974AF528D9DF2E00477AE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		78974AF828D9DF2E00477AE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78974AFA28D9DF2E00477AE6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -65,6 +69,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7875444D28EF323D0008A663 /* CafeRouteScene */ = {
+			isa = PBXGroup;
+			children = (
+				7875444E28EF32530008A663 /* CafeRouteViews */,
+				7875444F28EF32980008A663 /* CafeRouteViewController.swift */,
+			);
+			path = CafeRouteScene;
+			sourceTree = "<group>";
+		};
+		7875444E28EF32530008A663 /* CafeRouteViews */ = {
+			isa = PBXGroup;
+			children = (
+				7875445128EF549D0008A663 /* MapViewController.swift */,
+			);
+			path = CafeRouteViews;
+			sourceTree = "<group>";
+		};
 		78974AE028D9DF2D00477AE6 = {
 			isa = PBXGroup;
 			children = (
@@ -91,7 +112,6 @@
 				78974B0228D9E76B00477AE6 /* Network */,
 				78974B0128D9E76600477AE6 /* Domain */,
 				78974AF028D9DF2D00477AE6 /* ViewController.swift */,
-				78974AF228D9DF2D00477AE6 /* Main.storyboard */,
 				78974AF728D9DF2E00477AE6 /* LaunchScreen.storyboard */,
 				78974AFA28D9DF2E00477AE6 /* Info.plist */,
 			);
@@ -128,6 +148,7 @@
 		78974B0328D9E77500477AE6 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				7875444D28EF323D0008A663 /* CafeRouteScene */,
 				78974B1528D9F4B100477AE6 /* FindCafeScene */,
 			);
 			path = Presentation;
@@ -155,6 +176,7 @@
 			children = (
 				78974B2928DA529100477AE6 /* Cafe.swift */,
 				78974B2D28DB50BB00477AE6 /* Joke.swift */,
+				7875445328EF79BF0008A663 /* NearCafe.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -248,7 +270,6 @@
 				78974B3628E5E9DD00477AE6 /* iceSound.mp3 in Resources */,
 				78974AF928D9DF2E00477AE6 /* LaunchScreen.storyboard in Resources */,
 				78974AF628D9DF2E00477AE6 /* Assets.xcassets in Resources */,
-				78974AF428D9DF2D00477AE6 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +285,7 @@
 				78974AF128D9DF2D00477AE6 /* ViewController.swift in Sources */,
 				78974B2C28DB4A2C00477AE6 /* APIService.swift in Sources */,
 				78974AED28D9DF2D00477AE6 /* AppDelegate.swift in Sources */,
+				7875445028EF32980008A663 /* CafeRouteViewController.swift in Sources */,
 				78974B3428E26F9500477AE6 /* Keys.swift in Sources */,
 				78974B2A28DA529100477AE6 /* Cafe.swift in Sources */,
 				78974B1928D9F4F500477AE6 /* FindCafeViewModel.swift in Sources */,
@@ -271,20 +293,14 @@
 				78974B2E28DB50BB00477AE6 /* Joke.swift in Sources */,
 				78974B3028E26F2000477AE6 /* dataManager.swift in Sources */,
 				78974AEF28D9DF2D00477AE6 /* SceneDelegate.swift in Sources */,
+				7875445228EF549D0008A663 /* MapViewController.swift in Sources */,
+				7875445428EF79BF0008A663 /* NearCafe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		78974AF228D9DF2D00477AE6 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				78974AF328D9DF2D00477AE6 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		78974AF728D9DF2E00477AE6 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
