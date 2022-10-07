@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		78005C5A28F0BFA000F6B787 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78005C5928F0BFA000F6B787 /* Extensions.swift */; };
 		7875444C28EC45DE0008A663 /* CafeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875444B28EC45DE0008A663 /* CafeTableViewCell.swift */; };
 		7875445028EF32980008A663 /* CafeRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875444F28EF32980008A663 /* CafeRouteViewController.swift */; };
 		7875445228EF549D0008A663 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875445128EF549D0008A663 /* MapViewController.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		78005C5928F0BFA000F6B787 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7875444B28EC45DE0008A663 /* CafeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeTableViewCell.swift; sourceTree = "<group>"; };
 		7875444F28EF32980008A663 /* CafeRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeRouteViewController.swift; sourceTree = "<group>"; };
 		7875445128EF549D0008A663 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 		78974B0528D9E7D900477AE6 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				78005C5928F0BFA000F6B787 /* Extensions.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -291,6 +294,7 @@
 				78974B1928D9F4F500477AE6 /* FindCafeViewModel.swift in Sources */,
 				78974B1728D9F4E200477AE6 /* FindCafeViewController.swift in Sources */,
 				78974B2E28DB50BB00477AE6 /* Joke.swift in Sources */,
+				78005C5A28F0BFA000F6B787 /* Extensions.swift in Sources */,
 				78974B3028E26F2000477AE6 /* dataManager.swift in Sources */,
 				78974AEF28D9DF2D00477AE6 /* SceneDelegate.swift in Sources */,
 				7875445228EF549D0008A663 /* MapViewController.swift in Sources */,

@@ -60,7 +60,7 @@ class FindCafeViewController : UIViewController {
         findButton.alpha = 0.0
         return findButton
     }()
-    
+    // MARK: ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCLLocation()
@@ -72,31 +72,26 @@ class FindCafeViewController : UIViewController {
 }
 
 extension FindCafeViewController{
-    
+    // MARK: Binding
     func bindingObject(){
         viewModel.cafeListObservable
             .observe(on: MainScheduler.instance)
             .bind(to: cafeTableView.rx.items(cellIdentifier: cellId, cellType: CafeTableViewCell.self)){
                 index, item, cell in
                 
-                cell.cafeNameLabel.text = item.title
+                cell.cafeNameLabel.text = item.cafeName
                     .replacingOccurrences(of: "<b>", with:" ")
                     .replacingOccurrences(of: "</b>", with:" ")
-                cell.cafeAddressLabel.text = item.roadAddress
+                cell.cafeAddressLabel.text = item.cafeAddress
                 
-            }
-            .disposed(by: disposeBag)
-        viewModel.distanceObservable
-            .observe(on: MainScheduler.instance)
-            .bind(to: cafeTableView.rx.items(cellIdentifier: cellId, cellType: CafeTableViewCell.self)){index, item, cell in
-                cell.cafeDistance.text = "123"
+                cell.cafeDistance.text = item.distance
             }
             .disposed(by: disposeBag)
         
-        cafeTableView.rx.modelSelected(Item.self)
+        cafeTableView.rx.modelSelected(NearCafe.self)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {item in
-                print(item.title)
+                print(item.cafeName)
                 self.pushNavi()
             })
             .disposed(by: disposeBag)
@@ -110,7 +105,7 @@ extension FindCafeViewController{
             }
         }
     }
-    
+    // MARK: Layout
     func setUpLayOut(){
         view.backgroundColor = UIColor(named: "AccentColor")
         view.addSubview(coffeeImageView)
@@ -240,6 +235,7 @@ extension FindCafeViewController{
     }
 }
 
+//MARK: Location
 extension FindCafeViewController :CLLocationManagerDelegate{
     func setUpCLLocation(){
         //델리게이트 설정
@@ -270,6 +266,7 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         let langtitude = locationManager.location?.coordinate.latitude ?? 37
         let currentLocation = CLLocation(latitude: langtitude, longitude: longtitude)
         viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
+        print(currentLocation)
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr")
         geocoder.reverseGeocodeLocation(currentLocation, preferredLocale: locale) { [weak self] placemarks, _ in
@@ -277,7 +274,6 @@ extension FindCafeViewController :CLLocationManagerDelegate{
                   let address = placemarks.last
             else { return }
             let currentPlaceCafeQuery = (address.locality ?? "서울")+(address.subLocality ?? "종로구")+"카페"
-            self?.getDistance(addressString: currentPlaceCafeQuery)
             self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
             
         }
@@ -318,22 +314,8 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         }
     }
     
-    func getDistance(addressString : String){
-        let addressString = addressString
-        var coords: CLLocationCoordinate2D?
-        
-        CLGeocoder().geocodeAddressString(addressString, completionHandler:{(placemarks, error) in
-            if error != nil {
-                print("에러 발생: \(error!.localizedDescription)")
-            } else if placemarks!.count > 0 {
-                let placemark = placemarks![0]
-                let location = placemark.location
-                coords = location!.coordinate
-                //4.showMap을 호출 한다.
-                print(coords?.latitude, coords?.longitude)
-            }
-        })
-    }
+   
     
+   
 }
 

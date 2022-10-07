@@ -24,7 +24,7 @@ class CafeTableViewCell : UITableViewCell{
             cafeNameLabel.font = UIFont.boldSystemFont(ofSize: 30)
             cafeAddressLabel.font = UIFont.boldSystemFont(ofSize: 16)
             
-            cafeDistance.text = "135M"
+            cafeDistance.text = "---"
             cafeDistance.textColor = UIColor(named: "NameColor")
             cafeDistance.font = UIFont.boldSystemFont(ofSize: 24)
             [cafeAddressLabel, cafeNameLabel,cafeDistance].forEach {
