@@ -28,8 +28,6 @@ class CafeRouteViewController : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(placeString1)
-        print(placeString2)
         myCoordinates =  CLLocationCoordinate2D(latitude: 25.647399800, longitude: -100.334304500)
         myPlacemark = MKPlacemark(coordinate: myCoordinates ?? CLLocationCoordinate2D(latitude: 25.647399800, longitude: -100.334304500))
         var myMapItem1 = MKMapItem(placemark: myPlacemark ?? MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: 25.647399800, longitude: -100.334304500)))
@@ -56,8 +54,6 @@ class CafeRouteViewController : UIViewController{
                 return
             }
             self.route = response.routes[0]
-            print(response.routes.count)
-            print(self.route.distance)
             //get the routes, could be multiple routes in the routes[] array but usually [0] is the best route
         }
     }

@@ -35,29 +35,38 @@ class FindCafeViewModel{
                 let response = try! JSONDecoder().decode(Cafe.self, from: data)
                 return response
             }
-            .map({ cafe -> [NearCafe] in
-                var intArr = [NearCafe]()
-                
-                for i in cafe.items{
-                    intArr.append(NearCafe(cafeName: i.title, cafeAddress: i.roadAddress,  distance: "123M"))
-                    self.getDistance(ObjectAddress: i.roadAddress.getAvailableAddress())
-                }
-                return intArr
-            })
             .subscribe(onNext: {
-                print("fds\($0)")
-                self.cafeListObservable.onNext($0)
-                self.isProgressAnimationContinue.onNext(true)
+                self.getNearCafe(cafe: $0) { nearcafe in
+                    self.cafeListObservable.onNext(nearcafe)
+                    self.isProgressAnimationContinue.onNext(true)
+                }
+                
             })
     }
+    func getNearCafe(cafe : Cafe,completion : @escaping([NearCafe])->Void){
+        var nearCafeArr = [NearCafe]()
+        var count = 0
+        for i in cafe.items{
+            getDistance(ObjectAddress: i.roadAddress.getAvailableAddress()) { distance in
+                nearCafeArr.append(NearCafe(cafeName: i.title, cafeAddress: i.roadAddress, distance: distance))
+                count+=1
+                if count == cafe.items.count{
+                    completion(nearCafeArr)
+                }
+            }
+        }
+            
+        
+        
+    }
+   
     
-    func getDistance(ObjectAddress : String){
+    func getDistance(ObjectAddress : String, completionDistance : @escaping(String)->Void){
         var currentMapItem = MKMapItem(placemark: MKPlacemark(coordinate: self.currentCoord))
         var distance : String?
         CLGeocoder().geocodeAddressString(ObjectAddress, completionHandler:{(placemarks, error) in
             if error != nil {
                 print("에러 발생: \(error!.localizedDescription)")
-                print(self.currentCoord.self)
             } else if placemarks!.count > 0 {
                 let placemark = placemarks![0]
                 let location = placemark.location
@@ -71,11 +80,11 @@ class FindCafeViewModel{
                 let directions = MKDirections(request: request) //request directions
                 directions.calculate { (response, error) in
                     guard let response = response else {
-                        print("12314\(error.debugDescription)")
+                        print(error.debugDescription)
                         return
                     }
-                    distance = "\(response.routes[0].distance)"
-                    self.distanceObservable.onNext(distance!)
+                    distance = "\(Int(response.routes[0].distance))M"
+                    completionDistance(distance!)
                     //get the routes, could be multiple routes in the routes[] array but usually [0] is the best route
                 }
             }
@@ -84,6 +93,8 @@ class FindCafeViewModel{
         
         
     }
+    
+
     
     func getDistanceToDestination(srcMapItem srcmapItem: MKMapItem, destMapItem destmapItem: MKMapItem) -> String{
         var distance : CLLocationDistance = 50
@@ -95,12 +106,11 @@ class FindCafeViewModel{
         let directions = MKDirections(request: request) //request directions
         directions.calculate { (response, error) in
             guard let response = response else {
-                print("12314\(error.debugDescription)")
+                print("\(error.debugDescription)")
                 
                 return
             }
             distance = response.routes[0].distance
-            print(response.routes[0].distance)
             //get the routes, could be multiple routes in the routes[] array but usually [0] is the best route
         }
        return "\(distance)"

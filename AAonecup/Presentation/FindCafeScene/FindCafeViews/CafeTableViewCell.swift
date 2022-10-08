@@ -25,6 +25,7 @@ class CafeTableViewCell : UITableViewCell{
             cafeAddressLabel.font = UIFont.boldSystemFont(ofSize: 16)
             
             cafeDistance.text = "---"
+            cafeDistance.adjustsFontSizeToFitWidth = true
             cafeDistance.textColor = UIColor(named: "NameColor")
             cafeDistance.font = UIFont.boldSystemFont(ofSize: 24)
             [cafeAddressLabel, cafeNameLabel,cafeDistance].forEach {
@@ -46,7 +47,7 @@ class CafeTableViewCell : UITableViewCell{
             cafeDistance.snp.makeConstraints { make in
                 make.leading.equalTo(cafeNameLabel.snp.trailing).offset(10)
                 make.centerY.equalTo(cafeNameLabel.snp.centerY)
-                
+                make.width.equalTo(UIScreen.main.bounds.width - 320)
             }
             
         }

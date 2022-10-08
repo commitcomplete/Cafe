@@ -91,7 +91,6 @@ extension FindCafeViewController{
         cafeTableView.rx.modelSelected(NearCafe.self)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {item in
-                print(item.cafeName)
                 self.pushNavi()
             })
             .disposed(by: disposeBag)
@@ -266,7 +265,6 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         let langtitude = locationManager.location?.coordinate.latitude ?? 37
         let currentLocation = CLLocation(latitude: langtitude, longitude: longtitude)
         viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
-        print(currentLocation)
         let geocoder = CLGeocoder()
         let locale = Locale(identifier: "Ko-kr")
         geocoder.reverseGeocodeLocation(currentLocation, preferredLocale: locale) { [weak self] placemarks, _ in
