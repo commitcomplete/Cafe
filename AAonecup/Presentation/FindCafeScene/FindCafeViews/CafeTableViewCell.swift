@@ -47,7 +47,13 @@ class CafeTableViewCell : UITableViewCell{
             cafeDistance.snp.makeConstraints { make in
                 make.leading.equalTo(cafeNameLabel.snp.trailing).offset(10)
                 make.centerY.equalTo(cafeNameLabel.snp.centerY)
-                make.width.equalTo(UIScreen.main.bounds.width - 320)
+                if (UIScreen.main.bounds.width > CGFloat(400)) {
+                    make.width.equalTo(UIScreen.main.bounds.width - 345)
+                }
+                else{
+                    make.width.equalTo(UIScreen.main.bounds.width - 320)
+                }
+                
             }
             
         }

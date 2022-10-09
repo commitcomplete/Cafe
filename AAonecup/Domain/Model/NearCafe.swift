@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import MapKit
 
 struct NearCafe{
     var cafeName: String
     var cafeAddress : String
     var distance : String
+    var route : MKRoute
+    var coords : CLLocationCoordinate2D
 }

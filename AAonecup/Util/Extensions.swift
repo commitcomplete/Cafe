@@ -10,6 +10,15 @@ import Foundation
 extension String{
     func getAvailableAddress() -> String{
         var strArr = self.components(separatedBy: " ")
-        return strArr[0]+strArr[1]+strArr[2]+strArr[3]+strArr[4]
+        var realStrArr = ""
+        for i in 0...strArr.count{
+                realStrArr += " \(strArr[i])"
+            if Int(strArr[i]) != nil {
+                break
+            }
+        }
+        
+        return realStrArr
+        
     }
 }

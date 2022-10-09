@@ -14,6 +14,7 @@ class APIService {
     static func fetchAllMenus(onComplete: @escaping (Result<Data, Error>) -> Void) {
         URLSession.shared.dataTask(with: URL(string: MenuUrl)!) { data, res, err in
             if let err = err {
+                print(12321321)
                 onComplete(.failure(err))
                 return
             }

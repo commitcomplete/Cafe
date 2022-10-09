@@ -13,6 +13,7 @@ import RxRelay
 import SnapKit
 import AVFoundation
 import CoreLocation
+import MapKit
 
 class FindCafeViewController : UIViewController {
     var progressAnimationtimer: Timer? = nil
@@ -38,6 +39,7 @@ class FindCafeViewController : UIViewController {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.rowHeight = 80
+        tableView.alpha = 0.0
         return tableView
     }()
     private lazy var coffeeImageView: UIImageView = {
@@ -91,7 +93,7 @@ extension FindCafeViewController{
         cafeTableView.rx.modelSelected(NearCafe.self)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {item in
-                self.pushNavi()
+                self.pushNavi(route: item.route, coords: item.coords,cafeName: item.cafeName,address: item.cafeAddress,distance : Int(item.route.distance))
             })
             .disposed(by: disposeBag)
         
@@ -99,6 +101,10 @@ extension FindCafeViewController{
             if $0{
                 self.progressAnimationtimer?.invalidate()
                 DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.6) {
+                        self.cafeTableView.alpha = 1.0
+                    }
+                    
                     self.cafeFindButton.setTitle("탐색완료", for: .normal)
                 }
             }
@@ -114,7 +120,7 @@ extension FindCafeViewController{
         setUpTableView()
         mainTitle.snp.makeConstraints{
             $0.centerX.equalToSuperview()
-            
+            $0.top.equalToSuperview().inset(80)
         }
         coffeeImageView.snp.makeConstraints{make in
             make.center.equalToSuperview()
@@ -124,13 +130,18 @@ extension FindCafeViewController{
         cafeFindButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
-            make.top.equalTo(cafeTableView.snp.bottom).offset(60)
+            make.bottom.equalToSuperview().inset(60)
             make.height.equalTo(48)
         }
         cafeTableView.snp.makeConstraints { make in
             make.center.equalToSuperview()
             make.leading.equalToSuperview().offset(24)
-            make.bottom.equalToSuperview().inset(160)
+            if UIScreen.main.bounds.height < 800{
+                make.bottom.equalToSuperview().inset(80)
+            }
+            else{
+                make.bottom.equalToSuperview().inset(160)
+            }
             make.top.equalTo(mainTitle.snp.bottom).offset(10)
         }
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTouchAnimation))
@@ -143,10 +154,13 @@ extension FindCafeViewController{
         }
         .disposed(by: disposeBag)
     }
-    func pushNavi(){
+    func pushNavi(route : MKRoute , coords : CLLocationCoordinate2D, cafeName :String, address: String ,distance : Int){
         let cafeRouteViewController = CafeRouteViewController()
-        cafeRouteViewController.placeString1 = "1"
-        cafeRouteViewController.placeString2 = "2"
+        cafeRouteViewController.placeString1 = cafeName
+        cafeRouteViewController.placeString2 = address
+        cafeRouteViewController.route = route
+        cafeRouteViewController.coords = coords
+        cafeRouteViewController.currentDistance = distance
         self.navigationController?.pushViewController(cafeRouteViewController, animated: true)
     }
     
@@ -261,8 +275,8 @@ extension FindCafeViewController :CLLocationManagerDelegate{
     }
     
     func getCurrentPlaceName(){
-        let longtitude = locationManager.location?.coordinate.longitude ?? 131
-        let langtitude = locationManager.location?.coordinate.latitude ?? 37
+        let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
+        let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
         let currentLocation = CLLocation(latitude: langtitude, longitude: longtitude)
         viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
         let geocoder = CLGeocoder()
@@ -271,7 +285,8 @@ extension FindCafeViewController :CLLocationManagerDelegate{
             guard let placemarks = placemarks,
                   let address = placemarks.last
             else { return }
-            let currentPlaceCafeQuery = (address.locality ?? "서울")+(address.subLocality ?? "종로구")+"카페"
+            let currentPlaceCafeQuery = (address.locality ?? "서울")+(address.subLocality ?? " 종로구")+" 카페"
+            print(currentPlaceCafeQuery)
             self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
             
         }
