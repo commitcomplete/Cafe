@@ -116,6 +116,7 @@ extension FindCafeViewController{
         viewModel.isProgressOutOfTime.bind{
             if $0{
                 self.progressAnimationtimer?.invalidate()
+                self.viewModel.cafeListObservable.onNext([NearCafe]())
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.6) {
                         self.cafeTableView.alpha = 1.0
@@ -241,7 +242,7 @@ extension FindCafeViewController{
         cafeFindButton.setImage(UIImage(systemName: ""), for: .normal)
         UIView.animate(withDuration: 0.7) {
             self.mainTitle.alpha = 0.0
-//            self.coffeeImageView.alpha = 0.3
+            self.cafeTableView.alpha = 0.0
         }
         progressAnimationtimer = Timer.scheduledTimer(withTimeInterval: 0.6, repeats: true) { _ in
             self.progressAnimation()
@@ -304,6 +305,7 @@ extension FindCafeViewController :CLLocationManagerDelegate{
                   let address = placemarks.last
             else { return }
             var currentPlaceCafeQuery = ""
+            
             if address.locality == nil{
                 currentPlaceCafeQuery = (address.administrativeArea ?? "서울")+(address.subLocality ?? " 종로구")+" 카페"
             }else{
