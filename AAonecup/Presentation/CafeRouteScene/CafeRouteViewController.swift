@@ -63,6 +63,7 @@ class CafeRouteViewController : UIViewController{
         self.setAnnotation(currentCoord: myCoordinates!, objectCoord: coords, delta: 0.1,title: placeString1, subtitle: placeString2)
         setUpDelegate()
 //        myMap.insertOverlay(route.polyline, at: 0)
+//        myMap.region = MKCoordinateRegion(center: myCoordinates!, span: MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03))
         self.distanceLabel.text = "남은거리 : \(currentDistance)M"
     }
     
@@ -129,8 +130,7 @@ extension CafeRouteViewController : MKMapViewDelegate{
         
         let currentAnnotation = MKPointAnnotation()
         currentAnnotation.coordinate  = currentCoord
-        currentAnnotation.title = "현재위치"
-        currentAnnotation.subtitle = "현재위치"
+        currentAnnotation.title = "출발"
         myMap.showAnnotations([annotation,currentAnnotation], animated: true)
     }
     
