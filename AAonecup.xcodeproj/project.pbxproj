@@ -30,6 +30,7 @@
 		78974B3228E26F6400477AE6 /* SearchCafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B3128E26F6400477AE6 /* SearchCafe.swift */; };
 		78974B3428E26F9500477AE6 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B3328E26F9500477AE6 /* Keys.swift */; };
 		78974B3628E5E9DD00477AE6 /* iceSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78974B3528E5E9DD00477AE6 /* iceSound.mp3 */; };
+		78DB7E7428F3F94000DB0C18 /* CafeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DB7E7328F3F94000DB0C18 /* CafeInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		78974B3128E26F6400477AE6 /* SearchCafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCafe.swift; sourceTree = "<group>"; };
 		78974B3328E26F9500477AE6 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		78974B3528E5E9DD00477AE6 /* iceSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = iceSound.mp3; sourceTree = "<group>"; };
+		78DB7E7328F3F94000DB0C18 /* CafeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +182,7 @@
 				78974B2928DA529100477AE6 /* Cafe.swift */,
 				78974B2D28DB50BB00477AE6 /* Joke.swift */,
 				7875445328EF79BF0008A663 /* NearCafe.swift */,
+				78DB7E7328F3F94000DB0C18 /* CafeInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				7875444C28EC45DE0008A663 /* CafeTableViewCell.swift in Sources */,
 				78974B3228E26F6400477AE6 /* SearchCafe.swift in Sources */,
 				78974AF128D9DF2D00477AE6 /* ViewController.swift in Sources */,
+				78DB7E7428F3F94000DB0C18 /* CafeInfo.swift in Sources */,
 				78974B2C28DB4A2C00477AE6 /* APIService.swift in Sources */,
 				78974AED28D9DF2D00477AE6 /* AppDelegate.swift in Sources */,
 				7875445028EF32980008A663 /* CafeRouteViewController.swift in Sources */,

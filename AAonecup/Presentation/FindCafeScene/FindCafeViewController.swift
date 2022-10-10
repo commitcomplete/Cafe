@@ -40,6 +40,7 @@ class FindCafeViewController : UIViewController {
         tableView.backgroundColor = .clear
         tableView.rowHeight = 80
         tableView.alpha = 0.0
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     private lazy var coffeeImageView: UIImageView = {
@@ -80,20 +81,20 @@ extension FindCafeViewController{
             .observe(on: MainScheduler.instance)
             .bind(to: cafeTableView.rx.items(cellIdentifier: cellId, cellType: CafeTableViewCell.self)){
                 index, item, cell in
-                
+                print(item.cafeName)
                 cell.cafeNameLabel.text = item.cafeName
                     .replacingOccurrences(of: "<b>", with:" ")
                     .replacingOccurrences(of: "</b>", with:" ")
                 cell.cafeAddressLabel.text = item.cafeAddress
                 
-                cell.cafeDistance.text = item.distance
+                cell.cafeDistance.text = "\(item.distance) M"
             }
             .disposed(by: disposeBag)
         
-        cafeTableView.rx.modelSelected(NearCafe.self)
+        cafeTableView.rx.modelSelected(CafeInfo.self)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {item in
-                self.pushNavi(route: item.route, coords: item.coords,cafeName: item.cafeName,address: item.cafeAddress,distance : Int(item.route.distance))
+                self.pushNavi(route: item.route, coords: item.coords,cafeName: item.cafeName,address: item.cafeAddress,distance : item.distance)
             })
             .disposed(by: disposeBag)
         
@@ -116,7 +117,7 @@ extension FindCafeViewController{
         viewModel.isProgressOutOfTime.bind{
             if $0{
                 self.progressAnimationtimer?.invalidate()
-                self.viewModel.cafeListObservable.onNext([NearCafe]())
+                self.viewModel.cafeListObservable.onNext([CafeInfo]())
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.6) {
                         self.cafeTableView.alpha = 1.0
@@ -189,7 +190,7 @@ extension FindCafeViewController{
     func setUpTableView(){
         cafeTableView.dataSource = nil
         cafeTableView.register(CafeTableViewCell.self, forCellReuseIdentifier: cellId)
-        cafeTableView.isScrollEnabled = false
+        cafeTableView.isScrollEnabled = true
     }
     
     func introAnimationWithSound(){
@@ -285,7 +286,10 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         case .restricted,.denied:
             sendLocationPermissionAlert()
         case .authorizedAlways ,.authorizedWhenInUse :
-            getCurrentPlaceName()
+            let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
+            let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
+            viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
+            viewModel.getNearCafeList(currentCoord: locationManager.location!.coordinate)
             buttonTouchAnimation()
         @unknown default:
             break
@@ -311,9 +315,25 @@ extension FindCafeViewController :CLLocationManagerDelegate{
             }else{
                  currentPlaceCafeQuery = (address.locality ?? "")+(address.subLocality ?? " 종로구")+" 카페"
             }
-            
+//            let searchr = MKLocalSearch.Request()
+//            searchr.naturalLanguageQuery = "cafe"
+//            searchr.region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(langtitude, longtitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+//            let search = MKLocalSearch(request: searchr)
+//            search.start { (response, error) in
+//                guard let response = response else {
+//                    // Handle the error.
+//                    return
+//                }
+//
+//                for item in response.mapItems {
+//                    if let name = item.placemark.title,
+//                        let location = item.placemark.location {
+//                        print("\(name): \(location.coordinate.latitude),\(location.coordinate.longitude)")
+//                    }
+//                }
+//            }
             print(currentPlaceCafeQuery)
-            self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
+//            self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
             
         }
     }
@@ -334,8 +354,11 @@ extension FindCafeViewController :CLLocationManagerDelegate{
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
+        print(locations.last)
+        print("")
     }
+    
+    
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus{
