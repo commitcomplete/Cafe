@@ -20,6 +20,7 @@ class FindCafeViewModel{
     lazy var isProgressOutOfTime = PublishSubject<Bool>()
     lazy var distanceObservable = PublishSubject<String>()
     var progressCountTimer: Timer? = nil
+    var limitSearchTimer : Timer? = nil
     
     var currentCoord : CLLocationCoordinate2D!
     
@@ -96,7 +97,7 @@ class FindCafeViewModel{
     
     
     func getNearCafeList(currentCoord : CLLocationCoordinate2D){
-        progressCountTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
+        progressCountTimer = Timer.scheduledTimer(withTimeInterval:10.0, repeats: false) { _ in
             self.isProgressOutOfTime.onNext(true)
         }
         let searchRequest = MKLocalSearch.Request()

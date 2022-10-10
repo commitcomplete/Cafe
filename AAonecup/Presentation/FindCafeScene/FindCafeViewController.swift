@@ -87,7 +87,7 @@ extension FindCafeViewController{
                     .replacingOccurrences(of: "</b>", with:" ")
                 cell.cafeAddressLabel.text = item.cafeAddress
                 
-                cell.cafeDistance.text = "\(item.distance) M"
+                cell.cafeDistance.text = "\(Double(item.distance).prettyDistance)"
             }
             .disposed(by: disposeBag)
         
@@ -106,10 +106,13 @@ extension FindCafeViewController{
                         self.cafeTableView.alpha = 1.0
                         self.coffeeImageView.alpha = 0.3
                     }
+                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
+                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
+                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+                        self.cafeFindButton.isEnabled = true
+                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                    }
                     
-                    self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
-                    self.cafeFindButton.isEnabled = true
-                    self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
                 }
             }
         }
@@ -121,16 +124,21 @@ extension FindCafeViewController{
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.6) {
                         self.cafeTableView.alpha = 1.0
+                        self.coffeeImageView.alpha = 0.3
+                    }
+                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
+                    self.mainTitle.text = "No Cafe!"
+                    self.mainTitle.alpha = 1.0
+                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
+                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+                        self.cafeFindButton.isEnabled = true
+                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
                         
                     }
                     
-                    self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
-                    self.cafeFindButton.isEnabled = true
-                    self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-                    self.mainTitle.text = "No Cafe!"
-                    self.mainTitle.alpha = 1.0
                 }
             }
+            
         }
     }
     // MARK: Layout
@@ -143,7 +151,15 @@ extension FindCafeViewController{
         setUpTableView()
         mainTitle.snp.makeConstraints{
             $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(80)
+            if UIScreen.main.bounds.height < 700{
+                $0.top.equalToSuperview().inset(25)
+            }else if UIScreen.main.bounds.height < 800{
+                $0.top.equalToSuperview().inset(40)
+            }
+            else{
+                $0.top.equalToSuperview().inset(80)
+            }
+            
         }
         coffeeImageView.snp.makeConstraints{make in
             make.center.equalToSuperview()
@@ -153,7 +169,11 @@ extension FindCafeViewController{
         cafeFindButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
-            make.bottom.equalToSuperview().inset(60)
+            if UIScreen.main.bounds.height<800{
+                make.bottom.equalToSuperview().inset(40)
+            }
+            else{
+                make.bottom.equalToSuperview().inset(60)}
             make.height.equalTo(48)
         }
         cafeTableView.snp.makeConstraints { make in
@@ -161,11 +181,13 @@ extension FindCafeViewController{
             make.leading.equalToSuperview().offset(24)
             if UIScreen.main.bounds.height < 800{
                 make.bottom.equalToSuperview().inset(80)
+                make.top.equalTo(mainTitle.snp.bottom).offset(-40)
             }
             else{
                 make.bottom.equalToSuperview().inset(160)
+                make.top.equalTo(mainTitle.snp.bottom).offset(-10)
             }
-            make.top.equalTo(mainTitle.snp.bottom).offset(10)
+            
         }
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTouchAnimation))
         coffeeImageView.addGestureRecognizer(tapGesture)
@@ -253,15 +275,16 @@ extension FindCafeViewController{
     
     func progressAnimation(){
         playIceSound()
+        self.coffeeImageView.alpha = 1.0
         UIView.animate(withDuration: 0.1) {
             let rotate = CGAffineTransform(rotationAngle: .pi * 1.0)
             self.coffeeImageView.transform = rotate
         } completion: { _ in
             
-                UIView.animate(withDuration: 0.1){
-                    let rotate = CGAffineTransform(rotationAngle: .zero)
-                    self.coffeeImageView.transform = rotate
-                    
+            UIView.animate(withDuration: 0.1){
+                let rotate = CGAffineTransform(rotationAngle: .zero)
+                self.coffeeImageView.transform = rotate
+                
                 
             }
         }
@@ -313,27 +336,27 @@ extension FindCafeViewController :CLLocationManagerDelegate{
             if address.locality == nil{
                 currentPlaceCafeQuery = (address.administrativeArea ?? "서울")+(address.subLocality ?? " 종로구")+" 카페"
             }else{
-                 currentPlaceCafeQuery = (address.locality ?? "")+(address.subLocality ?? " 종로구")+" 카페"
+                currentPlaceCafeQuery = (address.locality ?? "")+(address.subLocality ?? " 종로구")+" 카페"
             }
-//            let searchr = MKLocalSearch.Request()
-//            searchr.naturalLanguageQuery = "cafe"
-//            searchr.region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(langtitude, longtitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-//            let search = MKLocalSearch(request: searchr)
-//            search.start { (response, error) in
-//                guard let response = response else {
-//                    // Handle the error.
-//                    return
-//                }
-//
-//                for item in response.mapItems {
-//                    if let name = item.placemark.title,
-//                        let location = item.placemark.location {
-//                        print("\(name): \(location.coordinate.latitude),\(location.coordinate.longitude)")
-//                    }
-//                }
-//            }
+            //            let searchr = MKLocalSearch.Request()
+            //            searchr.naturalLanguageQuery = "cafe"
+            //            searchr.region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(langtitude, longtitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+            //            let search = MKLocalSearch(request: searchr)
+            //            search.start { (response, error) in
+            //                guard let response = response else {
+            //                    // Handle the error.
+            //                    return
+            //                }
+            //
+            //                for item in response.mapItems {
+            //                    if let name = item.placemark.title,
+            //                        let location = item.placemark.location {
+            //                        print("\(name): \(location.coordinate.latitude),\(location.coordinate.longitude)")
+            //                    }
+            //                }
+            //            }
             print(currentPlaceCafeQuery)
-//            self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
+            //            self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
             
         }
     }
@@ -366,7 +389,10 @@ extension FindCafeViewController :CLLocationManagerDelegate{
             break
         case .authorizedWhenInUse,.authorizedAlways:
             if self.isButtonClicked{
-                getCurrentPlaceName()
+                let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
+                let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
+                viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
+                viewModel.getNearCafeList(currentCoord: locationManager.location!.coordinate)
                 buttonTouchAnimation()
             }
         case .notDetermined:
@@ -376,8 +402,8 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         }
     }
     
-   
     
-   
+    
+    
 }
 
