@@ -86,7 +86,6 @@ extension FindCafeViewController{
                     .replacingOccurrences(of: "<b>", with:" ")
                     .replacingOccurrences(of: "</b>", with:" ")
                 cell.cafeAddressLabel.text = item.cafeAddress
-                
                 cell.cafeDistance.text = "\(Double(item.distance).prettyDistance)"
             }
             .disposed(by: disposeBag)
@@ -201,6 +200,7 @@ extension FindCafeViewController{
     }
     func pushNavi(route : MKRoute , coords : CLLocationCoordinate2D, cafeName :String, address: String ,distance : Int){
         let cafeRouteViewController = CafeRouteViewController()
+        cafeRouteViewController.myCoordinates = locationManager.location?.coordinate
         cafeRouteViewController.placeString1 = cafeName
         cafeRouteViewController.placeString2 = address
         cafeRouteViewController.route = route

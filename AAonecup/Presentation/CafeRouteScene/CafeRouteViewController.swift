@@ -57,12 +57,12 @@ class CafeRouteViewController : UIViewController{
             make.center.equalToSuperview()
         }
         myMap.delegate = self
-//        self.myMap.addOverlay(self.route.polyline)
+        self.myMap.addOverlay(self.route.polyline,level: .aboveRoads)
         self.myMap.showsUserLocation = true
         self.myMap.setUserTrackingMode(.follow, animated: true)
-        self.setAnnotation(latitudeValue: coords.latitude, longitudeValue: coords.longitude, delta: 0.1, title: placeString1, subtitle: placeString2)
+        self.setAnnotation(currentCoord: myCoordinates!, objectCoord: coords, delta: 0.1,title: placeString1, subtitle: placeString2)
         setUpDelegate()
-        myMap.insertOverlay(route.polyline, at: 0)
+//        myMap.insertOverlay(route.polyline, at: 0)
         self.distanceLabel.text = "남은거리 : \(currentDistance)M"
     }
     
@@ -73,19 +73,21 @@ extension CafeRouteViewController : MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let linerenderer = MKPolylineRenderer(overlay: self.route.polyline)
         linerenderer.strokeColor = UIColor(named: "AccentColor")
-        linerenderer.lineWidth = 8.0
+        linerenderer.lineWidth = 3.0
         return linerenderer
     }
     
+    
+    
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         print("updata!!")
-        getRoute(currentCoord: userLocation.coordinate) { distance, route in
-            if self.currentDistance != Int(route.distance){
-                mapView.addOverlay(route.polyline)
-                self.distanceLabel.text = "남은거리 : \(distance)"
-                self.currentDistance = Int(route.distance)
-            }
-        }
+//        getRoute(currentCoord: userLocation.coordinate) { distance, route in
+//            if self.currentDistance != Int(route.distance){
+//                mapView.addOverlay(route.polyline)
+//                self.distanceLabel.text = "남은거리 : \(distance)"
+//                self.currentDistance = Int(route.distance)
+//            }
+//        }
     }
     
     func resizeImage(image: UIImage, targetSize: CGSize) -> UIImage? {
@@ -114,22 +116,21 @@ extension CafeRouteViewController : MKMapViewDelegate{
         return newImage
     }
     
-    func setAnnotation(latitudeValue: CLLocationDegrees,
-                       longitudeValue: CLLocationDegrees,
+    func setAnnotation(currentCoord : CLLocationCoordinate2D,
+                       objectCoord : CLLocationCoordinate2D,
                        delta span :Double,
                        title strTitle: String,
                        subtitle strSubTitle:String){
         let annotation = MKPointAnnotation()
-        annotation.coordinate = CLLocationCoordinate2D(latitude: latitudeValue, longitude: longitudeValue)
+        annotation.coordinate = objectCoord
         annotation.title = strTitle.replacingOccurrences(of: "<b>", with:" ")
             .replacingOccurrences(of: "</b>", with:" ")
         annotation.subtitle = strSubTitle
         
         let currentAnnotation = MKPointAnnotation()
-        currentAnnotation.coordinate  = locationManager.location!.coordinate
+        currentAnnotation.coordinate  = currentCoord
         currentAnnotation.title = "현재위치"
         currentAnnotation.subtitle = "현재위치"
-        
         myMap.showAnnotations([annotation,currentAnnotation], animated: true)
     }
     
