@@ -10,7 +10,6 @@
 		78005C5A28F0BFA000F6B787 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78005C5928F0BFA000F6B787 /* Extensions.swift */; };
 		7875444C28EC45DE0008A663 /* CafeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875444B28EC45DE0008A663 /* CafeTableViewCell.swift */; };
 		7875445028EF32980008A663 /* CafeRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875444F28EF32980008A663 /* CafeRouteViewController.swift */; };
-		7875445228EF549D0008A663 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875445128EF549D0008A663 /* MapViewController.swift */; };
 		7875445428EF79BF0008A663 /* NearCafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875445328EF79BF0008A663 /* NearCafe.swift */; };
 		78974AED28D9DF2D00477AE6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974AEC28D9DF2D00477AE6 /* AppDelegate.swift */; };
 		78974AEF28D9DF2D00477AE6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974AEE28D9DF2D00477AE6 /* SceneDelegate.swift */; };
@@ -37,7 +36,6 @@
 		78005C5928F0BFA000F6B787 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7875444B28EC45DE0008A663 /* CafeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeTableViewCell.swift; sourceTree = "<group>"; };
 		7875444F28EF32980008A663 /* CafeRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeRouteViewController.swift; sourceTree = "<group>"; };
-		7875445128EF549D0008A663 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		7875445328EF79BF0008A663 /* NearCafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearCafe.swift; sourceTree = "<group>"; };
 		78974AE928D9DF2D00477AE6 /* AAonecup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AAonecup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78974AEC28D9DF2D00477AE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -85,7 +83,6 @@
 		7875444E28EF32530008A663 /* CafeRouteViews */ = {
 			isa = PBXGroup;
 			children = (
-				7875445128EF549D0008A663 /* MapViewController.swift */,
 			);
 			path = CafeRouteViews;
 			sourceTree = "<group>";
@@ -301,7 +298,6 @@
 				78005C5A28F0BFA000F6B787 /* Extensions.swift in Sources */,
 				78974B3028E26F2000477AE6 /* dataManager.swift in Sources */,
 				78974AEF28D9DF2D00477AE6 /* SceneDelegate.swift in Sources */,
-				7875445228EF549D0008A663 /* MapViewController.swift in Sources */,
 				7875445428EF79BF0008A663 /* NearCafe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
