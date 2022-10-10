@@ -17,8 +17,9 @@ class FindCafeViewModel{
     lazy var nameObservable = PublishSubject<Joke>()
     lazy var cafeListObservable = PublishSubject<[NearCafe]>()
     lazy var isProgressAnimationContinue = PublishSubject<Bool>()
+    lazy var isProgressOutOfTime = PublishSubject<Bool>()
     lazy var distanceObservable = PublishSubject<String>()
-    
+    var progressCountTimer: Timer? = nil
     lazy var firstJoke = nameObservable.map{
         $0.value
     }
@@ -30,16 +31,20 @@ class FindCafeViewModel{
     var currentCoord : CLLocationCoordinate2D!
     
     func getCafeList(query : String){
+        progressCountTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
+            self.isProgressOutOfTime.onNext(true)
+        }
+        
         naverAPI.rxFindNearCafeAPItoNaver(query: query)
             .map{ data -> Cafe in
                 let response = try! JSONDecoder().decode(Cafe.self, from: data)
                 return response
             }
             .subscribe(onNext: {
-                print($0)
                 self.getNearCafe(cafe: $0) { nearcafe in
                     self.cafeListObservable.onNext(nearcafe)
                     self.isProgressAnimationContinue.onNext(true)
+                    self.progressCountTimer?.invalidate()
                 }
                 
             })
@@ -78,7 +83,7 @@ class FindCafeViewModel{
                 let request = MKDirections.Request() //create a direction request object
                 request.source = currentMapItem //this is the source location mapItem object
                 request.destination = objectMapItem
-                request.transportType = MKDirectionsTransportType.any
+                request.transportType = MKDirectionsTransportType.walking
                 let directions = MKDirections(request: request) //request directions
                 directions.calculate { (response, error) in
                     guard let response = response else {

@@ -78,9 +78,10 @@ extension CafeRouteViewController : MKMapViewDelegate{
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
+        print("updata!!")
         getRoute(currentCoord: userLocation.coordinate) { distance, route in
             if self.currentDistance != Int(route.distance){
-                mapView.insertOverlay(route.polyline, at: 0)
+                mapView.addOverlay(route.polyline)
                 self.distanceLabel.text = "남은거리 : \(distance)"
                 self.currentDistance = Int(route.distance)
             }

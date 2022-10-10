@@ -29,7 +29,7 @@ class FindCafeViewController : UIViewController {
     
     private lazy var mainTitle : UILabel = {
         let label = UILabel()
-        label.text = "아아,한잔"
+        label.text = "Cafe!"
         label.textColor = UIColor(named: "Brown")
         label.font = UIFont.systemFont(ofSize: 60, weight: .bold)
         label.alpha = 0.0
@@ -103,9 +103,30 @@ extension FindCafeViewController{
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.6) {
                         self.cafeTableView.alpha = 1.0
+                        self.coffeeImageView.alpha = 0.3
                     }
                     
-                    self.cafeFindButton.setTitle("탐색완료", for: .normal)
+                    self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+                    self.cafeFindButton.isEnabled = true
+                    self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                }
+            }
+        }
+        
+        viewModel.isProgressOutOfTime.bind{
+            if $0{
+                self.progressAnimationtimer?.invalidate()
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.6) {
+                        self.cafeTableView.alpha = 1.0
+                        
+                    }
+                    
+                    self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+                    self.cafeFindButton.isEnabled = true
+                    self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                    self.mainTitle.text = "No Cafe!"
+                    self.mainTitle.alpha = 1.0
                 }
             }
         }
@@ -220,7 +241,7 @@ extension FindCafeViewController{
         cafeFindButton.setImage(UIImage(systemName: ""), for: .normal)
         UIView.animate(withDuration: 0.7) {
             self.mainTitle.alpha = 0.0
-            self.coffeeImageView.alpha = 0.3
+//            self.coffeeImageView.alpha = 0.3
         }
         progressAnimationtimer = Timer.scheduledTimer(withTimeInterval: 0.6, repeats: true) { _ in
             self.progressAnimation()
@@ -230,19 +251,16 @@ extension FindCafeViewController{
     
     func progressAnimation(){
         playIceSound()
-        UIView.animate(withDuration: 0.2) {
-            let rotate = CGAffineTransform(rotationAngle: .pi * 0.1)
+        UIView.animate(withDuration: 0.1) {
+            let rotate = CGAffineTransform(rotationAngle: .pi * 1.0)
             self.coffeeImageView.transform = rotate
         } completion: { _ in
-            UIView.animate(withDuration: 0.2) {
-                let rotate = CGAffineTransform(rotationAngle: -.pi * 0.1)
-                self.coffeeImageView.transform = rotate
-            }completion: { _ in
+            
                 UIView.animate(withDuration: 0.1){
                     let rotate = CGAffineTransform(rotationAngle: .zero)
                     self.coffeeImageView.transform = rotate
                     
-                }
+                
             }
         }
     }
@@ -285,7 +303,13 @@ extension FindCafeViewController :CLLocationManagerDelegate{
             guard let placemarks = placemarks,
                   let address = placemarks.last
             else { return }
-            let currentPlaceCafeQuery = (address.locality ?? "서울")+(address.subLocality ?? " 종로구")+" 카페"
+            var currentPlaceCafeQuery = ""
+            if address.locality == nil{
+                currentPlaceCafeQuery = (address.administrativeArea ?? "서울")+(address.subLocality ?? " 종로구")+" 카페"
+            }else{
+                 currentPlaceCafeQuery = (address.locality ?? "")+(address.subLocality ?? " 종로구")+" 카페"
+            }
+            
             print(currentPlaceCafeQuery)
             self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
             
