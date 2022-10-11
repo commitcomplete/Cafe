@@ -254,14 +254,25 @@ extension FindCafeViewController{
     
     @objc func imageTouchAnimation(_ sender: UITapGestureRecognizer){
         playIceSound()
-        UIView.animate(withDuration: 0.1) {
-            let rotate = CGAffineTransform(rotationAngle: .pi)
-            self.coffeeImageView.transform = rotate
-        } completion: { _ in
-            UIView.animate(withDuration: 0.1) {
-                let rotate = CGAffineTransform(rotationAngle: .zero)
-                self.coffeeImageView.transform = rotate
-            }
+//        UIView.animate(withDuration: 0.1) {
+//            let rotate = CGAffineTransform(rotationAngle: .pi)
+//            self.coffeeImageView.transform = rotate
+//        } completion: { _ in
+//            UIView.animate(withDuration: 0.1) {
+//                let rotate = CGAffineTransform(rotationAngle: .zero)
+//                self.coffeeImageView.transform = rotate
+//            }
+//        }
+        
+        UIView.animate(withDuration: 0.2) {
+            self.coffeeImageView.transform = CGAffineTransform(rotationAngle: .pi)
+        }
+        UIView.animate(
+            withDuration: 0.2,
+            delay: 0,
+            options: UIView.AnimationOptions.curveEaseIn
+        ) {
+            self.coffeeImageView.transform = CGAffineTransform(rotationAngle: 2 * .pi)
         }
     }
     func buttonTouchAnimation(){
@@ -281,17 +292,15 @@ extension FindCafeViewController{
     func progressAnimation(){
         playIceSound()
         self.coffeeImageView.alpha = 1.0
-        UIView.animate(withDuration: 0.1) {
-            let rotate = CGAffineTransform(rotationAngle: .pi * 1.0)
-            self.coffeeImageView.transform = rotate
-        } completion: { _ in
-            
-            UIView.animate(withDuration: 0.1){
-                let rotate = CGAffineTransform(rotationAngle: .zero)
-                self.coffeeImageView.transform = rotate
-                
-                
-            }
+        UIView.animate(withDuration: 0.2) {
+            self.coffeeImageView.transform = CGAffineTransform(rotationAngle: .pi)
+        }
+        UIView.animate(
+            withDuration: 0.2,
+            delay: 0,
+            options: UIView.AnimationOptions.curveEaseIn
+        ) {
+            self.coffeeImageView.transform = CGAffineTransform(rotationAngle: 2 * .pi)
         }
     }
 }

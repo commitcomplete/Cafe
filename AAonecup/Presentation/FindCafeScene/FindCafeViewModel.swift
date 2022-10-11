@@ -102,7 +102,7 @@ class FindCafeViewModel{
         }
         let searchRequest = MKLocalSearch.Request()
         searchRequest.naturalLanguageQuery = "cafe"
-        searchRequest.region = MKCoordinateRegion(center: currentCoord, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        searchRequest.region = MKCoordinateRegion(center: currentCoord, span: MKCoordinateSpan(latitudeDelta: 0.01  , longitudeDelta: 0.01))
         let search = MKLocalSearch(request: searchRequest)
         search.start { (response, error) in
             guard let response = response else {
