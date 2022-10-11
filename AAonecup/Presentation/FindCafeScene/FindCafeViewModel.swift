@@ -157,7 +157,9 @@ class FindCafeViewModel{
     }
     func limitSearchTime(){
         var seconds = 60
-        DispatchQueue.main.async {
+
+        DispatchQueue.global(qos: .background).async {
+            self.isSearchLimitTimeIsOver.onNext(seconds)
             self.searchLimitTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
                 seconds = seconds - 1
                 self.isSearchLimitTimeIsOver.onNext(seconds)
@@ -165,7 +167,10 @@ class FindCafeViewModel{
                     timer.invalidate()
                 }
             })
+            RunLoop.current.run()
         }
+            
+        
         
     }
 }

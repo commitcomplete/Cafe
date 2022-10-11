@@ -91,9 +91,36 @@ extension FindCafeViewController{
             .disposed(by: disposeBag)
         
         viewModel.isSearchLimitTimeIsOver
-            .observe(on: MainScheduler.instance)
             .subscribe { remainSecond in
-                self.cafeFindButton.setTitle("로스팅중 \(remainSecond.element ?? 60)", for: .normal)
+                DispatchQueue.main.async {
+                    if remainSecond.element ?? 60 == 0{
+                        UIView.animate(withDuration: 0.6) {
+                            self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+                            self.cafeFindButton.isEnabled = true
+                            self.cafeFindButton.backgroundColor = UIColor(named: "Brown")
+                            self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                        }
+                        
+                    }
+//                    else if remainSecond.element ?? 60 <= 20{
+//                        self.cafeFindButton.setTitle("원두 가는중 (\(remainSecond.element ?? 60))", for: .normal)
+//                    }
+//                    else if remainSecond.element ?? 60 <= 40{
+//                        self.cafeFindButton.setTitle("원두 볶는중 (\(remainSecond.element ?? 60))", for: .normal)
+//                    }
+//                    else if remainSecond.element ?? 60 <= 60{
+//                        self.cafeFindButton.setTitle("원두 수확중 (\(remainSecond.element ?? 60))", for: .normal)
+//                    }
+                    else{
+                        UIView.animate(withDuration: 0.6) {
+                            self.cafeFindButton.setTitle(" 카페 찾기 \(remainSecond.element ?? 60)초", for: .normal)
+                            self.cafeFindButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+                        }
+                        
+                    }
+                    
+                }
+                
             }
         
         cafeTableView.rx.modelSelected(CafeInfo.self)
@@ -115,14 +142,15 @@ extension FindCafeViewController{
                     UIView.animate(withDuration: 0.6) {
                         self.cafeTableView.alpha = 1.0
                         self.coffeeImageView.alpha = 0.3
+                        self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
                     }
                     self.viewModel.limitSearchTime()
-//                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
-//                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
-//                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
-//                        self.cafeFindButton.isEnabled = true
-//                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-//                    }
+                    //                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
+                    //                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
+                    //                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+                    //                        self.cafeFindButton.isEnabled = true
+                    //                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                    //                    }
                     
                 }
             }
@@ -136,17 +164,18 @@ extension FindCafeViewController{
                     UIView.animate(withDuration: 0.6) {
                         self.cafeTableView.alpha = 1.0
                         self.coffeeImageView.alpha = 0.3
+                        self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
                     }
-                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
+//                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
                     self.mainTitle.text = "No Cafe!"
                     self.mainTitle.alpha = 1.0
-                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
-                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
-                        self.cafeFindButton.isEnabled = true
-                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-                        
-                    }
-                    
+//                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
+//                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+//                        self.cafeFindButton.isEnabled = true
+//                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+//
+//                    }
+                    self.viewModel.limitSearchTime()
                 }
             }
             
@@ -261,15 +290,15 @@ extension FindCafeViewController{
     
     @objc func imageTouchAnimation(_ sender: UITapGestureRecognizer){
         playIceSound()
-//        UIView.animate(withDuration: 0.1) {
-//            let rotate = CGAffineTransform(rotationAngle: .pi)
-//            self.coffeeImageView.transform = rotate
-//        } completion: { _ in
-//            UIView.animate(withDuration: 0.1) {
-//                let rotate = CGAffineTransform(rotationAngle: .zero)
-//                self.coffeeImageView.transform = rotate
-//            }
-//        }
+        //        UIView.animate(withDuration: 0.1) {
+        //            let rotate = CGAffineTransform(rotationAngle: .pi)
+        //            self.coffeeImageView.transform = rotate
+        //        } completion: { _ in
+        //            UIView.animate(withDuration: 0.1) {
+        //                let rotate = CGAffineTransform(rotationAngle: .zero)
+        //                self.coffeeImageView.transform = rotate
+        //            }
+        //        }
         
         UIView.animate(withDuration: 0.2) {
             self.coffeeImageView.transform = CGAffineTransform(rotationAngle: .pi)
