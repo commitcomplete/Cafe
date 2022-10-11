@@ -196,7 +196,7 @@ extension FindCafeViewController{
             }
             else{
                 make.bottom.equalToSuperview().inset(160)
-                make.top.equalToSuperview().offset(30)
+                make.top.equalToSuperview().offset(50)
             }
             
         }
