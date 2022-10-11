@@ -97,6 +97,11 @@ extension FindCafeViewController{
             })
             .disposed(by: disposeBag)
         
+        cafeTableView.rx.itemSelected
+            .observe(on: MainScheduler.instance)
+            .subscribe { index in
+                self.cafeTableView.deselectRow(at: index, animated: true)
+            }
         viewModel.isProgressAnimationContinue.bind{
             if $0{
                 self.progressAnimationtimer?.invalidate()
