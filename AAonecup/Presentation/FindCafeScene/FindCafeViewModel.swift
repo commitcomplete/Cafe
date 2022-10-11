@@ -18,9 +18,10 @@ class FindCafeViewModel{
     lazy var cafeListObservable = PublishSubject<[CafeInfo]>()
     lazy var isProgressAnimationContinue = PublishSubject<Bool>()
     lazy var isProgressOutOfTime = PublishSubject<Bool>()
+    lazy var isSearchLimitTimeIsOver = PublishSubject<Int>()
     lazy var distanceObservable = PublishSubject<String>()
     var progressCountTimer: Timer? = nil
-    var limitSearchTimer : Timer? = nil
+    var searchLimitTimer : Timer? = nil
     
     var currentCoord : CLLocationCoordinate2D!
     
@@ -153,9 +154,18 @@ class FindCafeViewModel{
             //get the routes, could be multiple routes in the routes[] array but usually [0] is the best route
         }
         
-        
-        
-        
+    }
+    func limitSearchTime(){
+        var seconds = 60
+        DispatchQueue.main.async {
+            self.searchLimitTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
+                seconds = seconds - 1
+                self.isSearchLimitTimeIsOver.onNext(seconds)
+                if seconds == 0 {
+                    timer.invalidate()
+                }
+            })
+        }
         
     }
 }

@@ -90,6 +90,12 @@ extension FindCafeViewController{
             }
             .disposed(by: disposeBag)
         
+        viewModel.isSearchLimitTimeIsOver
+            .observe(on: MainScheduler.instance)
+            .subscribe { remainSecond in
+                self.cafeFindButton.setTitle("로스팅중 \(remainSecond.element ?? 60)", for: .normal)
+            }
+        
         cafeTableView.rx.modelSelected(CafeInfo.self)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {item in
@@ -110,12 +116,13 @@ extension FindCafeViewController{
                         self.cafeTableView.alpha = 1.0
                         self.coffeeImageView.alpha = 0.3
                     }
-                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
-                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
-                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
-                        self.cafeFindButton.isEnabled = true
-                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-                    }
+                    self.viewModel.limitSearchTime()
+//                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
+//                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
+//                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+//                        self.cafeFindButton.isEnabled = true
+//                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+//                    }
                     
                 }
             }
@@ -174,7 +181,7 @@ extension FindCafeViewController{
             make.centerX.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
             if UIScreen.main.bounds.height<800{
-                make.bottom.equalToSuperview().inset(40)
+                make.bottom.equalToSuperview().inset(20)
             }
             else{
                 make.bottom.equalToSuperview().inset(60)}
@@ -185,11 +192,11 @@ extension FindCafeViewController{
             make.leading.equalToSuperview().offset(24)
             if UIScreen.main.bounds.height < 800{
                 make.bottom.equalToSuperview().inset(80)
-                make.top.equalTo(mainTitle.snp.bottom).offset(-40)
+                make.top.equalToSuperview().offset(30)
             }
             else{
                 make.bottom.equalToSuperview().inset(160)
-                make.top.equalTo(mainTitle.snp.bottom).offset(-10)
+                make.top.equalToSuperview().offset(30)
             }
             
         }
