@@ -54,7 +54,7 @@ class FindCafeViewController : UIViewController {
         let findButton : UIButton = UIButton()
         findButton.backgroundColor = UIColor(named: "Brown")
         findButton.setTitle(" 카페 찾기", for: .normal)
-        findButton.setTitle(" 카페 찾기", for: .selected)
+        findButton.setTitleColor(.systemGray, for: .highlighted)
         findButton.layer.cornerRadius = 10
         findButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
         findButton.tintColor = .white
