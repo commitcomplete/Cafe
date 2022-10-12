@@ -111,14 +111,15 @@ class FindCafeViewModel{
                 return
             }
             var nearCafeList = [CafeInfo]()
+            var count = 0
             for item in response.mapItems {
+                count+=1
                 if let name = item.placemark.name,
                    let location = item.placemark.location {
                     self.getNearCafeDistance(objectCoord: location.coordinate) { distance, route, coord in
                         nearCafeList.append(CafeInfo(cafeName: name, cafeAddress: item.placemark.title ?? "지구", distance: distance, route: route, coords: coord))
-                        
-                        if item == response.mapItems.last{
-                            
+                        if count == nearCafeList.count{
+                            print(nearCafeList.count)
                             self.cafeListObservable.onNext(nearCafeList.sorted(by: {$0.distance < $1.distance}))
                             self.isProgressAnimationContinue.onNext(true)
                             self.progressCountTimer?.invalidate()
@@ -132,8 +133,7 @@ class FindCafeViewModel{
         
         
     }
-    
-    
+        
     
     func getNearCafeDistance(objectCoord : CLLocationCoordinate2D, completionDistance : @escaping(Int,MKRoute,CLLocationCoordinate2D)->Void){
         var currentMapItem = MKMapItem(placemark: MKPlacemark(coordinate: self.currentCoord))
@@ -157,7 +157,6 @@ class FindCafeViewModel{
     }
     func limitSearchTime(){
         var seconds = 60
-
         DispatchQueue.global(qos: .background).async {
             self.isSearchLimitTimeIsOver.onNext(seconds)
             self.searchLimitTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
@@ -169,8 +168,5 @@ class FindCafeViewModel{
             })
             RunLoop.current.run()
         }
-            
-        
-        
     }
 }
