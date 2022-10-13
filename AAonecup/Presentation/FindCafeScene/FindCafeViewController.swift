@@ -102,6 +102,7 @@ extension FindCafeViewController{
                             self.cafeFindButton.backgroundColor = UIColor(named: "Brown")
                             self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
                             self.cafeFindButton.tintColor = .white
+                            
                         }
                         
                     }
@@ -118,6 +119,7 @@ extension FindCafeViewController{
                         UIView.animate(withDuration: 0.6) {
                             self.cafeFindButton.setTitle(" 카페 찾기 \(remainSecond.element ?? 60)초", for: .normal)
                             self.cafeFindButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+                            
                         }
                         
                     }
@@ -147,6 +149,7 @@ extension FindCafeViewController{
                         self.coffeeImageView.alpha = 0.3
                         self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
                         self.cafeFindButton.tintColor = UIColor(named: "disableTextColor")
+                        self.scrollToTop()
                     }
                     self.viewModel.limitSearchTime()
                     //                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
@@ -344,6 +347,17 @@ extension FindCafeViewController{
         ) {
             self.coffeeImageView.transform = CGAffineTransform(rotationAngle: 2 * .pi)
         }
+    }
+    
+    private func scrollToTop() {
+        // 1
+        let topRow = IndexPath(row: 0,
+                               section: 0)
+                               
+        // 2
+        self.cafeTableView.scrollToRow(at: topRow,
+                                   at: .top,
+                                   animated: true)
     }
 }
 
