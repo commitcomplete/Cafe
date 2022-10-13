@@ -49,7 +49,7 @@ class CafeRouteViewController : UIViewController{
         view.addSubview(distanceLabel)
         distanceLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().inset(100)
+            make.top.equalToSuperview().inset(100)
         }
         myMap.snp.makeConstraints { make in
             make.width.equalToSuperview()
