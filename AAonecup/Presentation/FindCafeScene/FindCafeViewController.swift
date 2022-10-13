@@ -132,8 +132,8 @@ extension FindCafeViewController{
 //                    }
                     else{
                         UIView.animate(withDuration: 0.6) {
-                            self.cafeFindButton.setTitle(" 카페 찾기 \(remainSecond.element ?? 60)초", for: .normal)
-                            self.cafeFindButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+                            self.cafeFindButton.setTitle(" 재탐색하기 \(remainSecond.element ?? 60)초", for: .normal)
+                            self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .disabled)
                             
                         }
                         
@@ -162,11 +162,23 @@ extension FindCafeViewController{
                     UIView.animate(withDuration: 0.6) {
                         self.cafeTableView.alpha = 1.0
                         self.coffeeImageView.alpha = 0.3
-                        self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
-                        self.cafeFindButton.tintColor = UIColor(named: "disableTextColor")
+                        
                         self.scrollToTop()
                     }
-                    self.viewModel.limitSearchTime(inputSeconds: 60)
+                    if self.viewModel.touchCount > 1{
+                        self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
+                        self.cafeFindButton.tintColor = UIColor(named: "disableTextColor")
+                            self.viewModel.limitSearchTime(inputSeconds: 60)
+                        self.viewModel.touchCount = 0
+                    }
+                    else{
+                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+                        self.cafeFindButton.isEnabled = true
+                        self.cafeFindButton.backgroundColor = UIColor(named: "Brown")
+                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                        self.cafeFindButton.tintColor = .white}
+                    
+                    
                     //                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
                     //                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
                     //                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
@@ -335,10 +347,10 @@ extension FindCafeViewController{
         }
     }
     func buttonTouchAnimation(){
-        cafeFindButton.setTitle("탐색중...", for: .normal)
+        cafeFindButton.setTitle(" 탐색중...", for: .normal)
         cafeFindButton.isEnabled = false
         cafeFindButton.tintColor = UIColor(named: "disableTextColor")
-        cafeFindButton.setImage(UIImage(systemName: ""), for: .normal)
+        cafeFindButton.setImage(UIImage(systemName: "cup.and.saucer"), for: .disabled)
         UIView.animate(withDuration: 0.7) {
             self.mainTitle.alpha = 0.0
             self.cafeTableView.alpha = 0.0
@@ -368,7 +380,6 @@ extension FindCafeViewController{
         // 1
         let topRow = IndexPath(row: 0,
                                section: 0)
-                               
         // 2
         self.cafeTableView.scrollToRow(at: topRow,
                                    at: .top,
@@ -397,8 +408,12 @@ extension FindCafeViewController :CLLocationManagerDelegate{
             let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
             let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
             viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
-            viewModel.getNearCafeList(currentCoord: locationManager.location!.coordinate)
-            buttonTouchAnimation()
+            viewModel.touchCount += 1
+                viewModel.getNearCafeList(currentCoord: locationManager.location!.coordinate)
+                buttonTouchAnimation()
+            
+            
+            
         @unknown default:
             break
         }

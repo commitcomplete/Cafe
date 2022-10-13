@@ -129,7 +129,7 @@ extension CafeRouteViewController : CLLocationManagerDelegate{
         let directions = MKDirections(request: request) //request directions
         directions.calculate { (response, error) in
             guard let response = response else {
-                print(error.debugDescription)
+                print("\(error.debugDescription)")
                 return
             }
             distance = "\(Int(response.routes[0].distance))M"

@@ -22,7 +22,7 @@ class FindCafeViewModel{
     lazy var distanceObservable = PublishSubject<String>()
     var progressCountTimer: Timer? = nil
     var searchLimitTimer : Timer? = nil
-    
+    var touchCount = 0
     var currentCoord : CLLocationCoordinate2D!
     
 //    func getCafeList(query : String){
