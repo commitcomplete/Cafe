@@ -50,6 +50,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
+        // MARK: to do
+        // 나중에 앱 껏다가 다시들어와서 검색하는 꼼수 방지
+        //UserDefaults.standard.set(Date(), forKey: "nowDate")
+        
     }
 
 

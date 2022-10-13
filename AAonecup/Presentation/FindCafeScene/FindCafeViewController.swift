@@ -25,7 +25,13 @@ class FindCafeViewController : UIViewController {
     var audioPlayer = AVAudioPlayer()
     let cellId = "CafeTableViewCell"
     var currentCoords : CLLocationCoordinate2D!
+//    let format = DateFormatter()
     
+            
+    
+
+//    var useTime = Int(endTime.timeIntervalSince(startTime))
+ 
     
     private lazy var mainTitle : UILabel = {
         let label = UILabel()
@@ -72,7 +78,16 @@ class FindCafeViewController : UIViewController {
         setUpLayOut()
         introAnimationWithSound()
         bindingObject()
+        // MARK: todo
+        // 앱껐다가 들어오면 방지
+//        format.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//        var startItem = UserDefaults.standard.value(forKey: "nowDate")
+//        if Int(Date().timeIntervalSince(startItem as! Date)) < 60 {
+//            viewModel.limitSearchTime(inputSeconds: Int(Date().timeIntervalSince(startItem as! Date)))
+//        }
     }
+    
+    
     
 }
 
@@ -151,7 +166,7 @@ extension FindCafeViewController{
                         self.cafeFindButton.tintColor = UIColor(named: "disableTextColor")
                         self.scrollToTop()
                     }
-                    self.viewModel.limitSearchTime()
+                    self.viewModel.limitSearchTime(inputSeconds: 60)
                     //                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
                     //                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
                     //                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
@@ -183,7 +198,7 @@ extension FindCafeViewController{
 //                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
 //
 //                    }
-                    self.viewModel.limitSearchTime()
+                    self.viewModel.limitSearchTime(inputSeconds: 60)
                 }
             }
             
