@@ -98,7 +98,7 @@ class FindCafeViewModel{
     
     
     func getNearCafeList(currentCoord : CLLocationCoordinate2D){
-        progressCountTimer = Timer.scheduledTimer(withTimeInterval:10.0, repeats: false) { _ in
+        progressCountTimer = Timer.scheduledTimer(withTimeInterval:6.0, repeats: false) { _ in
             self.isProgressOutOfTime.onNext(true)
         }
         let searchRequest = MKLocalSearch.Request()
@@ -133,7 +133,7 @@ class FindCafeViewModel{
         
         
     }
-        
+    
     
     func getNearCafeDistance(objectCoord : CLLocationCoordinate2D, completionDistance : @escaping(Int,MKRoute,CLLocationCoordinate2D)->Void){
         var currentMapItem = MKMapItem(placemark: MKPlacemark(coordinate: self.currentCoord))

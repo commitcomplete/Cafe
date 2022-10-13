@@ -55,8 +55,10 @@ class FindCafeViewController : UIViewController {
         findButton.backgroundColor = UIColor(named: "Brown")
         findButton.setTitle(" 카페 찾기", for: .normal)
         findButton.setTitleColor(.systemGray, for: .highlighted)
+        findButton.setTitleColor(UIColor(named: "disableTextColor"), for: .disabled)
         findButton.layer.cornerRadius = 10
         findButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        findButton.setImage(UIImage(systemName: "paperplane.fill")?.withRenderingMode(.alwaysTemplate), for: .disabled)
         findButton.tintColor = .white
         findButton.insetsLayoutMarginsFromSafeArea = true
         findButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
@@ -99,6 +101,7 @@ extension FindCafeViewController{
                             self.cafeFindButton.isEnabled = true
                             self.cafeFindButton.backgroundColor = UIColor(named: "Brown")
                             self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                            self.cafeFindButton.tintColor = .white
                         }
                         
                     }
@@ -143,6 +146,7 @@ extension FindCafeViewController{
                         self.cafeTableView.alpha = 1.0
                         self.coffeeImageView.alpha = 0.3
                         self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
+                        self.cafeFindButton.tintColor = UIColor(named: "disableTextColor")
                     }
                     self.viewModel.limitSearchTime()
                     //                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
@@ -165,6 +169,7 @@ extension FindCafeViewController{
                         self.cafeTableView.alpha = 1.0
                         self.coffeeImageView.alpha = 0.3
                         self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
+                        self.cafeFindButton.setTitleColor(UIColor(named: "disableTextColor"), for: .disabled)
                     }
 //                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
                     self.mainTitle.text = "No Cafe!"
@@ -314,6 +319,7 @@ extension FindCafeViewController{
     func buttonTouchAnimation(){
         cafeFindButton.setTitle("탐색중...", for: .normal)
         cafeFindButton.isEnabled = false
+        cafeFindButton.tintColor = UIColor(named: "disableTextColor")
         cafeFindButton.setImage(UIImage(systemName: ""), for: .normal)
         UIView.animate(withDuration: 0.7) {
             self.mainTitle.alpha = 0.0
