@@ -47,9 +47,13 @@ class CafeRouteViewController : UIViewController{
         super.viewDidLoad()
         view.addSubview(myMap)
         view.addSubview(distanceLabel)
+        setUpLayOut()
         distanceLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(100)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.height.equalTo(48)
+            make.leading.equalToSuperview().inset(20)
+            make.trailing.equalToSuperview().inset(20)
         }
         myMap.snp.makeConstraints { make in
             make.width.equalToSuperview()
@@ -69,7 +73,15 @@ class CafeRouteViewController : UIViewController{
     
     
 }
+extension CafeRouteViewController{
+    func setUpLayOut(){
+//        distanceLabel.backgroundColor = UIColor(named: "AccentColor")!.withAlphaComponent(0.2)
+        distanceLabel.layer.masksToBounds = true
+        distanceLabel.layer.cornerRadius = 8.0
+        distanceLabel.textAlignment = .center
 
+    }
+}
 extension CafeRouteViewController : MKMapViewDelegate{
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let linerenderer = MKPolylineRenderer(overlay: self.route.polyline)
