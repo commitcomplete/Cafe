@@ -443,6 +443,7 @@
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AAonecup/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Cafe!";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location value will use for find near cafes and will not save in any other place.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
@@ -477,6 +478,7 @@
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = AAonecup/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Cafe!";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location value will use for find near cafes and will not save in any other place.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
