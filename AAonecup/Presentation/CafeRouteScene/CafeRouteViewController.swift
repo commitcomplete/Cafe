@@ -65,7 +65,7 @@ class CafeRouteViewController : UIViewController{
         setUpDelegate()
         //        myMap.insertOverlay(route.polyline, at: 0)
         //        myMap.region = MKCoordinateRegion(center: myCoordinates!, span: MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03))
-        self.distanceLabel.text = "남은거리 : \(currentDistance)M"
+        self.distanceLabel.text = "남은 거리 : \(currentDistance)M"
         
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -144,7 +144,7 @@ extension CafeRouteViewController : CLLocationManagerDelegate{
                 print(error.debugDescription)
                 return
             }
-            distance = "남은거리 : \(Int(response.routes[0].distance))M"
+            distance = "남은 거리 : \(Int(response.routes[0].distance))M"
             completion(distance!,response.routes[0])
             //get the routes, could be multiple routes in the routes[] array but usually [0] is the best route
         }
