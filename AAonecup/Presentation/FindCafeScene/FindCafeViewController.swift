@@ -25,13 +25,13 @@ class FindCafeViewController : UIViewController {
     var audioPlayer = AVAudioPlayer()
     let cellId = "CafeTableViewCell"
     var currentCoords : CLLocationCoordinate2D!
-//    let format = DateFormatter()
+    //    let format = DateFormatter()
     
-            
     
-
-//    var useTime = Int(endTime.timeIntervalSince(startTime))
- 
+    
+    
+    //    var useTime = Int(endTime.timeIntervalSince(startTime))
+    
     
     private lazy var mainTitle : UILabel = {
         let label = UILabel()
@@ -80,11 +80,11 @@ class FindCafeViewController : UIViewController {
         bindingObject()
         // MARK: todo
         // 앱껐다가 들어오면 방지
-//        format.dateFormat = "yyyy-MM-dd HH:mm:ss"
-//        var startItem = UserDefaults.standard.value(forKey: "nowDate")
-//        if Int(Date().timeIntervalSince(startItem as! Date)) < 60 {
-//            viewModel.limitSearchTime(inputSeconds: Int(Date().timeIntervalSince(startItem as! Date)))
-//        }
+        //        format.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //        var startItem = UserDefaults.standard.value(forKey: "nowDate")
+        //        if Int(Date().timeIntervalSince(startItem as! Date)) < 60 {
+        //            viewModel.limitSearchTime(inputSeconds: Int(Date().timeIntervalSince(startItem as! Date)))
+        //        }
     }
     
     
@@ -121,15 +121,15 @@ extension FindCafeViewController{
                         }
                         
                     }
-//                    else if remainSecond.element ?? 60 <= 20{
-//                        self.cafeFindButton.setTitle("원두 가는중 (\(remainSecond.element ?? 60))", for: .normal)
-//                    }
-//                    else if remainSecond.element ?? 60 <= 40{
-//                        self.cafeFindButton.setTitle("원두 볶는중 (\(remainSecond.element ?? 60))", for: .normal)
-//                    }
-//                    else if remainSecond.element ?? 60 <= 60{
-//                        self.cafeFindButton.setTitle("원두 수확중 (\(remainSecond.element ?? 60))", for: .normal)
-//                    }
+                    //                    else if remainSecond.element ?? 60 <= 20{
+                    //                        self.cafeFindButton.setTitle("원두 가는중 (\(remainSecond.element ?? 60))", for: .normal)
+                    //                    }
+                    //                    else if remainSecond.element ?? 60 <= 40{
+                    //                        self.cafeFindButton.setTitle("원두 볶는중 (\(remainSecond.element ?? 60))", for: .normal)
+                    //                    }
+                    //                    else if remainSecond.element ?? 60 <= 60{
+                    //                        self.cafeFindButton.setTitle("원두 수확중 (\(remainSecond.element ?? 60))", for: .normal)
+                    //                    }
                     else{
                         UIView.animate(withDuration: 0.6) {
                             self.cafeFindButton.setTitle(" 카페 찾기 \(remainSecond.element ?? 60)초", for: .normal)
@@ -189,15 +189,15 @@ extension FindCafeViewController{
                         self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
                         self.cafeFindButton.setTitleColor(UIColor(named: "disableTextColor"), for: .disabled)
                     }
-//                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
+                    //                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
                     self.mainTitle.text = "No Cafe!"
                     self.mainTitle.alpha = 1.0
-//                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
-//                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
-//                        self.cafeFindButton.isEnabled = true
-//                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-//
-//                    }
+                    //                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
+                    //                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+                    //                        self.cafeFindButton.isEnabled = true
+                    //                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                    //
+                    //                    }
                     self.viewModel.limitSearchTime(inputSeconds: 60)
                 }
             }
@@ -212,17 +212,29 @@ extension FindCafeViewController{
         view.addSubview(cafeFindButton)
         view.addSubview(mainTitle)
         setUpTableView()
-        mainTitle.snp.makeConstraints{
-            $0.centerX.equalToSuperview()
-            if UIScreen.main.bounds.height < 700{
-                $0.top.equalToSuperview().inset(25)
-            }else if UIScreen.main.bounds.height < 800{
-                $0.top.equalToSuperview().inset(40)
-            }
-            else{
-                $0.top.equalToSuperview().inset(80)
-            }
-            
+        //        mainTitle.snp.makeConstraints{
+        //            $0.centerX.equalToSuperview()
+        //            if UIScreen.main.bounds.height < 700{
+        //                $0.top.equalToSuperview().inset(25)
+        //            }else if UIScreen.main.bounds.height < 800{
+        //                $0.top.equalToSuperview().inset(40)
+        //            }
+        //            else{
+        //                $0.top.equalToSuperview().inset(80)
+        //            }
+        //
+        //        }
+        if UIScreen.main.bounds.height < 700{
+            mainTitle.font = UIFont.boldSystemFont(ofSize: 60)
+        }else if UIScreen.main.bounds.height < 800{
+            mainTitle.font = UIFont.boldSystemFont(ofSize: 70)
+        }
+        else{
+            mainTitle.font = UIFont.boldSystemFont(ofSize: 90)
+        }
+        mainTitle.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
         }
         coffeeImageView.snp.makeConstraints{make in
             make.center.equalToSuperview()
@@ -368,11 +380,11 @@ extension FindCafeViewController{
         // 1
         let topRow = IndexPath(row: 0,
                                section: 0)
-                               
+        
         // 2
         self.cafeTableView.scrollToRow(at: topRow,
-                                   at: .top,
-                                   animated: true)
+                                       at: .top,
+                                       animated: true)
     }
 }
 
