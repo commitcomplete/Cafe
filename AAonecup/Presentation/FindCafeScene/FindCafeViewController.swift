@@ -25,6 +25,12 @@ class FindCafeViewController : UIViewController {
     var audioPlayer = AVAudioPlayer()
     let cellId = "CafeTableViewCell"
     var currentCoords : CLLocationCoordinate2D!
+    //    let format = DateFormatter()
+    
+    
+    
+    
+    //    var useTime = Int(endTime.timeIntervalSince(startTime))
     
     
     private lazy var mainTitle : UILabel = {
@@ -40,6 +46,7 @@ class FindCafeViewController : UIViewController {
         tableView.backgroundColor = .clear
         tableView.rowHeight = 80
         tableView.alpha = 0.0
+        tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
     private lazy var coffeeImageView: UIImageView = {
@@ -53,9 +60,11 @@ class FindCafeViewController : UIViewController {
         let findButton : UIButton = UIButton()
         findButton.backgroundColor = UIColor(named: "Brown")
         findButton.setTitle(" 카페 찾기", for: .normal)
-        findButton.setTitle(" 카페 찾기", for: .selected)
+        findButton.setTitleColor(.systemGray, for: .highlighted)
+        findButton.setTitleColor(UIColor(named: "disableTextColor"), for: .disabled)
         findButton.layer.cornerRadius = 10
         findButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+        findButton.setImage(UIImage(systemName: "paperplane.fill")?.withRenderingMode(.alwaysTemplate), for: .disabled)
         findButton.tintColor = .white
         findButton.insetsLayoutMarginsFromSafeArea = true
         findButton.titleLabel?.font = UIFont.systemFont(ofSize: 15, weight: .bold)
@@ -69,7 +78,16 @@ class FindCafeViewController : UIViewController {
         setUpLayOut()
         introAnimationWithSound()
         bindingObject()
+        // MARK: todo
+        // 앱껐다가 들어오면 방지
+        //        format.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        //        var startItem = UserDefaults.standard.value(forKey: "nowDate")
+        //        if Int(Date().timeIntervalSince(startItem as! Date)) < 60 {
+        //            viewModel.limitSearchTime(inputSeconds: Int(Date().timeIntervalSince(startItem as! Date)))
+        //        }
     }
+    
+    
     
 }
 
@@ -80,23 +98,63 @@ extension FindCafeViewController{
             .observe(on: MainScheduler.instance)
             .bind(to: cafeTableView.rx.items(cellIdentifier: cellId, cellType: CafeTableViewCell.self)){
                 index, item, cell in
-                
+                print(item.cafeName)
                 cell.cafeNameLabel.text = item.cafeName
                     .replacingOccurrences(of: "<b>", with:" ")
                     .replacingOccurrences(of: "</b>", with:" ")
                 cell.cafeAddressLabel.text = item.cafeAddress
-                
-                cell.cafeDistance.text = item.distance
+                cell.cafeDistance.text = "\(Double(item.distance).prettyDistance)"
             }
             .disposed(by: disposeBag)
         
-        cafeTableView.rx.modelSelected(NearCafe.self)
+        viewModel.isSearchLimitTimeIsOver
+            .subscribe { remainSecond in
+                DispatchQueue.main.async {
+                    if remainSecond.element ?? 60 == 0{
+                        UIView.animate(withDuration: 0.6) {
+                            self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+                            self.cafeFindButton.isEnabled = true
+                            self.cafeFindButton.backgroundColor = UIColor(named: "Brown")
+                            self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                            self.cafeFindButton.tintColor = .white
+                            
+                        }
+                        
+                    }
+                    //                    else if remainSecond.element ?? 60 <= 20{
+                    //                        self.cafeFindButton.setTitle("원두 가는중 (\(remainSecond.element ?? 60))", for: .normal)
+                    //                    }
+                    //                    else if remainSecond.element ?? 60 <= 40{
+                    //                        self.cafeFindButton.setTitle("원두 볶는중 (\(remainSecond.element ?? 60))", for: .normal)
+                    //                    }
+                    //                    else if remainSecond.element ?? 60 <= 60{
+                    //                        self.cafeFindButton.setTitle("원두 수확중 (\(remainSecond.element ?? 60))", for: .normal)
+                    //                    }
+                    else{
+                        UIView.animate(withDuration: 0.6) {
+                            self.cafeFindButton.setTitle(" 카페 찾기 \(remainSecond.element ?? 60)초", for: .normal)
+                            self.cafeFindButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
+                            
+                        }
+                        
+                    }
+                    
+                }
+                
+            }
+        
+        cafeTableView.rx.modelSelected(CafeInfo.self)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {item in
-                self.pushNavi(route: item.route, coords: item.coords,cafeName: item.cafeName,address: item.cafeAddress,distance : Int(item.route.distance))
+                self.pushNavi(route: item.route, coords: item.coords,cafeName: item.cafeName,address: item.cafeAddress,distance : item.distance)
             })
             .disposed(by: disposeBag)
         
+        cafeTableView.rx.itemSelected
+            .observe(on: MainScheduler.instance)
+            .subscribe { index in
+                self.cafeTableView.deselectRow(at: index, animated: true)
+            }
         viewModel.isProgressAnimationContinue.bind{
             if $0{
                 self.progressAnimationtimer?.invalidate()
@@ -104,11 +162,18 @@ extension FindCafeViewController{
                     UIView.animate(withDuration: 0.6) {
                         self.cafeTableView.alpha = 1.0
                         self.coffeeImageView.alpha = 0.3
+                        self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
+                        self.cafeFindButton.tintColor = UIColor(named: "disableTextColor")
+                        self.scrollToTop()
                     }
+                    self.viewModel.limitSearchTime(inputSeconds: 60)
+                    //                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
+                    //                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
+                    //                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+                    //                        self.cafeFindButton.isEnabled = true
+                    //                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                    //                    }
                     
-                    self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
-                    self.cafeFindButton.isEnabled = true
-                    self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
                 }
             }
         }
@@ -116,20 +181,27 @@ extension FindCafeViewController{
         viewModel.isProgressOutOfTime.bind{
             if $0{
                 self.progressAnimationtimer?.invalidate()
-                self.viewModel.cafeListObservable.onNext([NearCafe]())
+                self.viewModel.cafeListObservable.onNext([CafeInfo]())
                 DispatchQueue.main.async {
                     UIView.animate(withDuration: 0.6) {
                         self.cafeTableView.alpha = 1.0
-                        
+                        self.coffeeImageView.alpha = 0.3
+                        self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
+                        self.cafeFindButton.setTitleColor(UIColor(named: "disableTextColor"), for: .disabled)
                     }
-                    
-                    self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
-                    self.cafeFindButton.isEnabled = true
-                    self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                    //                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
                     self.mainTitle.text = "No Cafe!"
                     self.mainTitle.alpha = 1.0
+                    //                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
+                    //                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
+                    //                        self.cafeFindButton.isEnabled = true
+                    //                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+                    //
+                    //                    }
+                    self.viewModel.limitSearchTime(inputSeconds: 60)
                 }
             }
+            
         }
     }
     // MARK: Layout
@@ -140,9 +212,29 @@ extension FindCafeViewController{
         view.addSubview(cafeFindButton)
         view.addSubview(mainTitle)
         setUpTableView()
-        mainTitle.snp.makeConstraints{
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(80)
+        //        mainTitle.snp.makeConstraints{
+        //            $0.centerX.equalToSuperview()
+        //            if UIScreen.main.bounds.height < 700{
+        //                $0.top.equalToSuperview().inset(25)
+        //            }else if UIScreen.main.bounds.height < 800{
+        //                $0.top.equalToSuperview().inset(40)
+        //            }
+        //            else{
+        //                $0.top.equalToSuperview().inset(80)
+        //            }
+        //
+        //        }
+        if UIScreen.main.bounds.height < 700{
+            mainTitle.font = UIFont.boldSystemFont(ofSize: 60)
+        }else if UIScreen.main.bounds.height < 800{
+            mainTitle.font = UIFont.boldSystemFont(ofSize: 70)
+        }
+        else{
+            mainTitle.font = UIFont.boldSystemFont(ofSize: 90)
+        }
+        mainTitle.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
         }
         coffeeImageView.snp.makeConstraints{make in
             make.center.equalToSuperview()
@@ -152,7 +244,11 @@ extension FindCafeViewController{
         cafeFindButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.leading.equalToSuperview().offset(20)
-            make.bottom.equalToSuperview().inset(60)
+            if UIScreen.main.bounds.height<800{
+                make.bottom.equalToSuperview().inset(20)
+            }
+            else{
+                make.bottom.equalToSuperview().inset(60)}
             make.height.equalTo(48)
         }
         cafeTableView.snp.makeConstraints { make in
@@ -160,11 +256,13 @@ extension FindCafeViewController{
             make.leading.equalToSuperview().offset(24)
             if UIScreen.main.bounds.height < 800{
                 make.bottom.equalToSuperview().inset(80)
+                make.top.equalToSuperview().offset(30)
             }
             else{
                 make.bottom.equalToSuperview().inset(160)
+                make.top.equalToSuperview().offset(50)
             }
-            make.top.equalTo(mainTitle.snp.bottom).offset(10)
+            
         }
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTouchAnimation))
         coffeeImageView.addGestureRecognizer(tapGesture)
@@ -178,6 +276,7 @@ extension FindCafeViewController{
     }
     func pushNavi(route : MKRoute , coords : CLLocationCoordinate2D, cafeName :String, address: String ,distance : Int){
         let cafeRouteViewController = CafeRouteViewController()
+        cafeRouteViewController.myCoordinates = locationManager.location?.coordinate
         cafeRouteViewController.placeString1 = cafeName
         cafeRouteViewController.placeString2 = address
         cafeRouteViewController.route = route
@@ -189,7 +288,7 @@ extension FindCafeViewController{
     func setUpTableView(){
         cafeTableView.dataSource = nil
         cafeTableView.register(CafeTableViewCell.self, forCellReuseIdentifier: cellId)
-        cafeTableView.isScrollEnabled = false
+        cafeTableView.isScrollEnabled = true
     }
     
     func introAnimationWithSound(){
@@ -226,19 +325,31 @@ extension FindCafeViewController{
     
     @objc func imageTouchAnimation(_ sender: UITapGestureRecognizer){
         playIceSound()
-        UIView.animate(withDuration: 0.1) {
-            let rotate = CGAffineTransform(rotationAngle: .pi)
-            self.coffeeImageView.transform = rotate
-        } completion: { _ in
-            UIView.animate(withDuration: 0.1) {
-                let rotate = CGAffineTransform(rotationAngle: .zero)
-                self.coffeeImageView.transform = rotate
-            }
+        //        UIView.animate(withDuration: 0.1) {
+        //            let rotate = CGAffineTransform(rotationAngle: .pi)
+        //            self.coffeeImageView.transform = rotate
+        //        } completion: { _ in
+        //            UIView.animate(withDuration: 0.1) {
+        //                let rotate = CGAffineTransform(rotationAngle: .zero)
+        //                self.coffeeImageView.transform = rotate
+        //            }
+        //        }
+        
+        UIView.animate(withDuration: 0.2) {
+            self.coffeeImageView.transform = CGAffineTransform(rotationAngle: .pi)
+        }
+        UIView.animate(
+            withDuration: 0.2,
+            delay: 0,
+            options: UIView.AnimationOptions.curveEaseIn
+        ) {
+            self.coffeeImageView.transform = CGAffineTransform(rotationAngle: 2 * .pi)
         }
     }
     func buttonTouchAnimation(){
         cafeFindButton.setTitle("탐색중...", for: .normal)
         cafeFindButton.isEnabled = false
+        cafeFindButton.tintColor = UIColor(named: "disableTextColor")
         cafeFindButton.setImage(UIImage(systemName: ""), for: .normal)
         UIView.animate(withDuration: 0.7) {
             self.mainTitle.alpha = 0.0
@@ -252,18 +363,28 @@ extension FindCafeViewController{
     
     func progressAnimation(){
         playIceSound()
-        UIView.animate(withDuration: 0.1) {
-            let rotate = CGAffineTransform(rotationAngle: .pi * 1.0)
-            self.coffeeImageView.transform = rotate
-        } completion: { _ in
-            
-                UIView.animate(withDuration: 0.1){
-                    let rotate = CGAffineTransform(rotationAngle: .zero)
-                    self.coffeeImageView.transform = rotate
-                    
-                
-            }
+        self.coffeeImageView.alpha = 1.0
+        UIView.animate(withDuration: 0.2) {
+            self.coffeeImageView.transform = CGAffineTransform(rotationAngle: .pi)
         }
+        UIView.animate(
+            withDuration: 0.2,
+            delay: 0,
+            options: UIView.AnimationOptions.curveEaseIn
+        ) {
+            self.coffeeImageView.transform = CGAffineTransform(rotationAngle: 2 * .pi)
+        }
+    }
+    
+    private func scrollToTop() {
+        // 1
+        let topRow = IndexPath(row: 0,
+                               section: 0)
+        
+        // 2
+        self.cafeTableView.scrollToRow(at: topRow,
+                                       at: .top,
+                                       animated: true)
     }
 }
 
@@ -285,7 +406,10 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         case .restricted,.denied:
             sendLocationPermissionAlert()
         case .authorizedAlways ,.authorizedWhenInUse :
-            getCurrentPlaceName()
+            let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
+            let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
+            viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
+            viewModel.getNearCafeList(currentCoord: locationManager.location!.coordinate)
             buttonTouchAnimation()
         @unknown default:
             break
@@ -309,11 +433,27 @@ extension FindCafeViewController :CLLocationManagerDelegate{
             if address.locality == nil{
                 currentPlaceCafeQuery = (address.administrativeArea ?? "서울")+(address.subLocality ?? " 종로구")+" 카페"
             }else{
-                 currentPlaceCafeQuery = (address.locality ?? "")+(address.subLocality ?? " 종로구")+" 카페"
+                currentPlaceCafeQuery = (address.locality ?? "")+(address.subLocality ?? " 종로구")+" 카페"
             }
-            
+            //            let searchr = MKLocalSearch.Request()
+            //            searchr.naturalLanguageQuery = "cafe"
+            //            searchr.region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(langtitude, longtitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+            //            let search = MKLocalSearch(request: searchr)
+            //            search.start { (response, error) in
+            //                guard let response = response else {
+            //                    // Handle the error.
+            //                    return
+            //                }
+            //
+            //                for item in response.mapItems {
+            //                    if let name = item.placemark.title,
+            //                        let location = item.placemark.location {
+            //                        print("\(name): \(location.coordinate.latitude),\(location.coordinate.longitude)")
+            //                    }
+            //                }
+            //            }
             print(currentPlaceCafeQuery)
-            self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
+            //            self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
             
         }
     }
@@ -333,9 +473,8 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        
-    }
+    
+    
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         switch manager.authorizationStatus{
@@ -343,7 +482,10 @@ extension FindCafeViewController :CLLocationManagerDelegate{
             break
         case .authorizedWhenInUse,.authorizedAlways:
             if self.isButtonClicked{
-                getCurrentPlaceName()
+                let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
+                let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
+                viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
+                viewModel.getNearCafeList(currentCoord: locationManager.location!.coordinate)
                 buttonTouchAnimation()
             }
         case .notDetermined:
@@ -353,8 +495,8 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         }
     }
     
-   
     
-   
+    
+    
 }
 

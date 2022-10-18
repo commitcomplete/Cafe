@@ -10,7 +10,6 @@
 		78005C5A28F0BFA000F6B787 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78005C5928F0BFA000F6B787 /* Extensions.swift */; };
 		7875444C28EC45DE0008A663 /* CafeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875444B28EC45DE0008A663 /* CafeTableViewCell.swift */; };
 		7875445028EF32980008A663 /* CafeRouteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875444F28EF32980008A663 /* CafeRouteViewController.swift */; };
-		7875445228EF549D0008A663 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875445128EF549D0008A663 /* MapViewController.swift */; };
 		7875445428EF79BF0008A663 /* NearCafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7875445328EF79BF0008A663 /* NearCafe.swift */; };
 		78974AED28D9DF2D00477AE6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974AEC28D9DF2D00477AE6 /* AppDelegate.swift */; };
 		78974AEF28D9DF2D00477AE6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974AEE28D9DF2D00477AE6 /* SceneDelegate.swift */; };
@@ -30,13 +29,13 @@
 		78974B3228E26F6400477AE6 /* SearchCafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B3128E26F6400477AE6 /* SearchCafe.swift */; };
 		78974B3428E26F9500477AE6 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B3328E26F9500477AE6 /* Keys.swift */; };
 		78974B3628E5E9DD00477AE6 /* iceSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78974B3528E5E9DD00477AE6 /* iceSound.mp3 */; };
+		78DB7E7428F3F94000DB0C18 /* CafeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DB7E7328F3F94000DB0C18 /* CafeInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		78005C5928F0BFA000F6B787 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		7875444B28EC45DE0008A663 /* CafeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeTableViewCell.swift; sourceTree = "<group>"; };
 		7875444F28EF32980008A663 /* CafeRouteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeRouteViewController.swift; sourceTree = "<group>"; };
-		7875445128EF549D0008A663 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		7875445328EF79BF0008A663 /* NearCafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearCafe.swift; sourceTree = "<group>"; };
 		78974AE928D9DF2D00477AE6 /* AAonecup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AAonecup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78974AEC28D9DF2D00477AE6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -54,6 +53,7 @@
 		78974B3128E26F6400477AE6 /* SearchCafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCafe.swift; sourceTree = "<group>"; };
 		78974B3328E26F9500477AE6 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		78974B3528E5E9DD00477AE6 /* iceSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = iceSound.mp3; sourceTree = "<group>"; };
+		78DB7E7328F3F94000DB0C18 /* CafeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +83,6 @@
 		7875444E28EF32530008A663 /* CafeRouteViews */ = {
 			isa = PBXGroup;
 			children = (
-				7875445128EF549D0008A663 /* MapViewController.swift */,
 			);
 			path = CafeRouteViews;
 			sourceTree = "<group>";
@@ -180,6 +179,7 @@
 				78974B2928DA529100477AE6 /* Cafe.swift */,
 				78974B2D28DB50BB00477AE6 /* Joke.swift */,
 				7875445328EF79BF0008A663 /* NearCafe.swift */,
+				78DB7E7328F3F94000DB0C18 /* CafeInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -286,6 +286,7 @@
 				7875444C28EC45DE0008A663 /* CafeTableViewCell.swift in Sources */,
 				78974B3228E26F6400477AE6 /* SearchCafe.swift in Sources */,
 				78974AF128D9DF2D00477AE6 /* ViewController.swift in Sources */,
+				78DB7E7428F3F94000DB0C18 /* CafeInfo.swift in Sources */,
 				78974B2C28DB4A2C00477AE6 /* APIService.swift in Sources */,
 				78974AED28D9DF2D00477AE6 /* AppDelegate.swift in Sources */,
 				7875445028EF32980008A663 /* CafeRouteViewController.swift in Sources */,
@@ -297,7 +298,6 @@
 				78005C5A28F0BFA000F6B787 /* Extensions.swift in Sources */,
 				78974B3028E26F2000477AE6 /* dataManager.swift in Sources */,
 				78974AEF28D9DF2D00477AE6 /* SceneDelegate.swift in Sources */,
-				7875445228EF549D0008A663 /* MapViewController.swift in Sources */,
 				7875445428EF79BF0008A663 /* NearCafe.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -367,7 +367,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -422,7 +422,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -445,10 +445,11 @@
 				INFOPLIST_FILE = AAonecup/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location value will use for find near cafes and will not save in any other place.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -456,9 +457,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dodo.AAonecup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -475,10 +479,11 @@
 				INFOPLIST_FILE = AAonecup/Info.plist;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location value will use for find near cafes and will not save in any other place.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -486,9 +491,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dodo.AAonecup;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
