@@ -34,6 +34,7 @@ class FindCafeViewController : UIViewController {
         label.alpha = 0.0
         return label
     }()
+    
     private lazy var cafeTableView : UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
@@ -42,6 +43,7 @@ class FindCafeViewController : UIViewController {
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
+    
     private lazy var coffeeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
@@ -64,7 +66,7 @@ class FindCafeViewController : UIViewController {
         findButton.alpha = 0.0
         return findButton
     }()
-    // MARK: ViewDidLoad
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpCLLocation()
@@ -72,16 +74,13 @@ class FindCafeViewController : UIViewController {
         introAnimationWithSound()
         bindingObject()
         // MARK: todo
-        // 앱껐다가 들어오면 방지
+        // 앱껐다가 들어올시에 재사용 대기시간 초기화 방지
         //        format.dateFormat = "yyyy-MM-dd HH:mm:ss"
         //        var startItem = UserDefaults.standard.value(forKey: "nowDate")
         //        if Int(Date().timeIntervalSince(startItem as! Date)) < 60 {
         //            viewModel.limitSearchTime(inputSeconds: Int(Date().timeIntervalSince(startItem as! Date)))
         //        }
     }
-    
-    
-    
 }
 
 extension FindCafeViewController{
@@ -111,19 +110,14 @@ extension FindCafeViewController{
                             self.cafeFindButton.tintColor = .white
                             
                         }
-                        
                     }
                     else{
                         UIView.animate(withDuration: 0.6) {
                             self.cafeFindButton.setTitle(" 카페 찾기 \(remainSecond.element ?? 60)초", for: .normal)
                             self.cafeFindButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
-                            
                         }
-                        
                     }
-                    
                 }
-                
             }
         
         cafeTableView.rx.modelSelected(CafeInfo.self)
@@ -200,48 +194,8 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         @unknown default:
             break
         }
-        
     }
-    //MARK: 네이버 검색 API를 이용한 버전 : 현재는 MAPKit으로 대체함
-    //    func getCurrentPlaceName(){
-    //        let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
-    //        let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
-    //        let currentLocation = CLLocation(latitude: langtitude, longitude: longtitude)
-    //        viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
-    //        let geocoder = CLGeocoder()
-    //        let locale = Locale(identifier: "Ko-kr")
-    //        geocoder.reverseGeocodeLocation(currentLocation, preferredLocale: locale) { [weak self] placemarks, _ in
-    //            guard let placemarks = placemarks,
-    //                  let address = placemarks.last
-    //            else { return }
-    //            var currentPlaceCafeQuery = ""
-    //
-    //            if address.locality == nil{
-    //                currentPlaceCafeQuery = (address.administrativeArea ?? "서울")+(address.subLocality ?? " 종로구")+" 카페"
-    //            }else{
-    //                currentPlaceCafeQuery = (address.locality ?? "")+(address.subLocality ?? " 종로구")+" 카페"
-    //            }
-    //            //            let searchr = MKLocalSearch.Request()
-    //            //            searchr.naturalLanguageQuery = "cafe"
-    //            //            searchr.region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(langtitude, longtitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-    //            //            let search = MKLocalSearch(request: searchr)
-    //            //            search.start { (response, error) in
-    //            //                guard let response = response else {
-    //            //                    // Handle the error.
-    //            //                    return
-    //            //                }
-    //            //
-    //            //                for item in response.mapItems {
-    //            //                    if let name = item.placemark.title,
-    //            //                        let location = item.placemark.location {
-    //            //                        print("\(name): \(location.coordinate.latitude),\(location.coordinate.longitude)")
-    //            //                    }
-    //            //                }
-    //            //            }
-    //            //            self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
-    //
-    //        }
-    //    }
+    
     func sendLocationPermissionAlert(){
         //Alert 생성 후 액션 연결
         let alertController = UIAlertController(title: "위치 서비스를 사용할 수 없습니다. 기기의 위치서비스를 켜주세요.(필수권한)", message: "앱 설정 화면으로 이동하시겠습니까?", preferredStyle: .alert)
@@ -323,6 +277,7 @@ extension FindCafeViewController {
             }
         }
     }
+    
     func playIceSound(){
         do {
             self.audioPlayer = try AVAudioPlayer(contentsOf: self.iceSound)
@@ -334,16 +289,6 @@ extension FindCafeViewController {
     
     @objc func imageTouchAnimation(_ sender: UITapGestureRecognizer){
         playIceSound()
-        //        UIView.animate(withDuration: 0.1) {
-        //            let rotate = CGAffineTransform(rotationAngle: .pi)
-        //            self.coffeeImageView.transform = rotate
-        //        } completion: { _ in
-        //            UIView.animate(withDuration: 0.1) {
-        //                let rotate = CGAffineTransform(rotationAngle: .zero)
-        //                self.coffeeImageView.transform = rotate
-        //            }
-        //        }
-        
         UIView.animate(withDuration: 0.2) {
             self.coffeeImageView.transform = CGAffineTransform(rotationAngle: .pi)
         }
@@ -355,6 +300,7 @@ extension FindCafeViewController {
             self.coffeeImageView.transform = CGAffineTransform(rotationAngle: 2 * .pi)
         }
     }
+    
     func buttonTouchAnimation(){
         cafeFindButton.setTitle("탐색중...", for: .normal)
         cafeFindButton.isEnabled = false
@@ -367,7 +313,6 @@ extension FindCafeViewController {
         progressAnimationtimer = Timer.scheduledTimer(withTimeInterval: 0.6, repeats: true) { _ in
             self.progressAnimation()
         }
-        
     }
     
     func progressAnimation(){
@@ -451,4 +396,45 @@ extension FindCafeViewController {
         }
         .disposed(by: disposeBag)
     }
+    
+    //MARK: 네이버 검색 API를 이용한 버전 : 현재는 MAPKit으로 대체함
+    //    func getCurrentPlaceName(){
+    //        let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
+    //        let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
+    //        let currentLocation = CLLocation(latitude: langtitude, longitude: longtitude)
+    //        viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
+    //        let geocoder = CLGeocoder()
+    //        let locale = Locale(identifier: "Ko-kr")
+    //        geocoder.reverseGeocodeLocation(currentLocation, preferredLocale: locale) { [weak self] placemarks, _ in
+    //            guard let placemarks = placemarks,
+    //                  let address = placemarks.last
+    //            else { return }
+    //            var currentPlaceCafeQuery = ""
+    //
+    //            if address.locality == nil{
+    //                currentPlaceCafeQuery = (address.administrativeArea ?? "서울")+(address.subLocality ?? " 종로구")+" 카페"
+    //            }else{
+    //                currentPlaceCafeQuery = (address.locality ?? "")+(address.subLocality ?? " 종로구")+" 카페"
+    //            }
+    //            //            let searchr = MKLocalSearch.Request()
+    //            //            searchr.naturalLanguageQuery = "cafe"
+    //            //            searchr.region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(langtitude, longtitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+    //            //            let search = MKLocalSearch(request: searchr)
+    //            //            search.start { (response, error) in
+    //            //                guard let response = response else {
+    //            //                    // Handle the error.
+    //            //                    return
+    //            //                }
+    //            //
+    //            //                for item in response.mapItems {
+    //            //                    if let name = item.placemark.title,
+    //            //                        let location = item.placemark.location {
+    //            //                        print("\(name): \(location.coordinate.latitude),\(location.coordinate.longitude)")
+    //            //                    }
+    //            //                }
+    //            //            }
+    //            //            self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
+    //
+    //        }
+    //    }
 }

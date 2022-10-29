@@ -25,43 +25,6 @@ class FindCafeViewModel{
     
     var currentCoord : CLLocationCoordinate2D!
     
-    //MARK: 네이버 검색 API를 이용한 버전 : 현재는 MAPKit으로 대체함
-    //    func getCafeList(query : String){
-    //        progressCountTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
-    //            self.isProgressOutOfTime.onNext(true)
-    //        }
-    //
-    //        naverAPI.rxFindNearCafeAPItoNaver(query: query)
-    //            .map{ data -> Cafe in
-    //                let response = try! JSONDecoder().decode(Cafe.self, from: data)
-    //                return response
-    //            }
-    //            .subscribe(onNext: {
-    //                self.getNearCafe(cafe: $0) { nearcafe in
-    //                    self.cafeListObservable.onNext(nearcafe)
-    //                    self.isProgressAnimationContinue.onNext(true)
-    //                    self.progressCountTimer?.invalidate()
-    //                }
-    //
-    //            })
-    //    }
-    
-    //MARK: 네이버 검색 API를 이용한 버전 : 현재는 MAPKit으로 대체함
-    //    func getNearCafe(cafe : Cafe,completion : @escaping([NearCafe])->Void){
-    //        var nearCafeArr = [NearCafe]()
-    //        var count = 0
-    //        for i in cafe.items{
-    //            getDistance(ObjectAddress: i.roadAddress.getAvailableAddress()) { distance,route,objectcoords in
-    //                nearCafeArr.append(NearCafe(cafeName: i.title, cafeAddress: i.roadAddress, distance: distance,route: route,coords: objectcoords))
-    //                count+=1
-    //                if count == cafe.items.count{
-    //                    completion(nearCafeArr)
-    //                }
-    //            }
-    //        }
-    //    }
-    
-    
     func getDistance(ObjectAddress : String, completionDistance : @escaping(String,MKRoute,CLLocationCoordinate2D)->Void){
         var currentMapItem = MKMapItem(placemark: MKPlacemark(coordinate: self.currentCoord))
         var distance : String?
@@ -86,15 +49,10 @@ class FindCafeViewModel{
                     }
                     distance = "\(Int(response.routes[0].distance))M"
                     completionDistance(distance!,response.routes[0],objectCoords)
-                    //get the routes, could be multiple routes in the routes[] array but usually [0] is the best route
                 }
             }
-            
         })
-        
-        
     }
-    
     
     func getNearCafeList(currentCoord : CLLocationCoordinate2D){
         progressCountTimer = Timer.scheduledTimer(withTimeInterval:6.0, repeats: false) { _ in
@@ -123,13 +81,9 @@ class FindCafeViewModel{
                             self.progressCountTimer?.invalidate()
                         }
                     }
-                    
-                    
                 }
             }
         }
-        
-        
     }
     
     
@@ -167,4 +121,40 @@ class FindCafeViewModel{
             RunLoop.current.run()
         }
     }
+    
+    //MARK: 네이버 검색 API를 이용한 버전 : 현재는 MAPKit으로 대체함
+    //    func getCafeList(query : String){
+    //        progressCountTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
+    //            self.isProgressOutOfTime.onNext(true)
+    //        }
+    //
+    //        naverAPI.rxFindNearCafeAPItoNaver(query: query)
+    //            .map{ data -> Cafe in
+    //                let response = try! JSONDecoder().decode(Cafe.self, from: data)
+    //                return response
+    //            }
+    //            .subscribe(onNext: {
+    //                self.getNearCafe(cafe: $0) { nearcafe in
+    //                    self.cafeListObservable.onNext(nearcafe)
+    //                    self.isProgressAnimationContinue.onNext(true)
+    //                    self.progressCountTimer?.invalidate()
+    //                }
+    //
+    //            })
+    //    }
+    
+    //MARK: 네이버 검색 API를 이용한 버전 : 현재는 MAPKit으로 대체함
+    //    func getNearCafe(cafe : Cafe,completion : @escaping([NearCafe])->Void){
+    //        var nearCafeArr = [NearCafe]()
+    //        var count = 0
+    //        for i in cafe.items{
+    //            getDistance(ObjectAddress: i.roadAddress.getAvailableAddress()) { distance,route,objectcoords in
+    //                nearCafeArr.append(NearCafe(cafeName: i.title, cafeAddress: i.roadAddress, distance: distance,route: route,coords: objectcoords))
+    //                count+=1
+    //                if count == cafe.items.count{
+    //                    completion(nearCafeArr)
+    //                }
+    //            }
+    //        }
+    //    }
 }

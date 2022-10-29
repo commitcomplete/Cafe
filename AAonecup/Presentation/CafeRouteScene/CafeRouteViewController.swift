@@ -49,25 +49,7 @@ class CafeRouteViewController : UIViewController{
         super.viewDidLoad()
         view.addSubview(myMap)
         view.addSubview(distanceLabel)
-        distanceLabel.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide)
-        }
-        myMap.snp.makeConstraints { make in
-            make.width.equalToSuperview()
-            make.height.equalToSuperview()
-            make.center.equalToSuperview()
-        }
-        myMap.delegate = self
-        //        self.myMap.addOverlay(self.route.polyline,level: .aboveRoads)
-        self.myMap.showsUserLocation = true
-        self.myMap.setUserTrackingMode(.follow, animated: true)
-        self.setAnnotation(currentCoord: myCoordinates!, objectCoord: coords, delta: 0.1,title: placeString1, subtitle: placeString2)
-        setUpDelegate()
-        //        myMap.insertOverlay(route.polyline, at: 0)
-        //        myMap.region = MKCoordinateRegion(center: myCoordinates!, span: MKCoordinateSpan(latitudeDelta: 0.03, longitudeDelta: 0.03))
-        self.distanceLabel.text = "남은 거리 : \(currentDistance)M"
-        
+        setUpLayout()
     }
     override func viewWillAppear(_ animated: Bool) {
         setUpRefreshTimer()
@@ -89,8 +71,25 @@ extension CafeRouteViewController {
                 self.myMap.addOverlay(self.routeOverLay!)
                 
             }
-            
         })
+    }
+    
+    func setUpLayout(){
+        distanceLabel.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+        }
+        myMap.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.height.equalToSuperview()
+            make.center.equalToSuperview()
+        }
+        myMap.delegate = self
+        self.myMap.showsUserLocation = true
+        self.myMap.setUserTrackingMode(.follow, animated: true)
+        self.setAnnotation(currentCoord: myCoordinates!, objectCoord: coords, delta: 0.1,title: placeString1, subtitle: placeString2)
+        setUpDelegate()
+        self.distanceLabel.text = "남은 거리 : \(currentDistance)M"
     }
 }
 
@@ -101,9 +100,6 @@ extension CafeRouteViewController : MKMapViewDelegate{
         linerenderer.lineWidth = 3.0
         return linerenderer
     }
-    
-    
-    
     
     func setAnnotation(currentCoord : CLLocationCoordinate2D,
                        objectCoord : CLLocationCoordinate2D,
@@ -120,7 +116,6 @@ extension CafeRouteViewController : MKMapViewDelegate{
         currentAnnotation.title = "출발"
         myMap.showAnnotations([annotation,currentAnnotation], animated: true)
     }
-    
 }
 
 extension CafeRouteViewController : CLLocationManagerDelegate{
@@ -147,14 +142,8 @@ extension CafeRouteViewController : CLLocationManagerDelegate{
             }
             distance = "남은 거리 : \(Int(response.routes[0].distance))M"
             completion(distance!,response.routes[0])
-            //get the routes, could be multiple routes in the routes[] array but usually [0] is the best route
         }
-        
-        
-        
     }
-    
-    
 }
 
 
