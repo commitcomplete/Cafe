@@ -1,4 +1,4 @@
-# Cafe! (2022/08/29 ~ 2022/09/01)
+# Cafe!
 ![Frame 4](https://user-images.githubusercontent.com/72395020/198826975-af453893-e301-4e9a-acc1-c11e78b86e26.png)
 
 ## Cafe! - 빠르게 알아보는 가까운 카페
