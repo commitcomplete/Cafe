@@ -1,48 +1,25 @@
 # Cafe! (2022/08/29 ~ 2022/09/01)
+![Frame 4](https://user-images.githubusercontent.com/72395020/198826975-af453893-e301-4e9a-acc1-c11e78b86e26.png)
 
-  <img src = "https://user-images.githubusercontent.com/72395020/188737151-4ed91cd8-5a1c-4870-9e10-e3b312c4b24d.png" width = "25%">
+## Cafe! - 빠르게 알아보는 가까운 카페
 
-## Having fun with Big-Face Filter
+[App store link](https://apps.apple.com/kr/app/cafe-%EB%B9%A0%EB%A5%B4%EA%B2%8C-%EC%95%8C%EC%95%84%EB%B3%B4%EB%8A%94-%EA%B0%80%EA%B9%8C%EC%9A%B4-%EC%B9%B4%ED%8E%98/id6443779233)
 
-[App store link](https://apps.apple.com/kr/app/big-face/id1642758195)
-
-Big-Face is a Face Filter.
-Automatically recognize faces and make it bigger.  
-Also offers a lot of color filters and distort filters.
-
-## Features
-
-- Automatical face recognition
-- Making face bigger
-- Color filters - red, yellow, green, blue, purple
-- Distort filters - Mosaic, Crystal, Convex1, Convex2, Circle
-- Overlap filters between color filters and distort filters
-- Capture Image
-
-## ScreenShots
- <img src = "https://user-images.githubusercontent.com/72395020/188734836-22086a2f-333e-4e66-9675-479ecddf43d8.png" width = "19%"> <img src = "https://user-images.githubusercontent.com/72395020/188734884-a04d6dea-545c-4860-a2ea-6d28c73fc8b0.png" width = "19%"> <img src = "https://user-images.githubusercontent.com/72395020/188734914-05a5639e-6bdf-4f40-bab1-34840ffd08d6.png" width = "19%"> <img src = "https://user-images.githubusercontent.com/72395020/188736205-206852e2-0e70-4068-b748-1cc7dc849aca.png" width = "19%"> <img src = "https://user-images.githubusercontent.com/72395020/188736325-97533c2c-0e74-4448-865d-b739ace460dd.png" width = "19%">
-
+* 한번의 터치로 근처의 가까운 카페들을 알아볼 수 있습니다!
+* 해당 카페까지의 경로와 남은 거리도 제공합니다!    
+---
+* 카페 탐색 버튼을 누르면 자신의 근처에 있는 카페들을 가까운 순으로 보여줍니다.
+* 리스팅된 카페를 클릭하면 현재 위치에서 해당 카페까지의 거리와 경로를 지도에 표시합니다.
+* 지도에 표시된 경로와 거리는 사용자가 이동함에 따라 업데이트 됩니다.
 
 ## Tech
 
-Big-Face takes reference from Apple Developer Documents to work properly:
+- UIKit
+- SnapKit
+- RxSwift
+- MVVM
+- MapKit
+- NaverSearch API
 
-- [UIKit] - Build interface
-- [ARKit] - Face recognition
-- [CoreImage] - CoreImageFilters
-- [CoreImage.CIFilterBuiltins] - To use CoreImageFilters easily
-- [AVFoundation] - To make capture sound and save view in album
-
-
-
-## Problems
-
-When first using color filters or distort filters, the size of filters adjust to square, which is not shape of real face.
-
-There are two probable reasons.
-1. The sequence of filters
--> Color filter or distort filter should be precede big face filter but it is not.
--> Change the sequence
-2. The size of filters 
--> In the case of big face filter, size adjust to real face. but the others is not.(remain default - square)
--> Adjust the filter size
+## ScreenShots
+ <img src = "https://user-images.githubusercontent.com/72395020/198827783-b1648968-b9dc-4102-9592-4478d29da0b2.png" width = "32%"> <img src = "https://user-images.githubusercontent.com/72395020/198827781-7f6bb59f-e2bc-4c28-9b83-e1c2959fc656.png" width = "32%">  <img src = "https://user-images.githubusercontent.com/72395020/198827782-e67caec2-16d4-4661-b1c1-ac9d579aafb2.png" width = "32%"> 
