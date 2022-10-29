@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+//MARK: 네이버 검색 API사용시 사용했던 파일 - 지금 사용 x
 class dataManager {
     static let shared : dataManager = dataManager()
     var searchResult : Cafe?
