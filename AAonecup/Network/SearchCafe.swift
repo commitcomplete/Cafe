@@ -9,12 +9,13 @@ import Foundation
 import UIKit
 import RxSwift
 
-class  naverAPI {
-    
-    static var shared = naverAPI()
-    
-    let jsonDecoder: JSONDecoder = JSONDecoder()
 
+//MARK: 네이버 검색 API를 이용한 버전 : 현재는 MAPKit으로 전환함
+
+class  naverAPI {
+    static var shared = naverAPI()
+    let jsonDecoder: JSONDecoder = JSONDecoder()
+    
     static func urlTaskDone() {
         let item = dataManager.shared.searchResult?.items[0]
     }
@@ -51,18 +52,17 @@ class  naverAPI {
     static func rxFindNearCafeAPItoNaver(query : String) -> Observable<Data>{
         return Observable.create { emitter in
             findNearCafeAPIToNaver(queryValue: query){result in
-                     switch result{
-                     case let .success(data):
-                         emitter.onNext(data)
-                         emitter.onCompleted()
-                     case let .failure(err):
-                         print("실패")
-                         emitter.onError(err)
-                     }
+                switch result{
+                case let .success(data):
+                    emitter.onNext(data)
+                    emitter.onCompleted()
+                case let .failure(err):
+                    emitter.onError(err)
                 }
-            return Disposables.create()
             }
+            return Disposables.create()
         }
     }
-    
+}
+
 

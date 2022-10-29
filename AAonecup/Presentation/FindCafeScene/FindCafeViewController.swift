@@ -25,13 +25,6 @@ class FindCafeViewController : UIViewController {
     var audioPlayer = AVAudioPlayer()
     let cellId = "CafeTableViewCell"
     var currentCoords : CLLocationCoordinate2D!
-    //    let format = DateFormatter()
-    
-    
-    
-    
-    //    var useTime = Int(endTime.timeIntervalSince(startTime))
-    
     
     private lazy var mainTitle : UILabel = {
         let label = UILabel()
@@ -98,7 +91,6 @@ extension FindCafeViewController{
             .observe(on: MainScheduler.instance)
             .bind(to: cafeTableView.rx.items(cellIdentifier: cellId, cellType: CafeTableViewCell.self)){
                 index, item, cell in
-                print(item.cafeName)
                 cell.cafeNameLabel.text = item.cafeName
                     .replacingOccurrences(of: "<b>", with:" ")
                     .replacingOccurrences(of: "</b>", with:" ")
@@ -121,15 +113,6 @@ extension FindCafeViewController{
                         }
                         
                     }
-                    //                    else if remainSecond.element ?? 60 <= 20{
-                    //                        self.cafeFindButton.setTitle("원두 가는중 (\(remainSecond.element ?? 60))", for: .normal)
-                    //                    }
-                    //                    else if remainSecond.element ?? 60 <= 40{
-                    //                        self.cafeFindButton.setTitle("원두 볶는중 (\(remainSecond.element ?? 60))", for: .normal)
-                    //                    }
-                    //                    else if remainSecond.element ?? 60 <= 60{
-                    //                        self.cafeFindButton.setTitle("원두 수확중 (\(remainSecond.element ?? 60))", for: .normal)
-                    //                    }
                     else{
                         UIView.animate(withDuration: 0.6) {
                             self.cafeFindButton.setTitle(" 카페 찾기 \(remainSecond.element ?? 60)초", for: .normal)
@@ -167,13 +150,6 @@ extension FindCafeViewController{
                         self.scrollToTop()
                     }
                     self.viewModel.limitSearchTime(inputSeconds: 60)
-                    //                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
-                    //                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
-                    //                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
-                    //                        self.cafeFindButton.isEnabled = true
-                    //                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-                    //                    }
-                    
                 }
             }
         }
@@ -189,91 +165,124 @@ extension FindCafeViewController{
                         self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
                         self.cafeFindButton.setTitleColor(UIColor(named: "disableTextColor"), for: .disabled)
                     }
-                    //                    self.cafeFindButton.setTitle("커피 식히는중...", for: .normal)
                     self.mainTitle.text = "No Cafe!"
                     self.mainTitle.alpha = 1.0
-                    //                    Timer.scheduledTimer(withTimeInterval: 60.0, repeats: false) { _ in
-                    //                        self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
-                    //                        self.cafeFindButton.isEnabled = true
-                    //                        self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-                    //
-                    //                    }
                     self.viewModel.limitSearchTime(inputSeconds: 60)
                 }
             }
-            
         }
     }
-    // MARK: Layout
-    func setUpLayOut(){
-        view.backgroundColor = UIColor(named: "AccentColor")
-        view.addSubview(coffeeImageView)
-        view.addSubview(cafeTableView)
-        view.addSubview(cafeFindButton)
-        view.addSubview(mainTitle)
-        setUpTableView()
-        //        mainTitle.snp.makeConstraints{
-        //            $0.centerX.equalToSuperview()
-        //            if UIScreen.main.bounds.height < 700{
-        //                $0.top.equalToSuperview().inset(25)
-        //            }else if UIScreen.main.bounds.height < 800{
-        //                $0.top.equalToSuperview().inset(40)
-        //            }
-        //            else{
-        //                $0.top.equalToSuperview().inset(80)
-        //            }
-        //
-        //        }
-        if UIScreen.main.bounds.height < 700{
-            mainTitle.font = UIFont.boldSystemFont(ofSize: 60)
-        }else if UIScreen.main.bounds.height < 800{
-            mainTitle.font = UIFont.boldSystemFont(ofSize: 70)
-        }
-        else{
-            mainTitle.font = UIFont.boldSystemFont(ofSize: 90)
-        }
-        mainTitle.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide)
-        }
-        coffeeImageView.snp.makeConstraints{make in
-            make.center.equalToSuperview()
-            make.width.equalTo(270)
-            make.height.equalTo(385)
-        }
-        cafeFindButton.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.leading.equalToSuperview().offset(20)
-            if UIScreen.main.bounds.height<800{
-                make.bottom.equalToSuperview().inset(20)
-            }
-            else{
-                make.bottom.equalToSuperview().inset(60)}
-            make.height.equalTo(48)
-        }
-        cafeTableView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.leading.equalToSuperview().offset(24)
-            if UIScreen.main.bounds.height < 800{
-                make.bottom.equalToSuperview().inset(80)
-                make.top.equalToSuperview().offset(30)
-            }
-            else{
-                make.bottom.equalToSuperview().inset(160)
-                make.top.equalToSuperview().offset(50)
-            }
-            
-        }
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTouchAnimation))
-        coffeeImageView.addGestureRecognizer(tapGesture)
-        coffeeImageView.isUserInteractionEnabled = true
-        cafeFindButton.rx.tap.bind{
-            self.isButtonClicked = true
-            self.checkLocationPermission()
-            
-        }
-        .disposed(by: disposeBag)
+}
+
+//MARK: Location
+extension FindCafeViewController :CLLocationManagerDelegate{
+    func setUpCLLocation(){
+        //델리게이트 설정
+        locationManager.delegate = self
+        // 거리 정확도 설정
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        // 사용자에게 허용 받기 alert 띄우기
+        
     }
+    
+    func checkLocationPermission(){
+        switch CLLocationManager.authorizationStatus(){
+        case .notDetermined :
+            locationManager.requestWhenInUseAuthorization()
+        case .restricted,.denied:
+            sendLocationPermissionAlert()
+        case .authorizedAlways ,.authorizedWhenInUse :
+            let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
+            let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
+            viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
+            viewModel.getNearCafeList(currentCoord: locationManager.location!.coordinate)
+            buttonTouchAnimation()
+        @unknown default:
+            break
+        }
+        
+    }
+    //MARK: 네이버 검색 API를 이용한 버전 : 현재는 MAPKit으로 대체함
+    //    func getCurrentPlaceName(){
+    //        let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
+    //        let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
+    //        let currentLocation = CLLocation(latitude: langtitude, longitude: longtitude)
+    //        viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
+    //        let geocoder = CLGeocoder()
+    //        let locale = Locale(identifier: "Ko-kr")
+    //        geocoder.reverseGeocodeLocation(currentLocation, preferredLocale: locale) { [weak self] placemarks, _ in
+    //            guard let placemarks = placemarks,
+    //                  let address = placemarks.last
+    //            else { return }
+    //            var currentPlaceCafeQuery = ""
+    //
+    //            if address.locality == nil{
+    //                currentPlaceCafeQuery = (address.administrativeArea ?? "서울")+(address.subLocality ?? " 종로구")+" 카페"
+    //            }else{
+    //                currentPlaceCafeQuery = (address.locality ?? "")+(address.subLocality ?? " 종로구")+" 카페"
+    //            }
+    //            //            let searchr = MKLocalSearch.Request()
+    //            //            searchr.naturalLanguageQuery = "cafe"
+    //            //            searchr.region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(langtitude, longtitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+    //            //            let search = MKLocalSearch(request: searchr)
+    //            //            search.start { (response, error) in
+    //            //                guard let response = response else {
+    //            //                    // Handle the error.
+    //            //                    return
+    //            //                }
+    //            //
+    //            //                for item in response.mapItems {
+    //            //                    if let name = item.placemark.title,
+    //            //                        let location = item.placemark.location {
+    //            //                        print("\(name): \(location.coordinate.latitude),\(location.coordinate.longitude)")
+    //            //                    }
+    //            //                }
+    //            //            }
+    //            //            self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
+    //
+    //        }
+    //    }
+    func sendLocationPermissionAlert(){
+        //Alert 생성 후 액션 연결
+        let alertController = UIAlertController(title: "위치 서비스를 사용할 수 없습니다. 기기의 위치서비스를 켜주세요.(필수권한)", message: "앱 설정 화면으로 이동하시겠습니까?", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "아니오", style: .destructive, handler: { (action) -> Void in
+            
+        }))
+        alertController.addAction(UIAlertAction(title: "네", style: .default, handler: { (action) -> Void in
+            
+            if let appSettings = URL(string: UIApplication.openSettingsURLString){
+                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
+            }
+        }))
+        self.present(alertController, animated: true, completion: nil)
+        
+    }
+    
+    
+    
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus{
+        case .denied,.restricted:
+            break
+        case .authorizedWhenInUse,.authorizedAlways:
+            if self.isButtonClicked{
+                let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
+                let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
+                viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
+                viewModel.getNearCafeList(currentCoord: locationManager.location!.coordinate)
+                buttonTouchAnimation()
+            }
+        case .notDetermined:
+            break
+        @unknown default:
+            break
+        }
+    }
+}
+
+extension FindCafeViewController {
+    
     func pushNavi(route : MKRoute , coords : CLLocationCoordinate2D, cafeName :String, address: String ,distance : Int){
         let cafeRouteViewController = CafeRouteViewController()
         cafeRouteViewController.myCoordinates = locationManager.location?.coordinate
@@ -377,126 +386,69 @@ extension FindCafeViewController{
     }
     
     private func scrollToTop() {
-        // 1
         let topRow = IndexPath(row: 0,
                                section: 0)
-        
-        // 2
         self.cafeTableView.scrollToRow(at: topRow,
                                        at: .top,
                                        animated: true)
     }
+    
+    // MARK: Layout
+    func setUpLayOut(){
+        view.backgroundColor = UIColor(named: "AccentColor")
+        view.addSubview(coffeeImageView)
+        view.addSubview(cafeTableView)
+        view.addSubview(cafeFindButton)
+        view.addSubview(mainTitle)
+        setUpTableView()
+        if UIScreen.main.bounds.height < 700{
+            mainTitle.font = UIFont.boldSystemFont(ofSize: 60)
+        }else if UIScreen.main.bounds.height < 800{
+            mainTitle.font = UIFont.boldSystemFont(ofSize: 70)
+        }
+        else{
+            mainTitle.font = UIFont.boldSystemFont(ofSize: 90)
+        }
+        mainTitle.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide)
+        }
+        coffeeImageView.snp.makeConstraints{make in
+            make.center.equalToSuperview()
+            make.width.equalTo(270)
+            make.height.equalTo(385)
+        }
+        cafeFindButton.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.leading.equalToSuperview().offset(20)
+            if UIScreen.main.bounds.height<800{
+                make.bottom.equalToSuperview().inset(20)
+            }
+            else{
+                make.bottom.equalToSuperview().inset(60)}
+            make.height.equalTo(48)
+        }
+        cafeTableView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.leading.equalToSuperview().offset(24)
+            if UIScreen.main.bounds.height < 800{
+                make.bottom.equalToSuperview().inset(80)
+                make.top.equalToSuperview().offset(30)
+            }
+            else{
+                make.bottom.equalToSuperview().inset(160)
+                make.top.equalToSuperview().offset(50)
+            }
+            
+        }
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTouchAnimation))
+        coffeeImageView.addGestureRecognizer(tapGesture)
+        coffeeImageView.isUserInteractionEnabled = true
+        cafeFindButton.rx.tap.bind{
+            self.isButtonClicked = true
+            self.checkLocationPermission()
+            
+        }
+        .disposed(by: disposeBag)
+    }
 }
-
-//MARK: Location
-extension FindCafeViewController :CLLocationManagerDelegate{
-    func setUpCLLocation(){
-        //델리게이트 설정
-        locationManager.delegate = self
-        // 거리 정확도 설정
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        // 사용자에게 허용 받기 alert 띄우기
-        
-    }
-    
-    func checkLocationPermission(){
-        switch CLLocationManager.authorizationStatus(){
-        case .notDetermined :
-            locationManager.requestWhenInUseAuthorization()
-        case .restricted,.denied:
-            sendLocationPermissionAlert()
-        case .authorizedAlways ,.authorizedWhenInUse :
-            let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
-            let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
-            viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
-            viewModel.getNearCafeList(currentCoord: locationManager.location!.coordinate)
-            buttonTouchAnimation()
-        @unknown default:
-            break
-        }
-        
-    }
-    
-    func getCurrentPlaceName(){
-        let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
-        let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
-        let currentLocation = CLLocation(latitude: langtitude, longitude: longtitude)
-        viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
-        let geocoder = CLGeocoder()
-        let locale = Locale(identifier: "Ko-kr")
-        geocoder.reverseGeocodeLocation(currentLocation, preferredLocale: locale) { [weak self] placemarks, _ in
-            guard let placemarks = placemarks,
-                  let address = placemarks.last
-            else { return }
-            var currentPlaceCafeQuery = ""
-            
-            if address.locality == nil{
-                currentPlaceCafeQuery = (address.administrativeArea ?? "서울")+(address.subLocality ?? " 종로구")+" 카페"
-            }else{
-                currentPlaceCafeQuery = (address.locality ?? "")+(address.subLocality ?? " 종로구")+" 카페"
-            }
-            //            let searchr = MKLocalSearch.Request()
-            //            searchr.naturalLanguageQuery = "cafe"
-            //            searchr.region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(langtitude, longtitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-            //            let search = MKLocalSearch(request: searchr)
-            //            search.start { (response, error) in
-            //                guard let response = response else {
-            //                    // Handle the error.
-            //                    return
-            //                }
-            //
-            //                for item in response.mapItems {
-            //                    if let name = item.placemark.title,
-            //                        let location = item.placemark.location {
-            //                        print("\(name): \(location.coordinate.latitude),\(location.coordinate.longitude)")
-            //                    }
-            //                }
-            //            }
-            print(currentPlaceCafeQuery)
-            //            self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
-            
-        }
-    }
-    func sendLocationPermissionAlert(){
-        //Alert 생성 후 액션 연결
-        let alertController = UIAlertController(title: "위치 서비스를 사용할 수 없습니다. 기기의 위치서비스를 켜주세요.(필수권한)", message: "앱 설정 화면으로 이동하시겠습니까?", preferredStyle: .alert)
-        alertController.addAction(UIAlertAction(title: "아니오", style: .destructive, handler: { (action) -> Void in
-            
-        }))
-        alertController.addAction(UIAlertAction(title: "네", style: .default, handler: { (action) -> Void in
-            
-            if let appSettings = URL(string: UIApplication.openSettingsURLString){
-                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
-            }
-        }))
-        self.present(alertController, animated: true, completion: nil)
-        
-    }
-    
-    
-    
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus{
-        case .denied,.restricted:
-            break
-        case .authorizedWhenInUse,.authorizedAlways:
-            if self.isButtonClicked{
-                let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
-                let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
-                viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
-                viewModel.getNearCafeList(currentCoord: locationManager.location!.coordinate)
-                buttonTouchAnimation()
-            }
-        case .notDetermined:
-            break
-        @unknown default:
-            break
-        }
-    }
-    
-    
-    
-    
-}
-

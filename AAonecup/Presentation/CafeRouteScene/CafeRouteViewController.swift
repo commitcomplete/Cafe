@@ -24,6 +24,7 @@ class CafeRouteViewController : UIViewController{
     let locationManager = CLLocationManager()
     var refreshTimer : Timer? = nil
     var routeOverLay : MKOverlay? = nil
+    
     private lazy var startbutton : UIButton = {
         let button = UIButton()
         button.setTitle("dfsdfs", for: .normal)
