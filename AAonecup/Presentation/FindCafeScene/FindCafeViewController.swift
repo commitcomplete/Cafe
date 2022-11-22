@@ -5,11 +5,8 @@
 //  Created by dohankim on 2022/09/20.
 //
 
-import Foundation
 import UIKit
 import RxSwift
-import RxCocoa
-import RxRelay
 import SnapKit
 import AVFoundation
 import CoreLocation
