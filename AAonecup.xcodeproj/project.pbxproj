@@ -27,8 +27,10 @@
 		78974B3028E26F2000477AE6 /* dataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B2F28E26F2000477AE6 /* dataManager.swift */; };
 		78974B3228E26F6400477AE6 /* SearchCafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B3128E26F6400477AE6 /* SearchCafe.swift */; };
 		78974B3628E5E9DD00477AE6 /* iceSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78974B3528E5E9DD00477AE6 /* iceSound.mp3 */; };
-		78B6A6FF292D0D6200C0BB70 /* FindViewController+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B6A6FE292D0D6200C0BB70 /* FindViewController+Binding.swift */; };
-		78B6A703292D201100C0BB70 /* FindViewController+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B6A702292D201100C0BB70 /* FindViewController+Location.swift */; };
+		78B6A6FF292D0D6200C0BB70 /* FindCafeViewController+Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B6A6FE292D0D6200C0BB70 /* FindCafeViewController+Binding.swift */; };
+		78B6A703292D201100C0BB70 /* FindCafeViewController+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B6A702292D201100C0BB70 /* FindCafeViewController+Location.swift */; };
+		78B6A705292D217900C0BB70 /* CafeRouteViewController+MapKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B6A704292D217900C0BB70 /* CafeRouteViewController+MapKit.swift */; };
+		78B6A707292D21C700C0BB70 /* CafeRouteViewController+Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B6A706292D21C700C0BB70 /* CafeRouteViewController+Location.swift */; };
 		78DB7E7428F3F94000DB0C18 /* CafeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DB7E7328F3F94000DB0C18 /* CafeInfo.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,8 +53,10 @@
 		78974B2F28E26F2000477AE6 /* dataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataManager.swift; sourceTree = "<group>"; };
 		78974B3128E26F6400477AE6 /* SearchCafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCafe.swift; sourceTree = "<group>"; };
 		78974B3528E5E9DD00477AE6 /* iceSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = iceSound.mp3; sourceTree = "<group>"; };
-		78B6A6FE292D0D6200C0BB70 /* FindViewController+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FindViewController+Binding.swift"; sourceTree = "<group>"; };
-		78B6A702292D201100C0BB70 /* FindViewController+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FindViewController+Location.swift"; sourceTree = "<group>"; };
+		78B6A6FE292D0D6200C0BB70 /* FindCafeViewController+Binding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FindCafeViewController+Binding.swift"; sourceTree = "<group>"; };
+		78B6A702292D201100C0BB70 /* FindCafeViewController+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FindCafeViewController+Location.swift"; sourceTree = "<group>"; };
+		78B6A704292D217900C0BB70 /* CafeRouteViewController+MapKit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CafeRouteViewController+MapKit.swift"; sourceTree = "<group>"; };
+		78B6A706292D21C700C0BB70 /* CafeRouteViewController+Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CafeRouteViewController+Location.swift"; sourceTree = "<group>"; };
 		78DB7E7328F3F94000DB0C18 /* CafeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,6 +79,8 @@
 			isa = PBXGroup;
 			children = (
 				7875444F28EF32980008A663 /* CafeRouteViewController.swift */,
+				78B6A704292D217900C0BB70 /* CafeRouteViewController+MapKit.swift */,
+				78B6A706292D21C700C0BB70 /* CafeRouteViewController+Location.swift */,
 			);
 			path = CafeRouteScene;
 			sourceTree = "<group>";
@@ -179,9 +185,9 @@
 			children = (
 				78974B2628D9FB2000477AE6 /* FindCafeViews */,
 				78974B1628D9F4E200477AE6 /* FindCafeViewController.swift */,
-				78B6A6FE292D0D6200C0BB70 /* FindViewController+Binding.swift */,
+				78B6A6FE292D0D6200C0BB70 /* FindCafeViewController+Binding.swift */,
+				78B6A702292D201100C0BB70 /* FindCafeViewController+Location.swift */,
 				78974B1828D9F4F500477AE6 /* FindCafeViewModel.swift */,
-				78B6A702292D201100C0BB70 /* FindViewController+Location.swift */,
 			);
 			path = FindCafeScene;
 			sourceTree = "<group>";
@@ -275,22 +281,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78B6A703292D201100C0BB70 /* FindViewController+Location.swift in Sources */,
+				78B6A703292D201100C0BB70 /* FindCafeViewController+Location.swift in Sources */,
 				7875444C28EC45DE0008A663 /* CafeTableViewCell.swift in Sources */,
 				78974B3228E26F6400477AE6 /* SearchCafe.swift in Sources */,
-				78B6A6FF292D0D6200C0BB70 /* FindViewController+Binding.swift in Sources */,
+				78B6A6FF292D0D6200C0BB70 /* FindCafeViewController+Binding.swift in Sources */,
 				78974AF128D9DF2D00477AE6 /* ViewController.swift in Sources */,
 				78DB7E7428F3F94000DB0C18 /* CafeInfo.swift in Sources */,
 				78974AED28D9DF2D00477AE6 /* AppDelegate.swift in Sources */,
 				7875445028EF32980008A663 /* CafeRouteViewController.swift in Sources */,
 				78974B2A28DA529100477AE6 /* Cafe.swift in Sources */,
 				78974B1928D9F4F500477AE6 /* FindCafeViewModel.swift in Sources */,
+				78B6A707292D21C700C0BB70 /* CafeRouteViewController+Location.swift in Sources */,
 				78974B1728D9F4E200477AE6 /* FindCafeViewController.swift in Sources */,
 				78974B2E28DB50BB00477AE6 /* Joke.swift in Sources */,
 				78005C5A28F0BFA000F6B787 /* Extensions.swift in Sources */,
 				78974B3028E26F2000477AE6 /* dataManager.swift in Sources */,
 				78974AEF28D9DF2D00477AE6 /* SceneDelegate.swift in Sources */,
 				7875445428EF79BF0008A663 /* NearCafe.swift in Sources */,
+				78B6A705292D217900C0BB70 /* CafeRouteViewController+MapKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
