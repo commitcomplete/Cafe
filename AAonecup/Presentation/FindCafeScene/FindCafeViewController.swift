@@ -26,7 +26,7 @@ class FindCafeViewController : UIViewController {
     let cellId = "CafeTableViewCell"
     var currentCoords : CLLocationCoordinate2D!
     
-    private lazy var mainTitle : UILabel = {
+    lazy var mainTitle : UILabel = {
         let label = UILabel()
         label.text = "Cafe!"
         label.textColor = UIColor(named: "Brown")
@@ -35,7 +35,7 @@ class FindCafeViewController : UIViewController {
         return label
     }()
     
-    private lazy var cafeTableView : UITableView = {
+    lazy var cafeTableView : UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
         tableView.rowHeight = 80
@@ -44,14 +44,14 @@ class FindCafeViewController : UIViewController {
         return tableView
     }()
     
-    private lazy var coffeeImageView: UIImageView = {
+    lazy var coffeeImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.masksToBounds = true
         imageView.image = UIImage(named: "iceCoffee")
         return imageView
     }()
     
-    private lazy var cafeFindButton : UIButton = {
+    lazy var cafeFindButton : UIButton = {
         let findButton : UIButton = UIButton()
         findButton.backgroundColor = UIColor(named: "Brown")
         findButton.setTitle(" 카페 찾기", for: .normal)
@@ -80,91 +80,6 @@ class FindCafeViewController : UIViewController {
         //        if Int(Date().timeIntervalSince(startItem as! Date)) < 60 {
         //            viewModel.limitSearchTime(inputSeconds: Int(Date().timeIntervalSince(startItem as! Date)))
         //        }
-    }
-}
-
-extension FindCafeViewController{
-    // MARK: Binding
-    func bindingObject(){
-        viewModel.cafeListObservable
-            .observe(on: MainScheduler.instance)
-            .bind(to: cafeTableView.rx.items(cellIdentifier: cellId, cellType: CafeTableViewCell.self)){
-                index, item, cell in
-                cell.cafeNameLabel.text = item.cafeName
-                    .replacingOccurrences(of: "<b>", with:" ")
-                    .replacingOccurrences(of: "</b>", with:" ")
-                cell.cafeAddressLabel.text = item.cafeAddress
-                cell.cafeDistance.text = "\(Double(item.distance).prettyDistance)"
-            }
-            .disposed(by: disposeBag)
-        
-        viewModel.isSearchLimitTimeIsOver
-            .subscribe { remainSecond in
-                DispatchQueue.main.async {
-                    if remainSecond.element ?? 60 == 0{
-                        UIView.animate(withDuration: 0.6) {
-                            self.cafeFindButton.setTitle(" 재탐색하기", for: .normal)
-                            self.cafeFindButton.isEnabled = true
-                            self.cafeFindButton.backgroundColor = UIColor(named: "Brown")
-                            self.cafeFindButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
-                            self.cafeFindButton.tintColor = .white
-                            
-                        }
-                    }
-                    else{
-                        UIView.animate(withDuration: 0.6) {
-                            self.cafeFindButton.setTitle(" 카페 찾기 \(remainSecond.element ?? 60)초", for: .normal)
-                            self.cafeFindButton.setImage(UIImage(systemName: "paperplane.fill"), for: .normal)
-                        }
-                    }
-                }
-            }
-        
-        cafeTableView.rx.modelSelected(CafeInfo.self)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: {item in
-                self.pushNavi(route: item.route, coords: item.coords,cafeName: item.cafeName,address: item.cafeAddress,distance : item.distance)
-            })
-            .disposed(by: disposeBag)
-        
-        cafeTableView.rx.itemSelected
-            .observe(on: MainScheduler.instance)
-            .subscribe { index in
-                self.cafeTableView.deselectRow(at: index, animated: true)
-            }
-        viewModel.isProgressAnimationContinue.bind{
-            if $0{
-                self.progressAnimationtimer?.invalidate()
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: 0.6) {
-                        self.cafeTableView.alpha = 1.0
-                        self.coffeeImageView.alpha = 0.3
-                        self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
-                        self.cafeFindButton.tintColor = UIColor(named: "disableTextColor")
-                        self.scrollToTop()
-                    }
-                    self.viewModel.limitSearchTime(inputSeconds: 60)
-                }
-            }
-        }
-        
-        viewModel.isProgressOutOfTime.bind{
-            if $0{
-                self.progressAnimationtimer?.invalidate()
-                self.viewModel.cafeListObservable.onNext([CafeInfo]())
-                DispatchQueue.main.async {
-                    UIView.animate(withDuration: 0.6) {
-                        self.cafeTableView.alpha = 1.0
-                        self.coffeeImageView.alpha = 0.3
-                        self.cafeFindButton.backgroundColor = UIColor(named: "disableColor")
-                        self.cafeFindButton.setTitleColor(UIColor(named: "disableTextColor"), for: .disabled)
-                    }
-                    self.mainTitle.text = "No Cafe!"
-                    self.mainTitle.alpha = 1.0
-                    self.viewModel.limitSearchTime(inputSeconds: 60)
-                }
-            }
-        }
     }
 }
 
@@ -330,7 +245,7 @@ extension FindCafeViewController {
         }
     }
     
-    private func scrollToTop() {
+    func scrollToTop() {
         let topRow = IndexPath(row: 0,
                                section: 0)
         self.cafeTableView.scrollToRow(at: topRow,
