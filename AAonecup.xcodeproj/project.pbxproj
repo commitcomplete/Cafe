@@ -70,17 +70,9 @@
 		7875444D28EF323D0008A663 /* CafeRouteScene */ = {
 			isa = PBXGroup;
 			children = (
-				7875444E28EF32530008A663 /* CafeRouteViews */,
 				7875444F28EF32980008A663 /* CafeRouteViewController.swift */,
 			);
 			path = CafeRouteScene;
-			sourceTree = "<group>";
-		};
-		7875444E28EF32530008A663 /* CafeRouteViews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = CafeRouteViews;
 			sourceTree = "<group>";
 		};
 		78974AE028D9DF2D00477AE6 = {
