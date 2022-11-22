@@ -26,7 +26,6 @@
 		78974B2E28DB50BB00477AE6 /* Joke.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B2D28DB50BB00477AE6 /* Joke.swift */; };
 		78974B3028E26F2000477AE6 /* dataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B2F28E26F2000477AE6 /* dataManager.swift */; };
 		78974B3228E26F6400477AE6 /* SearchCafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B3128E26F6400477AE6 /* SearchCafe.swift */; };
-		78974B3428E26F9500477AE6 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78974B3328E26F9500477AE6 /* Keys.swift */; };
 		78974B3628E5E9DD00477AE6 /* iceSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 78974B3528E5E9DD00477AE6 /* iceSound.mp3 */; };
 		78DB7E7428F3F94000DB0C18 /* CafeInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78DB7E7328F3F94000DB0C18 /* CafeInfo.swift */; };
 /* End PBXBuildFile section */
@@ -49,7 +48,6 @@
 		78974B2D28DB50BB00477AE6 /* Joke.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Joke.swift; sourceTree = "<group>"; };
 		78974B2F28E26F2000477AE6 /* dataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataManager.swift; sourceTree = "<group>"; };
 		78974B3128E26F6400477AE6 /* SearchCafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCafe.swift; sourceTree = "<group>"; };
-		78974B3328E26F9500477AE6 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		78974B3528E5E9DD00477AE6 /* iceSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = iceSound.mp3; sourceTree = "<group>"; };
 		78DB7E7328F3F94000DB0C18 /* CafeInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -157,7 +155,6 @@
 			children = (
 				78974B3528E5E9DD00477AE6 /* iceSound.mp3 */,
 				78974AF528D9DF2E00477AE6 /* Assets.xcassets */,
-				78974B3328E26F9500477AE6 /* Keys.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -286,7 +283,6 @@
 				78DB7E7428F3F94000DB0C18 /* CafeInfo.swift in Sources */,
 				78974AED28D9DF2D00477AE6 /* AppDelegate.swift in Sources */,
 				7875445028EF32980008A663 /* CafeRouteViewController.swift in Sources */,
-				78974B3428E26F9500477AE6 /* Keys.swift in Sources */,
 				78974B2A28DA529100477AE6 /* Cafe.swift in Sources */,
 				78974B1928D9F4F500477AE6 /* FindCafeViewModel.swift in Sources */,
 				78974B1728D9F4E200477AE6 /* FindCafeViewController.swift in Sources */,

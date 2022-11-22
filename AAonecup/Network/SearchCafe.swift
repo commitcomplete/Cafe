@@ -21,16 +21,16 @@ class  naverAPI {
     }
     
     static func findNearCafeAPIToNaver(queryValue: String , onComplete: @escaping (Result<Data, Error>) -> Void){
-        
-        let clientID: String = client_ID
-        let clientKEY: String = client_Secret
+        //MARK: 네이버 검색API 사용시 사용했던 Key값
+//        let clientID: String = client_ID
+//        let clientKEY: String = client_Secret
         
         let query: String  = "https://openapi.naver.com/v1/search/local.json?query=\(queryValue)&display=5&sort=comment"
         let encodedQuery: String = query.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed)!
         let queryURL: URL = URL(string: encodedQuery)!
         var requestURL = URLRequest(url: queryURL)
-        requestURL.addValue(clientID, forHTTPHeaderField: "X-Naver-Client-Id")
-        requestURL.addValue(clientKEY, forHTTPHeaderField: "X-Naver-Client-Secret")
+//        requestURL.addValue(clientID, forHTTPHeaderField: "X-Naver-Client-Id")
+//        requestURL.addValue(clientKEY, forHTTPHeaderField: "X-Naver-Client-Secret")
         
         let task = URLSession.shared.dataTask(with: requestURL) { data, res, err in
             if let err = err {
