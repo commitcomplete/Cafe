@@ -10,8 +10,8 @@ import CoreLocation
 import UIKit
 
 //MARK: Location
-extension FindCafeViewController :CLLocationManagerDelegate{
-    func setUpCLLocation(){
+extension FindCafeViewController:CLLocationManagerDelegate {
+    func setUpCLLocation() {
         //델리게이트 설정
         locationManager.delegate = self
         // 거리 정확도 설정
@@ -20,13 +20,13 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         
     }
     
-    func checkLocationPermission(){
-        switch CLLocationManager.authorizationStatus(){
-        case .notDetermined :
+    func checkLocationPermission() {
+        switch CLLocationManager.authorizationStatus() {
+        case .notDetermined:
             locationManager.requestWhenInUseAuthorization()
         case .restricted,.denied:
             sendLocationPermissionAlert()
-        case .authorizedAlways ,.authorizedWhenInUse :
+        case .authorizedAlways ,.authorizedWhenInUse:
             let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
             let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
             viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
@@ -37,7 +37,7 @@ extension FindCafeViewController :CLLocationManagerDelegate{
         }
     }
     
-    func sendLocationPermissionAlert(){
+    func sendLocationPermissionAlert() {
         //Alert 생성 후 액션 연결
         let alertController = UIAlertController(title: "위치 서비스를 사용할 수 없습니다. 기기의 위치서비스를 켜주세요.(필수권한)", message: "앱 설정 화면으로 이동하시겠습니까?", preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "아니오", style: .destructive, handler: { (action) -> Void in
@@ -57,11 +57,11 @@ extension FindCafeViewController :CLLocationManagerDelegate{
     
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus{
+        switch manager.authorizationStatus {
         case .denied,.restricted:
             break
         case .authorizedWhenInUse,.authorizedAlways:
-            if self.isButtonClicked{
+            if self.isButtonClicked {
                 let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
                 let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
                 viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)

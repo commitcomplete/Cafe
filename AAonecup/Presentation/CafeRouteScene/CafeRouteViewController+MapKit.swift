@@ -8,7 +8,7 @@
 import Foundation
 import MapKit
 
-extension CafeRouteViewController : MKMapViewDelegate{
+extension CafeRouteViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let linerenderer = MKPolylineRenderer(overlay: overlay)
         linerenderer.strokeColor = UIColor(named: "AccentColor")
@@ -16,11 +16,11 @@ extension CafeRouteViewController : MKMapViewDelegate{
         return linerenderer
     }
     
-    func setAnnotation(currentCoord : CLLocationCoordinate2D,
-                       objectCoord : CLLocationCoordinate2D,
-                       delta span :Double,
+    func setAnnotation(currentCoord: CLLocationCoordinate2D,
+                       objectCoord: CLLocationCoordinate2D,
+                       delta span: Double,
                        title strTitle: String,
-                       subtitle strSubTitle:String){
+                       subtitle strSubTitle: String) {
         let annotation = MKPointAnnotation()
         annotation.coordinate = objectCoord
         annotation.title = strTitle.replacingOccurrences(of: "<b>", with:" ")

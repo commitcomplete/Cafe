@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 
 
-//MARK: 네이버 검색 API를 이용한 버전 : 현재는 MAPKit으로 전환함
+//MARK: 네이버 검색 API를 이용한 버전: 현재는 MAPKit으로 전환함
 
 class  naverAPI {
     static var shared = naverAPI()
@@ -49,7 +49,7 @@ class  naverAPI {
         
     }
     
-    static func rxFindNearCafeAPItoNaver(query : String) -> Observable<Data>{
+    static func rxFindNearCafeAPItoNaver(query: String) -> Observable<Data>{
         return Observable.create { emitter in
             findNearCafeAPIToNaver(queryValue: query){result in
                 switch result{

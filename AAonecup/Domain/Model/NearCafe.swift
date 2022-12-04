@@ -8,7 +8,7 @@
 import Foundation
 import MapKit
 
-struct NearCafe{
+struct NearCafe {
     var cafeName: String
     var cafeAddress : String
     var distance : String

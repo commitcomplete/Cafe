@@ -12,27 +12,27 @@ import MapKit
 import SnapKit
 import CoreLocation
 
-class CafeRouteViewController : UIViewController{
-    var myCoordinates : CLLocationCoordinate2D? = nil
-    var myPlacemark :MKPlacemark? = nil
-    var myMapItem : MKMapItem? = nil
+class CafeRouteViewController: UIViewController {
+    var myCoordinates: CLLocationCoordinate2D? = nil
+    var myPlacemark:MKPlacemark? = nil
+    var myMapItem: MKMapItem? = nil
     var route: MKRoute!
-    var coords : CLLocationCoordinate2D!
-    var placeString1 : String = ""
-    var placeString2 : String = ""
-    var currentDistance : Int = 0
+    var coords: CLLocationCoordinate2D!
+    var placeString1: String = ""
+    var placeString2: String = ""
+    var currentDistance: Int = 0
     let locationManager = CLLocationManager()
-    var refreshTimer : Timer? = nil
-    var routeOverLay : MKOverlay? = nil
+    var refreshTimer: Timer? = nil
+    var routeOverLay: MKOverlay? = nil
     
-    private lazy var startbutton : UIButton = {
+    private lazy var startbutton: UIButton = {
         let button = UIButton()
         button.setTitle("dfsdfs", for: .normal)
         button.backgroundColor = .red
         return button
     }()
     
-    private lazy var distanceLabel : UILabel = {
+    private lazy var distanceLabel: UILabel = {
         let label = UILabel()
         label.text = "1234"
         label.textColor = UIColor(named: "AccentColor")
@@ -40,7 +40,7 @@ class CafeRouteViewController : UIViewController{
         return label
     }()
     
-    lazy var myMap : MKMapView = {
+    lazy var myMap: MKMapView = {
         let map = MKMapView()
         return map
     }()
@@ -74,7 +74,7 @@ extension CafeRouteViewController {
         })
     }
     
-    func setUpLayout(){
+    func setUpLayout() {
         distanceLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide)
@@ -89,6 +89,6 @@ extension CafeRouteViewController {
         self.myMap.setUserTrackingMode(.follow, animated: true)
         self.setAnnotation(currentCoord: myCoordinates!, objectCoord: coords, delta: 0.1,title: placeString1, subtitle: placeString2)
         setUpDelegate()
-        self.distanceLabel.text = "남은 거리 : \(currentDistance)M"
+        self.distanceLabel.text = "남은 거리: \(currentDistance)M"
     }
 }

@@ -11,10 +11,10 @@ import RxSwift
 
 extension FindCafeViewController{
     // MARK: Binding
-    func bindingObject(){
+    func bindingObject() {
         viewModel.cafeListObservable
             .observe(on: MainScheduler.instance)
-            .bind(to: cafeTableView.rx.items(cellIdentifier: cellId, cellType: CafeTableViewCell.self)){
+            .bind(to: cafeTableView.rx.items(cellIdentifier: cellId, cellType: CafeTableViewCell.self)) {
                 index, item, cell in
                 cell.cafeNameLabel.text = item.cafeName
                     .replacingOccurrences(of: "<b>", with:" ")
@@ -49,7 +49,7 @@ extension FindCafeViewController{
         cafeTableView.rx.modelSelected(CafeInfo.self)
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: {item in
-                self.pushNavi(route: item.route, coords: item.coords,cafeName: item.cafeName,address: item.cafeAddress,distance : item.distance)
+                self.pushNavi(route: item.route, coords: item.coords,cafeName: item.cafeName,address: item.cafeAddress,distance: item.distance)
             })
             .disposed(by: disposeBag)
         
@@ -74,7 +74,7 @@ extension FindCafeViewController{
             }
         }
         
-        viewModel.isProgressOutOfTime.bind{
+        viewModel.isProgressOutOfTime.bind  {
             if $0{
                 self.progressAnimationtimer?.invalidate()
                 self.viewModel.cafeListObservable.onNext([CafeInfo]())

@@ -12,7 +12,7 @@ import CoreLocation
 import MapKit
 
 
-class FindCafeViewModel{
+class FindCafeViewModel {
     lazy var nameObservable = PublishSubject<Joke>()
     lazy var cafeListObservable = PublishSubject<[CafeInfo]>()
     lazy var isProgressAnimationContinue = PublishSubject<Bool>()
@@ -20,13 +20,13 @@ class FindCafeViewModel{
     lazy var isSearchLimitTimeIsOver = PublishSubject<Int>()
     lazy var distanceObservable = PublishSubject<String>()
     var progressCountTimer: Timer? = nil
-    var searchLimitTimer : Timer? = nil
+    var searchLimitTimer: Timer? = nil
     
-    var currentCoord : CLLocationCoordinate2D!
+    var currentCoord: CLLocationCoordinate2D!
     
-    func getDistance(ObjectAddress : String, completionDistance : @escaping(String,MKRoute,CLLocationCoordinate2D)->Void){
+    func getDistance(ObjectAddress: String, completionDistance: @escaping(String,MKRoute,CLLocationCoordinate2D)->Void){
         var currentMapItem = MKMapItem(placemark: MKPlacemark(coordinate: self.currentCoord))
-        var distance : String?
+        var distance: String?
         CLGeocoder().geocodeAddressString(ObjectAddress, completionHandler:{(placemarks, error) in
             if error != nil {
                 print("에러 발생: \(error!.localizedDescription)")
@@ -53,7 +53,7 @@ class FindCafeViewModel{
         })
     }
     
-    func getNearCafeList(currentCoord : CLLocationCoordinate2D){
+    func getNearCafeList(currentCoord: CLLocationCoordinate2D){
         progressCountTimer = Timer.scheduledTimer(withTimeInterval:6.0, repeats: false) { _ in
             self.isProgressOutOfTime.onNext(true)
         }
@@ -86,9 +86,9 @@ class FindCafeViewModel{
     }
     
     
-    func getNearCafeDistance(objectCoord : CLLocationCoordinate2D, completionDistance : @escaping(Int,MKRoute,CLLocationCoordinate2D)->Void){
+    func getNearCafeDistance(objectCoord: CLLocationCoordinate2D, completionDistance: @escaping(Int,MKRoute,CLLocationCoordinate2D)->Void){
         var currentMapItem = MKMapItem(placemark: MKPlacemark(coordinate: self.currentCoord))
-        var distance : Int?
+        var distance: Int?
         var objectMapItem = MKMapItem(placemark: MKPlacemark(coordinate: objectCoord ))
         let request = MKDirections.Request() //create a direction request object
         request.source = currentMapItem //this is the source location mapItem object
@@ -106,7 +106,7 @@ class FindCafeViewModel{
         }
         
     }
-    func limitSearchTime(inputSeconds : Int){
+    func limitSearchTime(inputSeconds: Int) {
         var seconds = inputSeconds
         DispatchQueue.global(qos: .background).async {
             self.isSearchLimitTimeIsOver.onNext(seconds)
@@ -121,8 +121,8 @@ class FindCafeViewModel{
         }
     }
     
-    //MARK: 네이버 검색 API를 이용한 버전 : 현재는 MAPKit으로 대체함
-    //    func getCafeList(query : String){
+    //MARK: 네이버 검색 API를 이용한 버전: 현재는 MAPKit으로 대체함
+    //    func getCafeList(query: String){
     //        progressCountTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
     //            self.isProgressOutOfTime.onNext(true)
     //        }
@@ -142,8 +142,8 @@ class FindCafeViewModel{
     //            })
     //    }
     
-    //MARK: 네이버 검색 API를 이용한 버전 : 현재는 MAPKit으로 대체함
-    //    func getNearCafe(cafe : Cafe,completion : @escaping([NearCafe])->Void){
+    //MARK: 네이버 검색 API를 이용한 버전: 현재는 MAPKit으로 대체함
+    //    func getNearCafe(cafe: Cafe,completion: @escaping([NearCafe])->Void){
     //        var nearCafeArr = [NearCafe]()
     //        var count = 0
     //        for i in cafe.items{
