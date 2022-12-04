@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class CafeTableViewCell : UITableViewCell{
+class CafeTableViewCell: UITableViewCell {
         let cafeAddressLabel = UILabel()
         let cafeNameLabel = UILabel()
         let cafeDistance = UILabel()

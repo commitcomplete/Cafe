@@ -9,12 +9,12 @@ import Foundation
 import CoreLocation
 import MapKit
 
-extension CafeRouteViewController : CLLocationManagerDelegate{
+extension CafeRouteViewController: CLLocationManagerDelegate {
     func setUpDelegate(){
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
     }
-    func getRoute(currentCoord : CLLocationCoordinate2D,completion: @escaping (String,MKRoute) -> Void){
+    func getRoute(currentCoord: CLLocationCoordinate2D,completion: @escaping (String,MKRoute) -> Void) {
         var currentMapItem = MKMapItem(placemark: MKPlacemark(coordinate: currentCoord))
         var distance : String?
         

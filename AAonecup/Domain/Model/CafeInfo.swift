@@ -9,10 +9,10 @@
 import Foundation
 import MapKit
 
-struct CafeInfo{
+struct CafeInfo {
     var cafeName: String
-    var cafeAddress : String
-    var distance : Int
-    var route : MKRoute
-    var coords : CLLocationCoordinate2D
+    var cafeAddress: String
+    var distance: Int
+    var route: MKRoute
+    var coords: CLLocationCoordinate2D
 }
