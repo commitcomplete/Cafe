@@ -242,44 +242,4 @@ extension FindCafeViewController {
         .disposed(by: disposeBag)
     }
     
-    //MARK: 네이버 검색 API를 이용한 버전: 현재는 MAPKit으로 대체함
-    //    func getCurrentPlaceName(){
-    //        let longtitude = locationManager.location?.coordinate.longitude ?? 126.584063
-    //        let langtitude = locationManager.location?.coordinate.latitude ?? 37.335887
-    //        let currentLocation = CLLocation(latitude: langtitude, longitude: longtitude)
-    //        viewModel.currentCoord = CLLocationCoordinate2D(latitude: langtitude, longitude: longtitude)
-    //        let geocoder = CLGeocoder()
-    //        let locale = Locale(identifier: "Ko-kr")
-    //        geocoder.reverseGeocodeLocation(currentLocation, preferredLocale: locale) { [weak self] placemarks, _ in
-    //            guard let placemarks = placemarks,
-    //                  let address = placemarks.last
-    //            else { return }
-    //            var currentPlaceCafeQuery = ""
-    //
-    //            if address.locality == nil{
-    //                currentPlaceCafeQuery = (address.administrativeArea ?? "서울")+(address.subLocality ?? " 종로구")+" 카페"
-    //            }else{
-    //                currentPlaceCafeQuery = (address.locality ?? "")+(address.subLocality ?? " 종로구")+" 카페"
-    //            }
-    //            //            let searchr = MKLocalSearch.Request()
-    //            //            searchr.naturalLanguageQuery = "cafe"
-    //            //            searchr.region = MKCoordinateRegion(center: CLLocationCoordinate2DMake(langtitude, longtitude), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-    //            //            let search = MKLocalSearch(request: searchr)
-    //            //            search.start { (response, error) in
-    //            //                guard let response = response else {
-    //            //                    // Handle the error.
-    //            //                    return
-    //            //                }
-    //            //
-    //            //                for item in response.mapItems {
-    //            //                    if let name = item.placemark.title,
-    //            //                        let location = item.placemark.location {
-    //            //                        print("\(name): \(location.coordinate.latitude),\(location.coordinate.longitude)")
-    //            //                    }
-    //            //                }
-    //            //            }
-    //            //            self?.viewModel.getCafeList(query: currentPlaceCafeQuery)
-    //
-    //        }
-    //    }
 }
