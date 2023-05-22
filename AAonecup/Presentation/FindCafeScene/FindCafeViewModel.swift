@@ -13,7 +13,7 @@ import MapKit
 
 
 class FindCafeViewModel {
-    lazy var nameObservable = PublishSubject<Joke>()
+    
     lazy var cafeListObservable = PublishSubject<[CafeInfo]>()
     lazy var isProgressAnimationContinue = PublishSubject<Bool>()
     lazy var isProgressOutOfTime = PublishSubject<Bool>()
@@ -25,7 +25,7 @@ class FindCafeViewModel {
     var currentCoord: CLLocationCoordinate2D!
     
     func getDistance(ObjectAddress: String, completionDistance: @escaping(String,MKRoute,CLLocationCoordinate2D)->Void){
-        var currentMapItem = MKMapItem(placemark: MKPlacemark(coordinate: self.currentCoord))
+        let currentMapItem = MKMapItem(placemark: MKPlacemark(coordinate: self.currentCoord))
         var distance: String?
         CLGeocoder().geocodeAddressString(ObjectAddress, completionHandler:{(placemarks, error) in
             if error != nil {
@@ -33,9 +33,9 @@ class FindCafeViewModel {
             } else if placemarks!.count > 0 {
                 let placemark = placemarks![0]
                 let location = placemark.location
-                var objectCoords = location!.coordinate
+                let objectCoords = location!.coordinate
                 //4.showMap을 호출 한다.
-                var objectMapItem = MKMapItem(placemark: MKPlacemark(coordinate: objectCoords ))
+                let objectMapItem = MKMapItem(placemark: MKPlacemark(coordinate: objectCoords ))
                 let request = MKDirections.Request() //create a direction request object
                 request.source = currentMapItem //this is the source location mapItem object
                 request.destination = objectMapItem
@@ -87,9 +87,9 @@ class FindCafeViewModel {
     
     
     func getNearCafeDistance(objectCoord: CLLocationCoordinate2D, completionDistance: @escaping(Int,MKRoute,CLLocationCoordinate2D)->Void){
-        var currentMapItem = MKMapItem(placemark: MKPlacemark(coordinate: self.currentCoord))
+        let currentMapItem = MKMapItem(placemark: MKPlacemark(coordinate: self.currentCoord))
         var distance: Int?
-        var objectMapItem = MKMapItem(placemark: MKPlacemark(coordinate: objectCoord ))
+        let objectMapItem = MKMapItem(placemark: MKPlacemark(coordinate: objectCoord ))
         let request = MKDirections.Request() //create a direction request object
         request.source = currentMapItem //this is the source location mapItem object
         request.destination = objectMapItem
@@ -102,7 +102,7 @@ class FindCafeViewModel {
             }
             distance = Int(response.routes[0].distance)
             completionDistance(distance!,response.routes[0],objectCoord)
-            //get the routes, could be multiple routes in the routes[] array but usually [0] is the best route
+            
         }
         
     }
@@ -121,39 +121,4 @@ class FindCafeViewModel {
         }
     }
     
-    //MARK: 네이버 검색 API를 이용한 버전: 현재는 MAPKit으로 대체함
-    //    func getCafeList(query: String){
-    //        progressCountTimer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { _ in
-    //            self.isProgressOutOfTime.onNext(true)
-    //        }
-    //
-    //        naverAPI.rxFindNearCafeAPItoNaver(query: query)
-    //            .map{ data -> Cafe in
-    //                let response = try! JSONDecoder().decode(Cafe.self, from: data)
-    //                return response
-    //            }
-    //            .subscribe(onNext: {
-    //                self.getNearCafe(cafe: $0) { nearcafe in
-    //                    self.cafeListObservable.onNext(nearcafe)
-    //                    self.isProgressAnimationContinue.onNext(true)
-    //                    self.progressCountTimer?.invalidate()
-    //                }
-    //
-    //            })
-    //    }
-    
-    //MARK: 네이버 검색 API를 이용한 버전: 현재는 MAPKit으로 대체함
-    //    func getNearCafe(cafe: Cafe,completion: @escaping([NearCafe])->Void){
-    //        var nearCafeArr = [NearCafe]()
-    //        var count = 0
-    //        for i in cafe.items{
-    //            getDistance(ObjectAddress: i.roadAddress.getAvailableAddress()) { distance,route,objectcoords in
-    //                nearCafeArr.append(NearCafe(cafeName: i.title, cafeAddress: i.roadAddress, distance: distance,route: route,coords: objectcoords))
-    //                count+=1
-    //                if count == cafe.items.count{
-    //                    completion(nearCafeArr)
-    //                }
-    //            }
-    //        }
-    //    }
 }
