@@ -13,7 +13,7 @@ import MapKit
 
 
 class FindCafeViewModel {
-    lazy var nameObservable = PublishSubject<Joke>()
+    
     lazy var cafeListObservable = PublishSubject<[CafeInfo]>()
     lazy var isProgressAnimationContinue = PublishSubject<Bool>()
     lazy var isProgressOutOfTime = PublishSubject<Bool>()
